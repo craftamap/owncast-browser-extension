@@ -1,0 +1,18 @@
+{
+  "manifest_version": 2,
+  "name": "Firefox OwnCast Extension",
+  "version": "0.1.0",
+  "description": "",
+  "background": {
+    "scripts": [
+      "background.js"
+    ]
+  },
+  "browser_action": {
+    "default_popup": "index.html",
+    "default_title": "Firefox OwnCast Extension"
+  },
+  "permissions": [
+    "*://*/*"
+  ]
+}

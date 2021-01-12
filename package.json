@@ -1,0 +1,47 @@
+{
+  "name": "firefox-owncast-extension",
+  "version": "0.1.0",
+  "author": "Fabian Siegel <fabians1999@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "build": "webpack && web-ext build",
+    "lint": "web-ext lint"
+  },
+  "devDependencies": {
+    "copy-webpack-plugin": "^7.0.0",
+    "eslint": "^7.17.0",
+    "handlebars": "^4.7.6",
+    "handlebars-loader": "^1.7.1",
+    "html-webpack-plugin": "^4.5.1",
+    "mini-css-extract-plugin": "^1.3.3",
+    "sass": "^1.32.2",
+    "web-ext": "^5.4.1",
+    "webpack": "^5.12.3",
+    "webpack-cli": "^4.3.1"
+  },
+  "dependencies": {
+    "css-loader": "^5.0.1",
+    "jquery": "^3.5.1",
+    "postcss-loader": "^4.1.0",
+    "sass-loader": "^10.1.1",
+    "scss-loader": "^0.0.1",
+    "tailwindcss": "^2.0.2"
+  },
+  "webExt": {
+    "sourceDir": "addon",
+    "build": {
+      "overwriteDest": true
+    }
+  },
+  "eslintConfig": {
+    "env": {
+      "browser": true
+    },
+    "rules": {
+      "quotes": [
+        "error",
+        "single"
+      ]
+    }
+  }
+}

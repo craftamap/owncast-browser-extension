@@ -1,0 +1,7 @@
+addon/
+web-ext-artifacts/
+
+yarn-error.log
+
+node_modules/
+
