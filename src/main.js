@@ -1,37 +1,45 @@
 import Instances from './Instances.hbs';
 import './main.scss';
 
-const owncastInstances = [
-	'https://watch.owncast.online/',
-	'https://tv.grindhold.de/'
-
-];
-
 window.addEventListener('load', function (event) {
+	const bgApp = browser.extension.getBackgroundPage().bgApp;
+
 	const root = document.getElementById('app-root');
-	let instances = [];
-	root.innerHTML = Instances({
-		instances: instances,
-	});
 
-	for (const instance of owncastInstances) {
-		fetch(instance + 'api/yp')
-			.then(response => response.json())
-			.then(data => {
-				console.log(data);
-
-				const processed = {
-					'name': data.name,
-					'description': data.description,
-					'viewer': data.viewerCount,
-					'thumbnail': instance + 'thumbnail.jpg',
-					'status': data.online ? 'online' : 'offline',
-				};
-
-				instances = [...instances, processed];
+	document.addEventListener('click', (e) => {
+		console.log(e.target.id);
+		if (e.target.id === 'refresh') {
+			bgApp.refreshInstanceData().then((data) => {
+				const instances = bgApp.instanceData;
+				console.log(bgApp);
 				root.innerHTML = Instances({
 					instances: instances,
 				});
-			});
-	}
+
+			})
+		}
+	});
+
+	document.addEventListener('click', (e) => {
+		console.log(e.target.id);
+		if (e.target.id === 'add') {
+			console.log(e.target.classList);
+			document.querySelector('#add-section').classList.toggle('hidden');
+
+//			bgApp.refreshInstanceData().then((data) => {
+//				const instances = bgApp.instanceData;
+//				console.log(bgApp);
+//				root.innerHTML = Instances({
+//					instances: instances,
+//				});
+//
+//			})
+		}
+	});
+
+	const instances = bgApp.instanceData;
+	console.log(bgApp);
+	root.innerHTML = Instances({
+		instances: instances,
+	});
 });

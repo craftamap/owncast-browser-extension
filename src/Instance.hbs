@@ -1,5 +1,14 @@
-<div class="flex p-4 border-solid border border-gray-50 rounded">
-  <img class="w-24" src="{{thumbnail}}" />
-  <div>{{name}} is {{status}}</div>
-  <div>{{viewer}} viewer, {{description}}</div>
+<div class="flex p-4 rounded shadow-md w-95%">
+  <div class="h-24 w-32 bg-cover bg-center mr-4 flex-shrink-0" style="background-image: url('{{#if online}} {{thumbnail}} {{else}} {{logo}} {{/if}}')" >
+  </div>
+  <div class="flex flex-col">
+    <div><span class="font-bold">{{name}}</span> is <span class="{{#if online}} text-red-600 {{else}} text-gray-500 {{/if}}">{{status}}</span></div>
+    <div class="text-sm">{{description}}</div>
+    <div>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4 inline-block">
+        <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z" />
+      </svg>
+      {{viewer}}
+    </div>
+  </div>
 </div>
