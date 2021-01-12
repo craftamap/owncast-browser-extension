@@ -37,11 +37,18 @@
     "env": {
       "browser": true
     },
+    "parserOptions": {
+      "sourceType": "module",
+      "ecmaVersion": 2018
+    },
     "rules": {
-      "quotes": [
-        "error",
-        "single"
-      ]
+      "indent": ["error", "tab", {"SwitchCase": 1}],
+      "no-unused-vars": ["error", {"args": "none"}],
+      "eqeqeq": 2,
+      "quotes": [ "error", "single" ],
+      "camelcase": 2,
+      "curly": 2,
+      "space-in-parens": ["error", "never"]
     }
   }
 }
