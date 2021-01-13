@@ -12,3 +12,7 @@ jobs:
     - run: yarn install
     - run: yarn build
     - run: yarn lint
+    - uses: actions/upload-artifact@v2
+      with:
+        name: firefox_owncast_extension.zip
+        path: web-ext-artifacts/*.zip
