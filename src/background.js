@@ -50,12 +50,12 @@ const sendNotifications = async (oldData, newData) => {
 	newDiff.forEach((item) => {
 		browser.notifications.create({
 			type: 'basic',
-			title: item.name+ ' is online',
+			title: item.name + ' is online',
 			message: item.description,
 			iconUrl: item.logo,
 		})
 	})
-	
+
 	console.log(newInstances);
 }
 
@@ -70,7 +70,22 @@ const checkConnection = async (instanceUrl) => {
 	return await cast.getConfig();
 }
 
+
+const handleMessage = (request, sender, sendResponse) => {
+	const req = JSON.parse(request);
+	if (req.type === 'follow') {
+		checkConnection(req.data.url).then(() => {
+			Storage.addInstanceInStorage(req.data.url)
+		}).then(refreshInstanceData)
+			.then(() => {
+				return sendResponse('success');
+			})
+	}
+};
+
 window.addEventListener('load', function (event) {
+	browser.runtime.onMessage.addListener(handleMessage);
+
 	window.bgApp = {
 		'addInstanceInStorage': Storage.addInstanceInStorage,
 		'removeInstanceInStorage': Storage.removeInstanceInStorage,
