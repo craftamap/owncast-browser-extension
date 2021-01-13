@@ -1,6 +1,6 @@
-name: build
+name: build & lint
 
-on: [push, pr]
+on: [push, pull_request]
 
 jobs:
   build:
@@ -11,3 +11,4 @@ jobs:
       uses: actions/setup-node@v2
     - run: yarn install
     - run: yarn build
+    - run: yarn lint
