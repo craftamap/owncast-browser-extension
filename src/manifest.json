@@ -13,6 +13,7 @@
     "default_title": "Firefox OwnCast Extension"
   },
   "permissions": [
-    "*://*/*"
+    "*://*/*",
+    "storage"
   ]
 }

@@ -15,6 +15,7 @@ const refreshInstanceData = async () => {
 			'online': status.online,
 			'thumbnail': instance + 'thumbnail.jpg',
 			'logo': config.logo,
+			instance,
 		};
 	}));
 	console.log(statuses);
@@ -28,8 +29,9 @@ const refreshInstanceData = async () => {
 
 window.addEventListener('load', function (event) {
 	window.bgApp = {
-		instances: [],
 		refreshInstanceData,
+		'addInstanceInStorage': Storage.addInstanceInStorage,
+		'removeInstanceInStorage': Storage.removeInstanceInStorage,
 	};
 
 	const recursiveRefresh = () => {

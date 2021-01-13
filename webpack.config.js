@@ -25,8 +25,8 @@ module.exports = {
 						options: {
 							postcssOptions: {
 								plugins: [
-									'tailwindcss'
-								],
+									'tailwindcss',
+								]
 							}
 						}
 					},
