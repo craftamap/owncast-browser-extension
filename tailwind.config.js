@@ -1,6 +1,9 @@
 // tailwind.config.js
 module.exports = {
-	purge: [],
+	purge: {
+		content:['./src/**/*.hbs'],
+    enabled: true,
+	},
 	darkMode: 'media', // or 'media' or 'class'
 	theme: {
 		extend: {},
