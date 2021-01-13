@@ -29,7 +29,8 @@
     "postcss-loader": "^4.1.0",
     "sass-loader": "^10.1.1",
     "scss-loader": "^0.0.1",
-    "tailwindcss": "^2.0.2"
+    "tailwindcss": "^2.0.2",
+    "urlcat": "^2.0.4"
   },
   "webExt": {
     "sourceDir": "addon",

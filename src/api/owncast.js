@@ -1,20 +1,22 @@
+import urlcat from 'urlcat';
+
 function OwnCast(instance) {
 	this.getConfig = async () => {
-		return fetch(instance + 'api/config')
+		return fetch(urlcat(instance, 'api/config'))
 			.then(response => {
 				return response.json()
 			})
 	};
 
 	this.getStatus = async () => {
-		return fetch(instance + 'api/status')
+		return fetch(urlcat(instance, 'api/status'))
 			.then(response => {
 				return response.json()
 			})
 	}
 
 	this.getYp = async () => {
-		return fetch(instance + 'api/yp')
+		return fetch(urlcat(instance, 'api/yp'))
 			.then(response => {
 				return response.json()
 			})
