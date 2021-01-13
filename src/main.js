@@ -72,7 +72,7 @@ window.addEventListener('load', function (event) {
 			addButton.classList.add('hidden');
 			res();
 		}).then(() => {
-			bgApp.checkConnection(url)
+			return bgApp.checkConnection(url)
 		}).then((_data) => {
 			return bgApp.addInstanceInStorage(url)
 		}).then(() => {

@@ -11,7 +11,7 @@ module.exports = {
 	},
 	output: {
 		path: path.resolve(__dirname, 'addon'),
-		filename: '[name].js'
+		filename: 'js/[name].js'
 	},
 	module: {
 		rules: [
@@ -56,6 +56,8 @@ module.exports = {
 				{from: 'src/manifest.json', to: 'manifest.json'},
 			],
 		}),
-		new MiniCssExtractPlugin()
+		new MiniCssExtractPlugin({
+			filename: 'css/[name].css',
+		})
 	]
 };
