@@ -12,28 +12,52 @@ function init() {
 
 
 	if (window.addFollowButton) {
-		//return;
+		return;
 	}
-	//window.addFollowButton = true;
-	console.log('a');
+	window.addFollowButton = true;
 	// If a webpage has an owncast-video-container, its propably an owncast instance
 	if (document.getElementsByClassName('owncast-video-container').length < 1) {
 		return;
 	}
+
 	const socialList = document.getElementById('social-list');
-	const button = htmlToElement('<button class="border-2 rounded border-blue-500 p-2">Add to Extension</button>');
-	button.addEventListener('click', () => {
-		button.textContent = 'Wait...';
-		browser.runtime.sendMessage(JSON.stringify({
-			type: 'follow',
-			data: {
-				url: window.location.href
-			},
-		})).then((response) => {
-			button.textContent = 'Done!';
-		}, console.log);
-	});
-	socialList.append(button);
+
+	browser.runtime.sendMessage(JSON.stringify({
+		type: 'getStatus',
+		data: {
+			url: window.location.href
+		},
+	})).then((response) => {
+		if (!response) {
+			const button = htmlToElement('<button class="ml-2 border-2 rounded border-blue-500 p-2">Add To Extension</button>');
+			button.addEventListener('click', () => {
+				button.textContent = 'Wait...';
+				browser.runtime.sendMessage(JSON.stringify({
+					type: 'follow',
+					data: {
+						url: window.location.href
+					},
+				})).then((response) => {
+					button.textContent = 'Done!';
+				}, console.log);
+			});
+			socialList.append(button);
+		} else {
+			const button = htmlToElement('<button class="ml-2 border-2 rounded border-red-700 p-2">Remove From Extension</button>');
+			button.addEventListener('click', () => {
+				button.textContent = 'Wait...';
+				browser.runtime.sendMessage(JSON.stringify({
+					type: 'unfollow',
+					data: {
+						url: window.location.href
+					},
+				})).then((response) => {
+					button.textContent = 'Done!';
+				}, console.log);
+			});
+			socialList.append(button);
+		}
+	})
 }
 
 init();

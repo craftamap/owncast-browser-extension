@@ -73,9 +73,23 @@ const checkConnection = async (instanceUrl) => {
 
 const handleMessage = (request, sender, sendResponse) => {
 	const req = JSON.parse(request);
-	if (req.type === 'follow') {
+	if (req.type === 'getStatus') {
+		const url = req.data.url
+		return Storage.getInstancesFromStorage().then((res) => {
+			const instances = res['instances'];
+			const incl = instances.includes(url);
+			return incl;
+		})
+	} else if (req.type === 'follow') {
 		checkConnection(req.data.url).then(() => {
 			Storage.addInstanceInStorage(req.data.url)
+		}).then(refreshInstanceData)
+			.then(() => {
+				return sendResponse('success');
+			})
+	} else if (req.type === 'unfollow') {
+		checkConnection(req.data.url).then(() => {
+			Storage.removeInstanceInStorage(req.data.url)
 		}).then(refreshInstanceData)
 			.then(() => {
 				return sendResponse('success');
