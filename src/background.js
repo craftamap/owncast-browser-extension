@@ -20,12 +20,49 @@ const refreshInstanceData = async () => {
 		};
 	}));
 	console.log(statuses);
-	window.bgApp.instanceData = statuses
+	const newInstanceData = statuses
 		.filter((a) => !!a.value)
 		.map((a) => a.value)
 		.sort((a, b) => b.online - a.online);
 
+	await sendNotifications(window.bgApp.instanceData || [], newInstanceData);
+
+	window.bgApp.instanceData = newInstanceData;
+
+	await setBadge(window.bgApp.instanceData);
+
 	return window.bgApp.instanceData;
+};
+
+const sendNotifications = async (oldData, newData) => {
+	const oldUrls = new Set(oldData.filter((a) => {return a.online}).map(x => x.instance));
+	const newInstances = {};
+	const newDiff = [];
+	for (const instance of newData.filter((a) => {return a.online})) {
+		newInstances[instance.instance] = instance;
+	}
+	for (const instanceUrl of Object.keys(newInstances)) {
+		if (!oldUrls.has(instanceUrl)) {
+			newDiff.push(newInstances[instanceUrl]);
+		}
+	}
+
+	newDiff.forEach((item) => {
+		browser.notifications.create({
+			type: 'basic',
+			title: item.name+ ' is online',
+			message: item.description,
+			iconUrl: item.logo,
+		})
+	})
+	
+	console.log(newInstances);
+}
+
+const setBadge = async (instanceData) => {
+	const online = instanceData.filter((a) => {return a.online});
+	await browser.browserAction.setBadgeText({text: `${online.length}`});
+	await browser.browserAction.setBadgeBackgroundColor({color: '#3d007a'});
 };
 
 const checkConnection = async (instanceUrl) => {
@@ -35,10 +72,10 @@ const checkConnection = async (instanceUrl) => {
 
 window.addEventListener('load', function (event) {
 	window.bgApp = {
-		refreshInstanceData,
 		'addInstanceInStorage': Storage.addInstanceInStorage,
 		'removeInstanceInStorage': Storage.removeInstanceInStorage,
 		checkConnection: checkConnection,
+		refreshInstanceData,
 	};
 
 	const recursiveRefresh = () => {
