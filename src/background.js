@@ -9,7 +9,8 @@ const refreshInstanceData = async () => {
 		const config = await cast.getConfig();
 		return {
 			'name': config.name,
-			'description': config.summary.substring(0, 61),
+			'description': config.summary.length > 61
+				? config.summary.substring(0, 61) + '...' : config.summary,
 			'viewer': status.viewerCount,
 			'status': status.online ? 'online' : 'offline',
 			'online': status.online,
@@ -22,16 +23,22 @@ const refreshInstanceData = async () => {
 	window.bgApp.instanceData = statuses
 		.filter((a) => !!a.value)
 		.map((a) => a.value)
-		.sort((a,b) => b.online-a.online);
+		.sort((a, b) => b.online - a.online);
 
 	return window.bgApp.instanceData;
 };
+
+const checkConnection = async (instanceUrl) => {
+	const cast = new api.OwnCast(instanceUrl);
+	return await cast.getConfig();
+}
 
 window.addEventListener('load', function (event) {
 	window.bgApp = {
 		refreshInstanceData,
 		'addInstanceInStorage': Storage.addInstanceInStorage,
 		'removeInstanceInStorage': Storage.removeInstanceInStorage,
+		checkConnection: checkConnection,
 	};
 
 	const recursiveRefresh = () => {
