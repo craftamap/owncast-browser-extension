@@ -1,5 +1,5 @@
-import Instances from './Instances.hbs';
-import './main.scss';
+import Instances from './templates/Instances.hbs';
+import './scss/main.scss';
 
 
 function findParentBySelector(elm, selector) {
