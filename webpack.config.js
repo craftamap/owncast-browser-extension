@@ -4,6 +4,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
+	node: false,
 	entry: {
 		main: './src/main.js',
 		background: '/src/background.js',

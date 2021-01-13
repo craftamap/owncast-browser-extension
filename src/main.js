@@ -48,7 +48,7 @@ window.addEventListener('load', function (event) {
 					throw new Error();
 				}
 			} catch (e) {
-
+				console.err(e)
 			}
 			console.log(url);
 			bgApp.addInstanceInStorage(url).then(refreshDataAndUI);
