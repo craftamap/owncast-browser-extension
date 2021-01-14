@@ -3,7 +3,12 @@
     id="icons"
     class="flex justify-between p-4 rounded shadow-md w-95%"
   >
-    <div id="left" />
+    <div id="left">
+      <div
+        class="w-6 h-6 bg-contain"
+        style="background-image: url('/resources/icon-96.png')"
+      />
+    </div>
     <div id="center">
       <svg
         id="refresh"
