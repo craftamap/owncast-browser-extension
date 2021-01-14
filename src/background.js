@@ -131,6 +131,21 @@ const followButtonUnfollow = (request, sender, sendResponse) => {
 	}
 };
 
+function getSettings(request) {
+	if (request.type === 'getSettings') {
+		console.log('getSettings');
+		return Storage.getOptionsFromStorage();
+	}
+}
+
+function storeSettings(request) {
+	if (request.type === 'storeSettings') {
+		console.log('storeSettings');
+		console.log(request.data.options);
+		return Storage.setOptionsInStorage(request.data.options);
+	}
+}
+
 window.addEventListener('load', function (event) {
 
 	window.bgApp = {
@@ -146,6 +161,9 @@ window.addEventListener('load', function (event) {
 	browser.runtime.onMessage.addListener(followButtonGetStatus);
 	browser.runtime.onMessage.addListener(followButtonFollow);
 	browser.runtime.onMessage.addListener(followButtonUnfollow);
+	/* settings */
+	browser.runtime.onMessage.addListener(getSettings);
+	browser.runtime.onMessage.addListener(storeSettings);
 
 	const recursiveRefresh = () => {
 		refreshInstanceData().then((data) => {

@@ -10,6 +10,7 @@ module.exports = {
 		main: './src/main.js',
 		background: '/src/background.js',
 		'add-follow-button': '/src/add-follow-button.js',
+		'options': '/src/options.js',
 	},
 	output: {
 		path: path.resolve(__dirname, 'addon'),
@@ -56,6 +57,20 @@ module.exports = {
       </body>
     </html>
             `
+		}),
+		new HtmlWebpackPlugin({
+			chunks: ['options'],
+			templateContent: `
+    <html>
+      <head>
+        <meta charset="utf-8">
+      </head>
+      <body>
+        <div id="app-root"></div>
+      </body>
+    </html>
+            `,
+			filename: 'options.html',
 		}),
 		new CopyPlugin({
 			patterns: [

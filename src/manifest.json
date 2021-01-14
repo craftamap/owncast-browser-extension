@@ -25,8 +25,11 @@
   ],
   "browser_action": {
     "default_icon": "resources/icon-32.png",
-    "default_popup": "index.html",
+    "default_popup": "/index.html",
     "default_title": "Firefox OwnCast Extension"
+  },
+  "options_ui": {
+    "page": "/options.html"
   },
   "permissions": [
     "*://*/*",

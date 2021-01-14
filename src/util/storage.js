@@ -1,9 +1,14 @@
 function setOptionsInStorage(options) {
-	return chrome.storage.local.set({options: options});
+	return browser.storage.local.set({options: options});
 }
 
 function getOptionsFromStorage() {
-	return chrome.storage.local.get('options');
+	return browser.storage.local.get('options').then(({options}) => {
+		return Object.assign({
+			notifications: true,
+			badge: true,
+		}, (options|| {}));
+	});
 }
 
 function getInstancesFromStorage() {
