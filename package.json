@@ -7,7 +7,7 @@
     "build": "webpack && web-ext build",
     "watch": "webpack --watch",
     "lint": "eslint src/ && web-ext lint",
-    "run": "web-ext run"
+    "start": "web-ext run"
   },
   "devDependencies": {
     "copy-webpack-plugin": "^7.0.0",

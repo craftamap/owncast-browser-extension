@@ -14,7 +14,7 @@ This Extension is built using `yarn`. You can use the following commands:
 
 - `yarn build`
 - `yarn lint`
-- `yarn run`
+- `yarn start`
 
 ## Contributing
 
