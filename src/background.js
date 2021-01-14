@@ -24,14 +24,15 @@ const refreshInstanceData = async () => {
 		.filter((a) => !!a.value)
 		.map((a) => a.value)
 		.sort((a, b) => b.online - a.online);
+	const oldData = [...window.bgApp.instanceData || []];
 
-	await sendNotifications(window.bgApp.instanceData || [], newInstanceData);
+	await sendNotifications(oldData || [], newInstanceData);
 
 	window.bgApp.instanceData = newInstanceData;
 
 	await setBadge(window.bgApp.instanceData);
 
-	return window.bgApp.instanceData;
+	return newInstanceData;
 };
 
 const sendNotifications = async (oldData, newData) => {
@@ -65,9 +66,38 @@ const setBadge = async (instanceData) => {
 	await browser.browserAction.setBadgeBackgroundColor({color: '#3d007a'});
 };
 
-const checkConnection = async (instanceUrl) => {
-	const cast = new api.OwnCast(instanceUrl);
-	return await cast.getConfig();
+const checkConnection = (request, sender, sendResponse) => {
+	if (request.type === 'checkConnection') {
+		console.log('checkConnection', request.data.url);
+		const cast = new api.OwnCast(request.data.url);
+		return cast.getConfig();
+	}
+}
+
+function getInstanceData(request, sender, sendResponse) {
+	if (request.type === 'getInstanceData') {
+		return Promise.resolve(window.bgApp.instanceData || []);
+	}
+}
+
+
+function updateInstanceData(request, sender, sendResponse) {
+	if (request.type === 'updateInstanceData') {
+		console.log('updateInstanceData, before',);
+		return refreshInstanceData()
+	}
+}
+
+function removeInstanceInStorage(request, sender, sendResponse) {
+	if (request.type === 'removeInstanceInStorage') {
+		return Storage.removeInstanceInStorage(request.data.url)
+	}
+}
+
+function addInstanceInStorage(request, sender, sendResponse) {
+	if (request.type === 'addInstanceInStorage') {
+		return Storage.addInstanceInStorage(request.data.url);
+	}
 }
 
 
@@ -101,14 +131,23 @@ window.addEventListener('load', function (event) {
 	browser.runtime.onMessage.addListener(handleMessage);
 
 	window.bgApp = {
-		'addInstanceInStorage': Storage.addInstanceInStorage,
-		'removeInstanceInStorage': Storage.removeInstanceInStorage,
-		checkConnection: checkConnection,
-		refreshInstanceData,
+		instanceData: [],
 	};
 
+	browser.runtime.onMessage.addListener(getInstanceData);
+	browser.runtime.onMessage.addListener(updateInstanceData);
+	browser.runtime.onMessage.addListener(checkConnection);
+	browser.runtime.onMessage.addListener(removeInstanceInStorage);
+	browser.runtime.onMessage.addListener(addInstanceInStorage);
+
 	const recursiveRefresh = () => {
-		refreshInstanceData().then(() => {
+		refreshInstanceData().then((data) => {
+			return browser.runtime.sendMessage({
+				type:'updatedInstanceData',
+				data: {
+					instances: data
+				}
+			});
 		});
 		setTimeout(recursiveRefresh, 30000);
 	};
