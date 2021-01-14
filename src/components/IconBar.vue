@@ -11,6 +11,7 @@
         viewBox="0 0 20 20"
         fill="currentColor"
         class="w-6 h-6"
+        :class="{'animate-spin':isLoading }"
         @click="refresh"
       >
         <path
@@ -42,6 +43,11 @@
 <script>
 export default {
 	name: 'IconBar',
+	computed: {
+		isLoading() {
+			return this.$store.state.loading
+		}
+	},
 	methods: {
 		refresh(event) {
 			this.$store.dispatch('updateInstanceData');

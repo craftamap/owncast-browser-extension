@@ -9,6 +9,7 @@ window.addEventListener('load', function (event) {
 	const store = new Vuex.Store({
 		state: {
 			instances: [],
+			loading: false,
 			add: {
 				show: false,
 				loading: false,
@@ -17,6 +18,9 @@ window.addEventListener('load', function (event) {
 			}
 		},
 		mutations: {
+			setLoading(state, newLoading) {
+				state.loading = newLoading
+			},
 			toggleShowAddBar(state) {
 				state.add.show = !state.add.show;
 			},
@@ -47,10 +51,14 @@ window.addEventListener('load', function (event) {
 		},
 		actions: {
 			updateInstanceData({commit}) {
+				commit('setLoading', true);
 				return browser.runtime.sendMessage({
 					type: 'updateInstanceData',
 				}).then((instances) => {
 					commit('setInstances', instances)
+					commit('setLoading', false);
+				}).catch(() => {
+					commit('setLoading', false);
 				})
 			},
 			getInstanceData({commit}) {
