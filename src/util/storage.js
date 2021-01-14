@@ -1,9 +1,9 @@
 function setOptionsInStorage(options) {
-	return chrome.storage.sync.set({options: options});
+	return chrome.storage.local.set({options: options});
 }
 
 function getOptionsFromStorage() {
-	return chrome.storage.sync.get('options');
+	return chrome.storage.local.get('options');
 }
 
 function getInstancesFromStorage() {

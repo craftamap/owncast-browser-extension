@@ -9,6 +9,7 @@ module.exports = {
 	entry: {
 		main: './src/main.js',
 		background: '/src/background.js',
+		'add-follow-button': '/src/add-follow-button.js',
 	},
 	output: {
 		path: path.resolve(__dirname, 'addon'),

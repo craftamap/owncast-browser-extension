@@ -5,9 +5,16 @@
   "description": "",
   "background": {
     "scripts": [
-      "js/background.js"
+      "/js/background.js"
     ]
   },
+  "content_scripts": [
+    {
+      "matches": ["*://*/*"],
+      "js": ["/js/add-follow-button.js"],
+      "run_at": "document_idle"
+    }
+  ],
   "browser_action": {
     "default_popup": "index.html",
     "default_title": "Firefox OwnCast Extension"
