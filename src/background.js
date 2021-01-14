@@ -24,14 +24,15 @@ const refreshInstanceData = async () => {
 		.filter((a) => !!a.value)
 		.map((a) => a.value)
 		.sort((a, b) => b.online - a.online);
+	const oldData =  [...window.bgApp.instanceData || [] ];
 
-	await sendNotifications(window.bgApp.instanceData || [], newInstanceData);
+	await sendNotifications(oldData || [], newInstanceData);
 
 	window.bgApp.instanceData = newInstanceData;
 
 	await setBadge(window.bgApp.instanceData);
 
-	return window.bgApp.instanceData;
+	return newInstanceData;
 };
 
 const sendNotifications = async (oldData, newData) => {
@@ -70,7 +71,27 @@ const checkConnection = async (instanceUrl) => {
 	return await cast.getConfig();
 }
 
+function getInstanceData(request, sender, sendResponse) {
+	if(request.type === 'getInstanceData') {
+		sendResponse(window.bgApp.instanceData || []);
+	}
+}
+
+
+function updateInstanceData(request, sender, sendResponse) {
+	if(request.type === 'update') {
+		refreshInstanceData().then((
+		) => {
+			sendResponse(window.bgApp.instanceData || []);
+		})
+	}
+
+}
+
 window.addEventListener('load', function (event) {
+	browser.runtime.onMessage.addListener(getInstanceData);
+	browser.runtime.onMessage.addListener(updateInstanceData);
+
 	window.bgApp = {
 		'addInstanceInStorage': Storage.addInstanceInStorage,
 		'removeInstanceInStorage': Storage.removeInstanceInStorage,
