@@ -116,8 +116,9 @@ function followButtonFollow(request, sender, sendResponse) {
 		console.log(request.data.url);
 		const cast = new api.OwnCast(request.data.url);
 		cast.getConfig().then(() => {
-			Storage.addInstanceInStorage(request.data.url)
+			return Storage.addInstanceInStorage(request.data.url)
 		}).then(refreshInstanceData)
+			.then(() => 'success')
 	}
 }
 
