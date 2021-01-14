@@ -111,9 +111,14 @@ window.addEventListener('load', function (event) {
 	browser.runtime.onMessage.addListener(removeInstanceInStorage);
 	browser.runtime.onMessage.addListener(addInstanceInStorage);
 
-
 	const recursiveRefresh = () => {
-		refreshInstanceData().then(() => {
+		refreshInstanceData().then((data) => {
+			return browser.runtime.sendMessage({
+				type:'updatedInstanceData',
+				data: {
+					instances: data
+				}
+			});
 		});
 		setTimeout(recursiveRefresh, 30000);
 	};

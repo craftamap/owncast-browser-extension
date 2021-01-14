@@ -120,6 +120,12 @@ window.addEventListener('load', function (event) {
 		}
 	})
 
+	browser.runtime.onMessage.addListener((request) => {
+		if (request.type === 'updatedInstanceData') {
+			store.commit('setInstances', request.data.instances);
+		}
+	});
+
 	window.app = new Vue({
 		store: store,
 		el: '#app-root',
