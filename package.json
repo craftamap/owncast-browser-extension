@@ -25,12 +25,17 @@
   "dependencies": {
     "@tailwindcss/forms": "^0.1.4",
     "css-loader": "^5.0.1",
+    "eslint-plugin-vue": "^7.4.1",
     "jquery": "^3.5.1",
     "postcss-loader": "^4.1.0",
     "sass-loader": "^10.1.1",
     "scss-loader": "^0.0.1",
     "tailwindcss": "^2.0.2",
-    "urlcat": "^2.0.4"
+    "urlcat": "^2.0.4",
+    "vue": "^2.6.12",
+    "vue-loader": "^15.9.6",
+    "vue-template-compiler": "^2.6.12",
+    "vuex": "^3.6.0"
   },
   "webExt": {
     "sourceDir": "addon",
@@ -45,7 +50,8 @@
       "webextensions": true
     },
     "extends": [
-      "eslint:recommended"
+      "eslint:recommended",
+      "plugin:vue/vue3-recommended"
     ],
     "parserOptions": {
       "sourceType": "module",
