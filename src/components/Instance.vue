@@ -4,9 +4,9 @@
     class="flex flex-col p-4 rounded shadow-md w-95%"
     :data-instance="instance.instance"
   >
-    <div class="flex flex-row">
+    <div class="flex flex-row items-center">
       <div
-        class="h-24 w-32 bg-cover bg-center mr-4 flex-shrink-0"
+        class="rounded h-24 w-32 bg-cover bg-center mr-4 flex-shrink-0"
         :style="backgroundSrc"
       />
       <div class="flex flex-col flex-grow">
