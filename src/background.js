@@ -36,34 +36,42 @@ const refreshInstanceData = async () => {
 };
 
 const sendNotifications = async (oldData, newData) => {
-	const oldUrls = new Set(oldData.filter((a) => {return a.online}).map(x => x.instance));
-	const newInstances = {};
-	const newDiff = [];
-	for (const instance of newData.filter((a) => {return a.online})) {
-		newInstances[instance.instance] = instance;
-	}
-	for (const instanceUrl of Object.keys(newInstances)) {
-		if (!oldUrls.has(instanceUrl)) {
-			newDiff.push(newInstances[instanceUrl]);
+	const options = await Storage.getOptionsFromStorage();
+	if (options.notifications) {
+		const oldUrls = new Set(oldData.filter((a) => {return a.online}).map(x => x.instance));
+		const newInstances = {};
+		const newDiff = [];
+		for (const instance of newData.filter((a) => {return a.online})) {
+			newInstances[instance.instance] = instance;
 		}
-	}
+		for (const instanceUrl of Object.keys(newInstances)) {
+			if (!oldUrls.has(instanceUrl)) {
+				newDiff.push(newInstances[instanceUrl]);
+			}
+		}
 
-	newDiff.forEach((item) => {
-		browser.notifications.create({
-			type: 'basic',
-			title: item.name + ' is online',
-			message: item.description,
-			iconUrl: item.logo,
+		newDiff.forEach((item) => {
+			browser.notifications.create({
+				type: 'basic',
+				title: item.name + ' is online',
+				message: item.description,
+				iconUrl: item.logo,
+			})
 		})
-	})
 
-	console.log(newInstances);
+		console.log(newInstances);
+	}
 }
 
 const setBadge = async (instanceData) => {
-	const online = instanceData.filter((a) => {return a.online});
-	await browser.browserAction.setBadgeText({text: `${online.length}`});
-	await browser.browserAction.setBadgeBackgroundColor({color: '#3d007a'});
+	const options = await Storage.getOptionsFromStorage();
+	if (options.badge) {
+		const online = instanceData.filter((a) => {return a.online});
+		await browser.browserAction.setBadgeBackgroundColor({color: '#3d007a'});
+		await browser.browserAction.setBadgeText({text: `${online.length}`});
+	} else {
+		await browser.browserAction.setBadgeText({text: ''});
+	}
 };
 
 const checkConnection = (request, sender, sendResponse) => {
