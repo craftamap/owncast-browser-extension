@@ -3,6 +3,10 @@
   "name": "Firefox OwnCast Extension",
   "version": "0.1.0",
   "description": "",
+  "icons": {
+    "48": "resources/icon-48.png",
+    "96": "resources/icon-96.png"
+  },
   "background": {
     "scripts": [
       "/js/background.js"
@@ -10,12 +14,17 @@
   },
   "content_scripts": [
     {
-      "matches": ["*://*/*"],
-      "js": ["/js/add-follow-button.js"],
+      "matches": [
+        "*://*/*"
+      ],
+      "js": [
+        "/js/add-follow-button.js"
+      ],
       "run_at": "document_idle"
     }
   ],
   "browser_action": {
+    "default_icon": "resources/icon-32.png",
     "default_popup": "index.html",
     "default_title": "Firefox OwnCast Extension"
   },

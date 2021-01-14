@@ -60,6 +60,7 @@ module.exports = {
 		new CopyPlugin({
 			patterns: [
 				{from: 'src/manifest.json', to: 'manifest.json'},
+				{from: 'src/resources', to: 'resources'},
 			],
 		}),
 		new MiniCssExtractPlugin({
