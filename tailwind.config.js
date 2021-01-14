@@ -7,7 +7,7 @@ module.exports = {
 		],
 		enabled: true,
 	},
-	darkMode: 'media', // or 'media' or 'class'
+	darkMode: 'class', // or 'media' or 'class'
 	theme: {
 		extend: {},
 	},

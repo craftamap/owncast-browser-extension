@@ -5,16 +5,20 @@
   >
     <input
       id="add-url"
+      v-model="url"
       type="url"
       class="form-input block min-w-0 flex-grow w-95%"
+      @keyup.enter="submit"
     >
     <div class="my-2 ml-2 max-w-4 truncate">
       <svg
+        v-if="displayButton"
         id="add-button"
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 20 20"
         fill="currentColor"
         class="w-4 h-4 flex-shrink-0"
+        @click="submit"
       >
         <path
           fill-rule="evenodd"
@@ -23,11 +27,12 @@
         />
       </svg>
       <svg
+        v-if="displayLoading"
         id="spinner"
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 20 20"
         fill="currentColor"
-        class="w-4 h-4 animate-spin hidden"
+        class="w-4 h-4 animate-spin"
       >
         <path
           fill-rule="evenodd"
@@ -36,11 +41,12 @@
         />
       </svg>
       <svg
+        v-if="displayError"
         id="error"
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 20 20"
         fill="currentColor"
-        class="w-4 h-4 hidden text-red-500"
+        class="w-4 h-4 text-red-500"
       >
         <path
           fill-rule="evenodd"
@@ -49,11 +55,12 @@
         />
       </svg>
       <svg
+        v-if="displaySuccess"
         id="success"
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 20 20"
         fill="currentColor"
-        class="w-4 h-4 hidden text-green-500"
+        class="w-4 h-4 text-green-500"
       >
         <path
           fill-rule="evenodd"
@@ -67,6 +74,29 @@
 
 <script>
 export default {
-	name: 'AddBar', 
-}
+	name: 'AddBar',
+	computed: {
+		displayButton() {
+			const loading = this.$store.state.add.loading;
+			const error = this.$store.state.add.error;
+			const success = this.$store.state.add.success;
+			return !(loading || error || success);
+		},
+		displayLoading() {
+			return this.$store.state.add.loading;
+		},
+		displayError() {
+			return this.$store.state.add.error;
+		},
+		displaySuccess() {
+			return this.$store.state.add.success;
+		},
+	},
+	methods: {
+		submit() {
+			console.log(this.url);
+			this.$store.dispatch('checkConnectionAndAddInStorage', this.url);
+		},
+	},
+};
 </script>

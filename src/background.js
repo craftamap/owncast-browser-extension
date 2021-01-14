@@ -24,7 +24,7 @@ const refreshInstanceData = async () => {
 		.filter((a) => !!a.value)
 		.map((a) => a.value)
 		.sort((a, b) => b.online - a.online);
-	const oldData =  [...window.bgApp.instanceData || [] ];
+	const oldData = [...window.bgApp.instanceData || []];
 
 	await sendNotifications(oldData || [], newInstanceData);
 
@@ -51,12 +51,12 @@ const sendNotifications = async (oldData, newData) => {
 	newDiff.forEach((item) => {
 		browser.notifications.create({
 			type: 'basic',
-			title: item.name+ ' is online',
+			title: item.name + ' is online',
 			message: item.description,
 			iconUrl: item.logo,
 		})
 	})
-	
+
 	console.log(newInstances);
 }
 
@@ -66,38 +66,51 @@ const setBadge = async (instanceData) => {
 	await browser.browserAction.setBadgeBackgroundColor({color: '#3d007a'});
 };
 
-const checkConnection = async (instanceUrl) => {
-	const cast = new api.OwnCast(instanceUrl);
-	return await cast.getConfig();
+const checkConnection = (request, sender, sendResponse) => {
+	if (request.type === 'checkConnection') {
+		console.log('checkConnection', request.data.url);
+		const cast = new api.OwnCast(request.data.url);
+		return cast.getConfig();
+	}
 }
 
 function getInstanceData(request, sender, sendResponse) {
-	if(request.type === 'getInstanceData') {
-		sendResponse(window.bgApp.instanceData || []);
+	if (request.type === 'getInstanceData') {
+		return Promise.resolve(window.bgApp.instanceData || []);
 	}
 }
 
 
 function updateInstanceData(request, sender, sendResponse) {
-	if(request.type === 'update') {
-		refreshInstanceData().then((
-		) => {
-			sendResponse(window.bgApp.instanceData || []);
-		})
+	if (request.type === 'updateInstanceData') {
+		console.log('updateInstanceData, before',);
+		return refreshInstanceData()
 	}
+}
 
+function removeInstanceInStorage(request, sender, sendResponse) {
+	if (request.type === 'removeInstanceInStorage') {
+		return Storage.removeInstanceInStorage(request.data.url)
+	}
+}
+
+function addInstanceInStorage(request, sender, sendResponse) {
+	if (request.type === 'addInstanceInStorage') {
+		return Storage.addInstanceInStorage(request.data.url);
+	}
 }
 
 window.addEventListener('load', function (event) {
+	window.bgApp = {
+		instanceData: [],
+	};
+
 	browser.runtime.onMessage.addListener(getInstanceData);
 	browser.runtime.onMessage.addListener(updateInstanceData);
+	browser.runtime.onMessage.addListener(checkConnection);
+	browser.runtime.onMessage.addListener(removeInstanceInStorage);
+	browser.runtime.onMessage.addListener(addInstanceInStorage);
 
-	window.bgApp = {
-		'addInstanceInStorage': Storage.addInstanceInStorage,
-		'removeInstanceInStorage': Storage.removeInstanceInStorage,
-		checkConnection: checkConnection,
-		refreshInstanceData,
-	};
 
 	const recursiveRefresh = () => {
 		refreshInstanceData().then(() => {

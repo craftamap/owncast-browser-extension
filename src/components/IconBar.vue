@@ -11,6 +11,7 @@
         viewBox="0 0 20 20"
         fill="currentColor"
         class="w-6 h-6"
+        @click="refresh"
       >
         <path
           fill-rule="evenodd"
@@ -42,6 +43,9 @@
 export default {
 	name: 'IconBar',
 	methods: {
+		refresh(event) {
+			this.$store.dispatch('updateInstanceData');
+		},
 		toggleShowAddBar(event) {
 			this.$store.commit('toggleShowAddBar'); 
 		}

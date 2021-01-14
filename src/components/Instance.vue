@@ -2,24 +2,24 @@
   <div
     id="instance"
     class="flex flex-col p-4 rounded shadow-md w-95%"
-    data-instance="instance"
+    :data-instance="instance.instance"
   >
     <div class="flex flex-row">
       <div
         class="h-24 w-32 bg-cover bg-center mr-4 flex-shrink-0"
-        style="background-image: url('replace')"
+        :style="backgroundSrc"
       />
-      <div class="flex flex-col">
+      <div class="flex flex-col flex-grow">
         <div>
           <a
-            href="instance"
-          ><span class="font-bold">name</span> is
+            :href="instance.instance"
+          ><span class="font-bold">{{ instance.name }}</span> is
             <span
-              class="replace"
-            >status</span></a>
+              :class="[instance.online ? 'text-green-600' : 'text-gray-500' ]"
+            >{{ instance.status }}</span></a>
         </div>
         <div class="text-sm">
-          description
+          {{ instance.description }}
         </div>
         <div class="flex justify-between items-center">
           <div id="left">
@@ -34,7 +34,7 @@
                   d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"
                 />
               </svg>
-              viewer
+              {{ instance.viewer }}
             </div>
           </div>
           <div id="right">
@@ -45,6 +45,7 @@
                 viewBox="0 0 20 20"
                 fill="currentColor"
                 class="w-4 h-4 cursor-pointer"
+                @click="toggleRemove"
               >
                 <path
                   fill-rule="evenodd"
@@ -58,12 +59,14 @@
       </div>
     </div>
     <div
+      v-if="showRemove"
       id="delete-section"
-      class="my-2 hidden"
+      class="my-2"
     >
       <button
         id="remove"
         class="bg-red-500 px-4 py-2 text-white rounded"
+        @click="remove"
       >
         remove
       </button>
@@ -74,5 +77,33 @@
 <script>
 export default {
 	name: 'Instance',
+	props: {
+		instance: {
+			type: Object,
+			default: () => {return {}}
+		}
+	},
+	data() {
+		return {
+			showRemove: false,
+		}
+	},
+	computed: {
+		backgroundSrc() {
+			return {
+				'background-image': 'url('+(this.instance.online ? this.instance.thumbnail : this.instance.logo) +')',
+			}
+		}
+	}, 
+	methods: {
+		toggleRemove() {
+			this.showRemove = !this.showRemove;
+		},
+		remove() {
+			const instanceUrl = this.instance.instance;
+			console.log('clicked remove on', instanceUrl);
+			this.$store.dispatch('removeInstanceInStorage', instanceUrl);
+		}
+	}
 }
 </script>

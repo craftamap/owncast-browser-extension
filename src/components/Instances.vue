@@ -3,6 +3,7 @@
     <Instance
       v-for="instance in instances"
       :key="instance.instance"
+      :instance="instance"
     />
   </div>
 </template>

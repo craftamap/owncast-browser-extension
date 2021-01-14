@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex flex-col w-96 p-2 overflow-y-scroll"
+    class="flex flex-col w-96 p-2 overflow-y-scroll "
     style="height: 32rem"
   >
     <IconBar />
@@ -24,12 +24,12 @@ export default {
 	},
 	computed: {
 		showAddBar() {
-			return this.$store.state.showAddBar;
+			return this.$store.state.add.show;
 		}
 	},
 	created() {
 		console.log('created App');
-		this.$store.dispatch('update');
+		this.$store.dispatch('getInstanceData');
 	}
 }
 </script>
