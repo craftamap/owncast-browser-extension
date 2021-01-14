@@ -12,7 +12,7 @@
     {
       "matches": ["*://*/*"],
       "js": ["/js/add-follow-button.js"],
-      "run_at": "document_end"
+      "run_at": "document_idle"
     }
   ],
   "browser_action": {

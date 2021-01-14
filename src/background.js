@@ -100,35 +100,37 @@ function addInstanceInStorage(request, sender, sendResponse) {
 	}
 }
 
-
-const handleMessage = (request, sender, sendResponse) => {
-	const req = JSON.parse(request);
-	if (req.type === 'getStatus') {
-		const url = req.data.url
+function followButtonGetStatus(request, sender, sendResponse) {
+	if (request.type === 'getStatus') {
+		const url = request.data.url
 		return Storage.getInstancesFromStorage().then((res) => {
 			const instances = res['instances'];
 			const incl = instances.includes(url);
 			return incl;
 		})
-	} else if (req.type === 'follow') {
-		checkConnection(req.data.url).then(() => {
-			Storage.addInstanceInStorage(req.data.url)
+	}
+}
+
+function followButtonFollow(request, sender, sendResponse) {
+	if (request.type === 'follow') {
+		console.log(request.data.url);
+		const cast = new api.OwnCast(request.data.url);
+		cast.getConfig().then(() => {
+			Storage.addInstanceInStorage(request.data.url)
 		}).then(refreshInstanceData)
-			.then(() => {
-				return sendResponse('success');
-			})
-	} else if (req.type === 'unfollow') {
-		checkConnection(req.data.url).then(() => {
-			Storage.removeInstanceInStorage(req.data.url)
-		}).then(refreshInstanceData)
-			.then(() => {
-				return sendResponse('success');
-			})
+	}
+}
+
+const followButtonUnfollow = (request, sender, sendResponse) => {
+	if (request.type === 'unfollow') {
+		Storage.removeInstanceInStorage(request.data.url)
+			.then(refreshInstanceData)
+			.catch(console.log)
+			.then(() => 'success')
 	}
 };
 
 window.addEventListener('load', function (event) {
-	browser.runtime.onMessage.addListener(handleMessage);
 
 	window.bgApp = {
 		instanceData: [],
@@ -139,6 +141,10 @@ window.addEventListener('load', function (event) {
 	browser.runtime.onMessage.addListener(checkConnection);
 	browser.runtime.onMessage.addListener(removeInstanceInStorage);
 	browser.runtime.onMessage.addListener(addInstanceInStorage);
+	/* add-follow-button */
+	browser.runtime.onMessage.addListener(followButtonGetStatus);
+	browser.runtime.onMessage.addListener(followButtonFollow);
+	browser.runtime.onMessage.addListener(followButtonUnfollow);
 
 	const recursiveRefresh = () => {
 		refreshInstanceData().then((data) => {
