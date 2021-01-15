@@ -7,6 +7,7 @@ function getOptionsFromStorage() {
 		return Object.assign({
 			notifications: true,
 			badge: true,
+			interval: 60,
 		}, (options|| {}));
 	});
 }

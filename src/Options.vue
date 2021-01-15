@@ -33,6 +33,20 @@
         for="badge"
       >Enable Badge</label>
     </div>
+    <div class="flex items-center my-2">
+      <label>
+        <div>interval for background refresh</div>
+        <input
+          id="interval"
+          v-model="interval"
+          class="input-number"
+          type="number"
+          min="30"
+          max="86400"
+          name="interval"
+        >
+      </label>
+    </div>
     <div>
       <input
         type="submit"
@@ -61,6 +75,14 @@ export default {
 			},
 			set (value) {
 				this.$store.commit('setNotifications', value)
+			}
+		},
+		interval: {
+			get () {
+				return this.$store.state.options.interval
+			},
+			set (value) {
+				this.$store.commit('setInterval', value)
 			}
 		}
 	},	

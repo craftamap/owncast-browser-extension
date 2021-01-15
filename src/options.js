@@ -10,6 +10,7 @@ window.addEventListener('load', function (event) {
 			options: {
 				badge: false,
 				notifications: false,
+				interval: 0,
 			}
 		},
 		mutations: {
@@ -22,6 +23,9 @@ window.addEventListener('load', function (event) {
 			},
 			setNotifications(state, notifications) {
 				state.options.notifications = notifications;
+			},
+			setInterval(state, interval) {
+				state.options.interval= interval;
 			}
 		},
 		actions: {
