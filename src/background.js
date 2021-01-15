@@ -19,7 +19,7 @@ const refreshInstanceData = async () => {
 			instance,
 		};
 	}));
-	console.log(statuses);
+	console.log('[refreshInstanceData]', statuses);
 	const newInstanceData = statuses
 		.filter((a) => !!a.value)
 		.map((a) => a.value)
@@ -59,7 +59,7 @@ const sendNotifications = async (oldData, newData) => {
 			})
 		})
 
-		console.log(newInstances);
+		console.log('[sendNotifications]', newInstances);
 	}
 }
 
@@ -76,7 +76,7 @@ const setBadge = async (instanceData) => {
 
 const checkConnection = (request, sender, sendResponse) => {
 	if (request.type === 'checkConnection') {
-		console.log('checkConnection', request.data.url);
+		console.log('[checkConnection]', request.data.url);
 		const cast = new api.OwnCast(request.data.url);
 		return cast.getConfig();
 	}
@@ -91,7 +91,7 @@ function getInstanceData(request, sender, sendResponse) {
 
 function updateInstanceData(request, sender, sendResponse) {
 	if (request.type === 'updateInstanceData') {
-		console.log('updateInstanceData, before',);
+		console.log('[updateInstanceData] before',);
 		return refreshInstanceData()
 	}
 }
@@ -121,7 +121,7 @@ function followButtonGetStatus(request, sender, sendResponse) {
 
 function followButtonFollow(request, sender, sendResponse) {
 	if (request.type === 'follow') {
-		console.log(request.data.url);
+		console.log('[followButtonFollow]',request.data.url);
 		const cast = new api.OwnCast(request.data.url);
 		cast.getConfig().then(() => {
 			return Storage.addInstanceInStorage(request.data.url)
@@ -141,15 +141,15 @@ const followButtonUnfollow = (request, sender, sendResponse) => {
 
 function getSettings(request) {
 	if (request.type === 'getSettings') {
-		console.log('getSettings');
+		console.log('[getSettings]');
 		return Storage.getOptionsFromStorage();
 	}
 }
 
 function storeSettings(request) {
 	if (request.type === 'storeSettings') {
-		console.log('storeSettings');
-		console.log(request.data.options);
+		console.log('[storeSettings]');
+		console.log('[storeSettings]', request.data.options);
 		return Storage.setOptionsInStorage(request.data.options);
 	}
 }
@@ -181,8 +181,15 @@ window.addEventListener('load', function (event) {
 					instances: data
 				}
 			});
+		}).catch((reason) => {
+			console.warn(reason)
+		}).then(() => {
+			return Storage.getOptionsFromStorage();
+		}).then((options) => {
+			const interval = options.interval * 1000;
+			console.log(`[refreshInstanceData] done! Next exec in ${interval} ms`)
+			setTimeout(recursiveRefresh, interval);
 		});
-		setTimeout(recursiveRefresh, 30000);
 	};
 	recursiveRefresh();
 })

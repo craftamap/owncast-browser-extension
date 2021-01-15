@@ -89,7 +89,9 @@ export default {
 	methods: {
 		async store(e) {
 			e.preventDefault();
-			console.log(this.$store.state.options);
+			// Although not mutating, we should propably move this sendMessage to an
+			// vuex action as well
+			console.log('[store]',this.$store.state.options);
 			return browser.runtime.sendMessage({
 				type: 'storeSettings',
 				data: {

@@ -16,7 +16,7 @@ window.addEventListener('load', function (event) {
 		mutations: {
 			setOptions(state, options) {
 				state.options = options;
-				console.log(state.options);
+				console.log('[setOptions]',state.options);
 			},
 			setBadge(state, badge) {
 				state.options.badge = badge;
@@ -33,7 +33,7 @@ window.addEventListener('load', function (event) {
 				return browser.runtime.sendMessage({
 					type: 'getSettings',
 				}).then((options) => {
-					console.log(options);
+					console.log('[getOptionsFromStorage]',options);
 					commit('setOptions', options);	
 				})
 			}
