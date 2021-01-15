@@ -1,6 +1,6 @@
-# Firefox Owncast Extension
+# Owncast Browser Extension 
 
-Firefox Owncast Extension is a Firefox extension used to follow various
+Owncast Browser Extension is a Firefox extension used to follow various
 Owncast Instances
 
 ![Screenshot](.github/screenshot.png)
