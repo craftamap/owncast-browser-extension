@@ -1,8 +1,8 @@
 {
   "manifest_version": 2,
   "name": "OwnCast Extension",
-  "version": "0.1.1",
-  "version_name": "0.1.1",
+  "version": "0.1.2",
+  "version_name": "0.1.2-dev",
   "description": "",
   "icons": {
     "48": "resources/icon-48.png",
