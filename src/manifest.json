@@ -2,6 +2,7 @@
   "manifest_version": 2,
   "name": "Firefox OwnCast Extension",
   "version": "0.1.0",
+  "version_name": "0.1.0-dev",
   "description": "",
   "icons": {
     "48": "resources/icon-48.png",

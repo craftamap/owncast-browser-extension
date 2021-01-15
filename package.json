@@ -1,6 +1,6 @@
 {
   "name": "firefox-owncast-extension",
-  "version": "0.1.0",
+  "version": "0.1.0-dev",
   "author": "Fabian Siegel <fabians1999@gmail.com>",
   "license": "MIT",
   "scripts": {
