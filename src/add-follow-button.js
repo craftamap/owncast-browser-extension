@@ -8,7 +8,8 @@ function foundSocialList(response, socialList) {
 	console.log(socialList)
 	if (!response) {
 		const button = htmlToElement('<button class="ml-2 border-2 rounded border-blue-500 p-2">Add To Extension</button>');
-		button.addEventListener('click', () => {
+		const onClick = () => {
+			button.removeEventListener('click', onClick);
 			button.textContent = 'Wait...';
 			browser.runtime.sendMessage({
 				type: 'follow',
@@ -17,17 +18,23 @@ function foundSocialList(response, socialList) {
 				},
 			}).then((response) => {
 				console.log(response);
-				button.textContent = 'Done!';
+				return button.textContent = 'Done!';
+			}).catch((reason) => {
+				console.error('[foundSocialList]', reason);
+				return button.textContent = 'Failed...';
+			}).then(() => {
 				setTimeout(() => {
 					button.remove();
 					waitForSocialList();
 				}, 3000)
 			}, console.trace);
-		});
+		};
+		button.addEventListener('click', onClick);
 		socialList.append(button);
 	} else {
 		const button = htmlToElement('<button class="ml-2 border-2 rounded border-red-700 p-2">Remove From Extension</button>');
-		button.addEventListener('click', () => {
+		const onClick = () => {
+			button.removeEventListener('click', onClick);
 			button.textContent = 'Wait...';
 			browser.runtime.sendMessage({
 				type: 'unfollow',
@@ -36,13 +43,18 @@ function foundSocialList(response, socialList) {
 				},
 			}).then((response) => {
 				console.log(response);
-				button.textContent = 'Done!';
+				return button.textContent = 'Done!';
+			}).catch((reason) => {
+				console.error('[foundSocialList]', reason);
+				return button.textContent = 'Failed...';
+			}).then(() => {
 				setTimeout(() => {
 					button.remove();
 					waitForSocialList();
 				}, 3000)
-			});
-		});
+			}, console.trace);
+		};
+		button.addEventListener('click', onClick);
 		socialList.append(button);
 
 	}
