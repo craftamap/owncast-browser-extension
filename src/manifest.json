@@ -1,6 +1,6 @@
 {
   "manifest_version": 2,
-  "name": "Firefox OwnCast Extension",
+  "name": "OwnCast Extension",
   "version": "0.1.1",
   "version_name": "0.1.1-dev",
   "description": "",
@@ -27,7 +27,7 @@
   "browser_action": {
     "default_icon": "resources/icon-32.png",
     "default_popup": "/index.html",
-    "default_title": "Firefox OwnCast Extension"
+    "default_title": "OwnCast Extension"
   },
   "options_ui": {
     "page": "/options.html"
