@@ -19,7 +19,7 @@
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 20 20"
         fill="currentColor"
-        class="w-6 h-6"
+        class="w-6 h-6 cursor-pointer"
         :class="{'animate-spin':isLoading }"
         @click="refresh"
       >
@@ -36,7 +36,7 @@
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 20 20"
         fill="currentColor"
-        class="w-6 h-6 flex-shrink-0"
+        class="w-6 h-6 flex-shrink-0 cursor-pointer"
         @click="toggleShowAddBar"
       >
         <path
