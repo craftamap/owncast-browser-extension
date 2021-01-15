@@ -9,9 +9,7 @@ Owncast Instances
 
 ## Installation
 
-Currently, no signed release of this extension exists. Stay tuned!
-If you want to test this extension however, you can download the zip
-from the latest GitHub Action Run of master.
+The addon can be installed from [addons.mozilla.com](https://addons.mozilla.org/en-US/firefox/addon/owncast-extension/).
 
 ## Building and Development
 
