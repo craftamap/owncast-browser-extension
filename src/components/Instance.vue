@@ -91,7 +91,7 @@ export default {
 	computed: {
 		backgroundSrc() {
 			return {
-				'background-image': 'url('+(this.instance.online ? this.instance.thumbnail : this.instance.logo) +')',
+				'background-image': 'url('+(this.instance.online ? this.instance.thumbnail : this.instance.instance + this.instance.logo) +')',
 			}
 		}
 	}, 
