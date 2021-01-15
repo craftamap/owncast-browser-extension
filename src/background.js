@@ -1,5 +1,6 @@
 import api from './api/owncast';
 import Storage from './util/storage';
+import urlcat from 'urlcat';
 
 const refreshInstanceData = async () => {
 	const instances = await Storage.getInstancesFromStorage();
@@ -7,6 +8,9 @@ const refreshInstanceData = async () => {
 		const cast = new api.OwnCast(instance);
 		const status = await cast.getStatus();
 		const config = await cast.getConfig();
+		
+		const logoIsAbsolute = (/^https?:\/\//i).test(config.logo);
+
 		return {
 			'name': config.name,
 			'description': config.summary.length > 61
@@ -15,7 +19,7 @@ const refreshInstanceData = async () => {
 			'status': status.online ? 'online' : 'offline',
 			'online': status.online,
 			'thumbnail': instance + 'thumbnail.jpg',
-			'logo': config.logo,
+			'logo':  logoIsAbsolute ? config.logo : urlcat(instance, config.logo),
 			instance,
 		};
 	}));
