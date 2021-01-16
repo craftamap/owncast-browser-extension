@@ -1,3 +1,4 @@
+import browser from 'webextension-polyfill';
 import Vue from 'vue';
 import Vuex from 'vuex'
 import Options from './Options.vue';

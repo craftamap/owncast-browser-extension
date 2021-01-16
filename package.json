@@ -19,6 +19,7 @@
     "mini-css-extract-plugin": "^1.3.3",
     "sass": "^1.32.2",
     "web-ext": "^5.4.1",
+    "webextension-polyfill-ts": "^0.22.0",
     "webpack": "^5.12.3",
     "webpack-cli": "^4.3.1"
   },
@@ -35,7 +36,8 @@
     "vue": "^2.6.12",
     "vue-loader": "^15.9.6",
     "vue-template-compiler": "^2.6.12",
-    "vuex": "^3.6.0"
+    "vuex": "^3.6.0",
+    "webextension-polyfill": "^0.7.0"
   },
   "webExt": {
     "sourceDir": "addon",
@@ -48,6 +50,9 @@
       "browser": true,
       "es6": true,
       "webextensions": true
+    },
+    "globals": {
+      "browser": "off"
     },
     "extends": [
       "eslint:recommended",

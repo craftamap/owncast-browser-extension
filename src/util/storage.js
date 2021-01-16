@@ -1,3 +1,5 @@
+import browser from 'webextension-polyfill';
+
 function setOptionsInStorage(options) {
 	return browser.storage.local.set({options: options});
 }

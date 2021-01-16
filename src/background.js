@@ -1,3 +1,4 @@
+import browser from 'webextension-polyfill';
 import api from './api/owncast';
 import Storage from './util/storage';
 import urlcat from 'urlcat';

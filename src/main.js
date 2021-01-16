@@ -1,4 +1,4 @@
-//import Instances from './templates/Instances.hbs';
+import browser from 'webextension-polyfill';
 import Vue from 'vue';
 import App from './App.vue';
 import Vuex from 'vuex'

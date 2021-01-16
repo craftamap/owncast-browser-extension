@@ -58,6 +58,8 @@
 </template>
 
 <script>
+import browser from 'webextension-polyfill';
+
 export default {
 	name:'Options',
 	computed: {
