@@ -5,7 +5,7 @@
   >
     <div id="left">
       <a
-        href="https://owncast.online"
+        href="https://directory.owncast.online"
       >
         <div
           class="w-6 h-6 bg-contain"
