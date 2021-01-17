@@ -13,6 +13,7 @@
         <div>
           <a
             :href="instance.instance"
+            target="_blank"
           ><span class="font-bold">{{ instance.name }}</span> is
             <span
               :class="[instance.online ? 'text-green-600' : 'text-gray-500' ]"
