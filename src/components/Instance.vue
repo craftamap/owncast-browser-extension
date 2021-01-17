@@ -9,7 +9,7 @@
         class="rounded h-24 w-32 bg-cover bg-center mr-4 flex-shrink-0"
         :style="backgroundSrc"
       />
-      <div class="flex flex-col flex-grow">
+      <div class="flex flex-col flex-grow text-base">
         <div>
           <a
             :href="instance.instance"
