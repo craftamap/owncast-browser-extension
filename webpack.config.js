@@ -9,7 +9,7 @@ module.exports = {
 	entry: {
 		main: './src/main.js',
 		background: '/src/background.js',
-		'add-follow-button': '/src/add-follow-button.js',
+		'content-script': '/src/content-script.js',
 		'options': '/src/options.js',
 	},
 	output: {
