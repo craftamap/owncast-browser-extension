@@ -6,8 +6,14 @@ function htmlToElement(html) {
 	template.innerHTML = html;
 	return template.content.firstChild;
 }
-function foundSocialList(response, socialList) {
-	console.log(socialList)
+function foundSocialList(response, container) {
+	const potentialSocial = container.querySelector('#social-list li:last-child')
+	let buttonContainer;
+	if (potentialSocial !== null) {
+		buttonContainer = potentialSocial;
+	} else {
+		buttonContainer = container.querySelector('h2');
+	}
 	if (!response) {
 		const button = htmlToElement('<button class="ml-2 border-2 rounded border-blue-500 p-2">Add To Extension</button>');
 		const onClick = () => {
@@ -27,12 +33,12 @@ function foundSocialList(response, socialList) {
 			}).then(() => {
 				setTimeout(() => {
 					button.remove();
-					waitForSocialList();
+					waitForContainer();
 				}, 3000)
 			}, console.trace);
 		};
 		button.addEventListener('click', onClick);
-		socialList.append(button);
+		buttonContainer.after(button);
 	} else {
 		const button = htmlToElement('<button class="ml-2 border-2 rounded border-red-700 p-2">Remove From Extension</button>');
 		const onClick = () => {
@@ -52,20 +58,20 @@ function foundSocialList(response, socialList) {
 			}).then(() => {
 				setTimeout(() => {
 					button.remove();
-					waitForSocialList();
+					waitForContainer();
 				}, 3000)
 			}, console.trace);
 		};
 		button.addEventListener('click', onClick);
-		socialList.append(button);
+		buttonContainer.after(button);
 
 	}
 }
 
-function waitForSocialList() {
-	let socialList = document.getElementById('social-list');
-	if (socialList === null) {
-		setTimeout(waitForSocialList, 100);
+function waitForContainer() {
+	let container = document.querySelector('.user-content');
+	if (container === null) {
+		setTimeout(waitForContainer, 100);
 	} else {
 		console.log('trying to send message');
 		browser.runtime.sendMessage({
@@ -75,8 +81,8 @@ function waitForSocialList() {
 			},
 		}).then((response) => {
 			console.log('got response', response);
-			console.log(socialList);
-			foundSocialList(response, socialList);
+			console.log(container);
+			foundSocialList(response, container);
 		});
 	}
 }
@@ -96,7 +102,7 @@ function init() {
 		}
 		clearTimeout(timeouts.thousendfivehundered);
 		console.log('found video container');
-		waitForSocialList();
+		waitForContainer();
 
 	}
 	timeouts.threehundered = setTimeout(onTimeout, 300);
