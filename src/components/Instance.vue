@@ -9,10 +9,11 @@
         class="rounded h-24 w-32 bg-cover bg-center mr-4 flex-shrink-0"
         :style="backgroundSrc"
       />
-      <div class="flex flex-col flex-grow">
+      <div class="flex flex-col flex-grow text-base">
         <div>
           <a
             :href="instance.instance"
+            target="_blank"
           ><span class="font-bold">{{ instance.name }}</span> is
             <span
               :class="[instance.online ? 'text-green-600' : 'text-gray-500' ]"

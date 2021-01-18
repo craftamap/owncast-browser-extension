@@ -6,6 +6,7 @@
     <div id="left">
       <a
         href="https://directory.owncast.online"
+        target="_blank"
       >
         <div
           class="w-6 h-6 bg-contain"
