@@ -1,7 +1,7 @@
 <template>
   <form
     id="options"
-    class="m-4"
+    class="m-8 text-base"
     @submit="store"
   >
     <h1 class="font-bold text-lg">
@@ -198,7 +198,7 @@ export default {
 
 <style>
 html, body {
-  height: 100%;
-  width: 100%;
+  min-height: 200px;
+  min-width: 200px;
 }
 </style>

@@ -48,6 +48,7 @@ module.exports = {
 		new HtmlWebpackPlugin({
 			chunks: ['main'],
 			templateContent: `
+		<!DOCTYPE html>
     <html>
       <head>
         <meta charset="utf-8">
