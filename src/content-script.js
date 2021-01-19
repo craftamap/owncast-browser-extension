@@ -129,12 +129,14 @@ function init() {
 			return;
 		}
 		clearTimeout(timeouts.thousendfivehundered);
+		clearTimeout(timeouts.threethousand);
 		console.log('found video container');
 		waitForSocialList();
 		autoChangeUsername();
 	}
 	timeouts.threehundered = setTimeout(onTimeout, 300);
 	timeouts.thousendfivehundered = setTimeout(onTimeout, 1500);
+	timeouts.threethousand = setTimeout(onTimeout, 3000);
 }
 
 init();

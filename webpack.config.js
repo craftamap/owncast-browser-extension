@@ -23,7 +23,7 @@ module.exports = {
 				loader: 'vue-loader'
 			},
 			{
-				test: /\.s(a|c)ss$/,
+				test: /\.s?css$/,
 				use: [
 					MiniCssExtractPlugin.loader,
 					{loader: 'css-loader', options: {importLoaders: 1}},
