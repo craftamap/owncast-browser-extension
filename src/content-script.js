@@ -81,6 +81,40 @@ function waitForSocialList() {
 	}
 }
 
+function autoChangeUsername() {
+	console.log('[autoChangeUsername]')
+	browser.runtime.sendMessage({
+		type: 'getStoredUsername'
+	}).then((response) => {
+		console.log('[autoChangeUsername] got response', response);
+		const username = response;
+		if (username) {
+			console.log('[autoChangeUsername] got valid username')
+			
+			const usernameAlreadyStored = localStorage.getItem('owncast_username')
+			if (usernameAlreadyStored) {
+				console.log('[autoChangeUsername] found username', usernameAlreadyStored, 'associated with this instance - not changing username automatically')
+				return;
+			}
+
+			const userInfoChange = document.querySelector('#user-info-change');
+			const usernameUpdateInput = userInfoChange.querySelector('#username-change-input')
+			const usernameUpdateButton = userInfoChange.querySelector('#button-update-username')
+
+			if (usernameUpdateInput.value === username) {
+				console.log('[autoChangeUsername] username already', usernameUpdateInput.value, 'not changing')
+			} else {
+				console.log('[autoChangeUsername] changing username to', username)
+				usernameUpdateInput.value = username;
+				usernameUpdateButton.click();
+				console.log('[autoChangeUsername] done!')
+			}
+		} else {
+			console.log('[autoChangeUsername] no or invalid username found in storage. Bummer.')
+		}
+	})
+}
+
 function init() {
 	if (window.addFollowButton) {
 		return;
@@ -97,7 +131,7 @@ function init() {
 		clearTimeout(timeouts.thousendfivehundered);
 		console.log('found video container');
 		waitForSocialList();
-
+		autoChangeUsername();
 	}
 	timeouts.threehundered = setTimeout(onTimeout, 300);
 	timeouts.thousendfivehundered = setTimeout(onTimeout, 1500);
