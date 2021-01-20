@@ -8,6 +8,20 @@
       Pop-Up and Notifications
     </h1> 
     <div class="flex items-center  my-2">
+      <label>
+        <div>pop-up theme</div>
+        <select
+          id="theme"
+          v-model="theme"
+          class="input-select"
+          name="theme"
+        >
+          <option>dark</option>
+          <option>light</option>
+        </select>
+      </label>
+    </div>
+    <div class="flex items-center  my-2">
       <input
         id="notifications"
         v-model="notifications"
@@ -117,8 +131,6 @@
 </template>
 
 <script>
-import browser from 'webextension-polyfill';
-
 export default {
 	name:'Options',
 	computed: {
@@ -162,35 +174,20 @@ export default {
 			set (value) {
 				this.$store.commit('setUsername', value)
 			}
+		},
+		theme: {
+			get () {
+				return this.$store.state.options.theme
+			},
+			set (value) {
+				this.$store.commit('setTheme', value)
+			}
 		}
 	},	
 	methods: {
 		async store(e) {
 			e.preventDefault();
-			// Although not mutating, we should propably move this sendMessage to an
-			// vuex action as well
-			console.log('[store]',this.$store.state.options);
-			this.$store.commit('setDisplayLoading');
-			return browser.runtime.sendMessage({
-				type: 'storeSettings',
-				data: {
-					options: {...this.$store.state.options}
-				}
-			}).then(() => {
-				return this.$store.dispatch('getOptionsFromStorage')
-			}).then(() => {
-				return this.$store.commit('setDisplaySuccess')
-			}).catch(() => {
-				return this.$store.commit('setDisplayError')
-			}).then(() => {
-				new Promise((res) => {
-					setTimeout(() => {
-						this.$store.commit('unsetDisplay')
-						res();
-					}, 3000);
-				})
-			})
-      
+			return this.$store.dispatch('storeOptionsInStorage');
 		}
 	}
 }

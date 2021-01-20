@@ -56,6 +56,9 @@ window.addEventListener('load', function (event) {
 			},
 			setUsername(state, username) {
 				state.options.username = username;
+			},
+			setTheme(state, theme) {
+				state.options.theme = theme;
 			}
 		},
 		actions: {
@@ -66,6 +69,32 @@ window.addEventListener('load', function (event) {
 					console.log('[getOptionsFromStorage]',options);
 					commit('setOptions', options);	
 				})
+			},
+			storeOptionsInStorage({commit, dispatch, state}) {
+			// Although not mutating, we should propably move this sendMessage to an
+			// vuex action as well
+				console.log('[store]', state.options);
+				commit('setDisplayLoading');
+				return browser.runtime.sendMessage({
+					type: 'storeSettings',
+					data: {
+						options: {...state.options}
+					}
+				}).then(() => {
+					return dispatch('getOptionsFromStorage')
+				}).then(() => {
+					return commit('setDisplaySuccess')
+				}).catch(() => {
+					return commit('setDisplayError')
+				}).then(() => {
+					new Promise((res) => {
+						setTimeout(() => {
+							commit('unsetDisplay')
+							res();
+						}, 3000);
+					})
+				})
+
 			}
 		}
 	});
