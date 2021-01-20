@@ -5,6 +5,7 @@ const CopyPlugin = require('copy-webpack-plugin');
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 
 module.exports = {
+	mode: 'production',
 	node: false,
 	entry: {
 		main: './src/main.js',
