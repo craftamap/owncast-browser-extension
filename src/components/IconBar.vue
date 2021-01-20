@@ -1,7 +1,7 @@
 <template>
   <div
     id="icons"
-    class="flex justify-between p-4 rounded shadow-md w-95%"
+    class="flex justify-between p-4 rounded shadow-md w-95% dark:bg-gray-800"
   >
     <div id="left">
       <a

@@ -1,13 +1,13 @@
 <template>
   <div
     id="add-bar"
-    class="flex justify-between p-4 rounded shadow-md w-95% items-center"
+    class="flex justify-between p-4 mt-2 rounded shadow-md w-95% items-center dark:bg-gray-800"
   >
     <input
       id="add-url"
       v-model="url"
       type="url"
-      class="form-input block min-w-0 flex-grow w-95%"
+      class="form-input block min-w-0 flex-grow w-95% text-black"
       @keyup.enter="submit"
     >
     <div class="my-2 ml-2 max-w-4 truncate">

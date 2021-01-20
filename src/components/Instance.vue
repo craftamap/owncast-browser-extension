@@ -1,7 +1,7 @@
 <template>
   <div
     id="instance"
-    class="flex flex-col p-4 rounded shadow-md w-95%"
+    class="flex flex-col mt-2 p-4 rounded shadow-md w-95% dark:bg-gray-800"
     :data-instance="instance.instance"
   >
     <div class="flex flex-row items-center">

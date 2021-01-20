@@ -1,11 +1,18 @@
 <template>
+  <!-- theme names must be directly in here, otherwise they get trimmed
+       TODO: add themes to not-trim list -->
   <div
-    class="flex flex-col w-96 p-2 overflow-y-scroll "
-    style="height: 32rem"
+    id="theme-wrapper"
+    :class="[getTheme === 'dark' ? 'dark' : 'light' ]"
   >
-    <IconBar />
-    <AddBar v-if="showAddBar" />
-    <Instances />
+    <div
+      class="flex flex-col w-96 p-2 overflow-y-scroll dark:bg-gray-900 dark:text-white"
+      style="height: 32rem"
+    >
+      <IconBar />
+      <AddBar v-if="showAddBar" />
+      <Instances />
+    </div>
   </div>
 </template>
 
@@ -25,6 +32,9 @@ export default {
 	computed: {
 		showAddBar() {
 			return this.$store.state.add.show;
+		},
+		getTheme() {
+			return this.$store.state.theme;
 		}
 	},
 	created() {
@@ -33,6 +43,3 @@ export default {
 	}
 }
 </script>
-
-<style lang="sass">
-</style>
