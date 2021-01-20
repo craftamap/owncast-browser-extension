@@ -159,6 +159,15 @@ function storeSettings(request) {
 	}
 }
 
+function getStoredUsername(request) {
+	if (request.type === 'getStoredUsername') {
+		console.log('[getStoredUsername]')
+		return Storage.getOptionsFromStorage().then((options) => {
+			return options.username
+		})
+	}
+}
+
 window.addEventListener('load', function (event) {
 
 	window.bgApp = {
@@ -170,10 +179,11 @@ window.addEventListener('load', function (event) {
 	browser.runtime.onMessage.addListener(checkConnection);
 	browser.runtime.onMessage.addListener(removeInstanceInStorage);
 	browser.runtime.onMessage.addListener(addInstanceInStorage);
-	/* add-follow-button */
+	/* content-script */
 	browser.runtime.onMessage.addListener(followButtonGetStatus);
 	browser.runtime.onMessage.addListener(followButtonFollow);
 	browser.runtime.onMessage.addListener(followButtonUnfollow);
+	browser.runtime.onMessage.addListener(getStoredUsername);
 	/* settings */
 	browser.runtime.onMessage.addListener(getSettings);
 	browser.runtime.onMessage.addListener(storeSettings);
