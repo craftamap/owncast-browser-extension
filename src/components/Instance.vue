@@ -31,7 +31,8 @@
           <div id="left">
             <div
               v-if="instance.online"
-              class="inline-block"
+              class="inline-block align-middle"
+              title="current number of viewers"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -47,7 +48,8 @@
             </div>
             <div
               v-if="instance.online"
-              class="inline-block"
+              class="inline-block align-middle"
+              title="uptime"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -65,7 +67,7 @@
             </div>
           </div>
           <div id="right">
-            <div class="inline-block">
+            <div class="inline-block align-middle">
               <svg
                 id="show-remove"
                 xmlns="http://www.w3.org/2000/svg"
