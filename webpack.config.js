@@ -9,7 +9,7 @@ module.exports = {
 	entry: {
 		main: './src/main.js',
 		background: '/src/background.js',
-		'add-follow-button': '/src/add-follow-button.js',
+		'content-script': '/src/content-script.js',
 		'options': '/src/options.js',
 	},
 	output: {
@@ -23,7 +23,7 @@ module.exports = {
 				loader: 'vue-loader'
 			},
 			{
-				test: /\.s(a|c)ss$/,
+				test: /\.s?css$/,
 				use: [
 					MiniCssExtractPlugin.loader,
 					{loader: 'css-loader', options: {importLoaders: 1}},
@@ -48,6 +48,7 @@ module.exports = {
 		new HtmlWebpackPlugin({
 			chunks: ['main'],
 			templateContent: `
+		<!DOCTYPE html>
     <html>
       <head>
         <meta charset="utf-8">
