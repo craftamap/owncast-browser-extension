@@ -5,10 +5,15 @@
     :data-instance="instance.instance"
   >
     <div class="flex flex-row items-center">
-      <div
-        class="rounded h-24 w-32 bg-cover bg-center mr-4 flex-shrink-0"
-        :style="backgroundSrc"
-      />
+      <a
+        :href="instance.instance"
+        target="_blank"
+      >
+        <div
+          class="rounded h-24 w-32 bg-cover bg-center mr-4 flex-shrink-0"
+          :style="backgroundSrc"
+        />
+      </a>
       <div class="flex flex-col flex-grow text-base">
         <div>
           <a
