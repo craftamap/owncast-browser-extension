@@ -15,7 +15,7 @@
         />
       </a>
       <div class="flex flex-col flex-grow text-base">
-        <div>
+        <div class="mb-2">
           <a
             :href="instance.instance"
             target="_blank"
@@ -24,12 +24,15 @@
               :class="[instance.online ? 'text-green-600' : 'text-gray-500' ]"
             >{{ instance.status }}</span></a>
         </div>
-        <div class="text-sm">
+        <div class="text-sm mb-2">
           {{ instance.description }}
         </div>
         <div class="flex justify-between items-center">
           <div id="left">
-            <div class="inline-block">
+            <div
+              v-if="instance.online"
+              class="inline-block"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 20 20"
@@ -41,6 +44,24 @@
                 />
               </svg>
               {{ instance.viewer }}
+            </div>
+            <div
+              v-if="instance.online"
+              class="inline-block"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+                class="w-4 h-4 inline-block"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+              {{ instance.onlineSince.hour }}h {{ instance.onlineSince.minute }}m 
             </div>
           </div>
           <div id="right">
