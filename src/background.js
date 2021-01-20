@@ -88,6 +88,7 @@ const sendNotifications = async (oldData, newData) => {
 	}
 }
 
+
 const setBadge = async (instanceData) => {
 	const options = await Storage.getOptionsFromStorage();
 	if (options.badge) {
@@ -99,94 +100,72 @@ const setBadge = async (instanceData) => {
 	}
 };
 
-const checkConnection = (request, sender, sendResponse) => {
-	if (request.type === 'checkConnection') {
-		console.log('[checkConnection]', request.data.url);
-		const cast = new api.OwnCast(request.data.url);
-		return cast.getConfig();
+
+const onMessageListener = (request, sender) => {
+	const listener = {
+		checkConnection (request, sender)  {
+			console.log('[checkConnection]', request.data.url);
+			const cast = new api.OwnCast(request.data.url);
+			return cast.getConfig();
+		},
+		getInstanceData(request, sender) {
+			return Promise.resolve(window.bgApp.instanceData || []);
+		},
+		updateInstanceData(request, sender) {
+			console.log('[updateInstanceData] before',);
+			return refreshInstanceData()
+		},
+		removeInstanceInStorage(request, sender) {
+			return Storage.removeInstanceInStorage(request.data.url)
+		},
+		addInstanceInStorage(request, sender) {
+			return Storage.addInstanceInStorage(request.data.url);
+		},
+		followButtonGetStatus(request, sender) {
+			const url = request.data.url
+			return Storage.getInstancesFromStorage().then((res) => {
+				const instances = res['instances'];
+				const incl = instances.includes(url);
+				return incl;
+			})
+		},
+		async followButtonFollow(request, sender) {
+			console.log('[followButtonFollow]',request.data.url);
+			const cast = new api.OwnCast(request.data.url);
+			return cast.getConfig().then(() => {
+				return Storage.addInstanceInStorage(request.data.url)
+			}).then(refreshInstanceData)
+				.then(() => 'success')
+		},
+		async followButtonUnfollow (request, sender) {
+			console.log('[followButtonFollow]',request.data.url);
+			return Storage.removeInstanceInStorage(request.data.url)
+				.then(refreshInstanceData)
+				.catch(console.log)
+				.then(() => 'success')
+		},
+		getSettings(request) {
+			console.log('[getSettings]');
+			return Storage.getOptionsFromStorage();
+		},
+		storeSettings(request) {
+			console.log('[storeSettings]');
+			console.log('[storeSettings]', request.data.options);
+			return Storage.setOptionsInStorage(request.data.options);
+		},
+		getStoredUsername(request) {
+			console.log('[getStoredUsername]')
+			return Storage.getOptionsFromStorage().then((options) => {
+				return options.username
+			})
+		},
 	}
+	const requestType = request && request.type;
+	return listener[requestType](request, sender);
 }
 
-function getInstanceData(request, sender, sendResponse) {
-	if (request.type === 'getInstanceData') {
-		return Promise.resolve(window.bgApp.instanceData || []);
-	}
-}
 
 
-function updateInstanceData(request, sender, sendResponse) {
-	if (request.type === 'updateInstanceData') {
-		console.log('[updateInstanceData] before',);
-		return refreshInstanceData()
-	}
-}
-
-function removeInstanceInStorage(request, sender, sendResponse) {
-	if (request.type === 'removeInstanceInStorage') {
-		return Storage.removeInstanceInStorage(request.data.url)
-	}
-}
-
-function addInstanceInStorage(request, sender, sendResponse) {
-	if (request.type === 'addInstanceInStorage') {
-		return Storage.addInstanceInStorage(request.data.url);
-	}
-}
-
-function followButtonGetStatus(request, sender, sendResponse) {
-	if (request.type === 'getStatus') {
-		const url = request.data.url
-		return Storage.getInstancesFromStorage().then((res) => {
-			const instances = res['instances'];
-			const incl = instances.includes(url);
-			return incl;
-		})
-	}
-}
-
-function followButtonFollow(request, sender, sendResponse) {
-	if (request.type === 'follow') {
-		console.log('[followButtonFollow]',request.data.url);
-		const cast = new api.OwnCast(request.data.url);
-		cast.getConfig().then(() => {
-			return Storage.addInstanceInStorage(request.data.url)
-		}).then(refreshInstanceData)
-			.then(() => 'success')
-	}
-}
-
-const followButtonUnfollow = (request, sender, sendResponse) => {
-	if (request.type === 'unfollow') {
-		Storage.removeInstanceInStorage(request.data.url)
-			.then(refreshInstanceData)
-			.catch(console.log)
-			.then(() => 'success')
-	}
-};
-
-function getSettings(request) {
-	if (request.type === 'getSettings') {
-		console.log('[getSettings]');
-		return Storage.getOptionsFromStorage();
-	}
-}
-
-function storeSettings(request) {
-	if (request.type === 'storeSettings') {
-		console.log('[storeSettings]');
-		console.log('[storeSettings]', request.data.options);
-		return Storage.setOptionsInStorage(request.data.options);
-	}
-}
-
-function getStoredUsername(request) {
-	if (request.type === 'getStoredUsername') {
-		console.log('[getStoredUsername]')
-		return Storage.getOptionsFromStorage().then((options) => {
-			return options.username
-		})
-	}
-}
 
 window.addEventListener('load', function (event) {
 
@@ -194,19 +173,7 @@ window.addEventListener('load', function (event) {
 		instanceData: [],
 	};
 
-	browser.runtime.onMessage.addListener(getInstanceData);
-	browser.runtime.onMessage.addListener(updateInstanceData);
-	browser.runtime.onMessage.addListener(checkConnection);
-	browser.runtime.onMessage.addListener(removeInstanceInStorage);
-	browser.runtime.onMessage.addListener(addInstanceInStorage);
-	/* content-script */
-	browser.runtime.onMessage.addListener(followButtonGetStatus);
-	browser.runtime.onMessage.addListener(followButtonFollow);
-	browser.runtime.onMessage.addListener(followButtonUnfollow);
-	browser.runtime.onMessage.addListener(getStoredUsername);
-	/* settings */
-	browser.runtime.onMessage.addListener(getSettings);
-	browser.runtime.onMessage.addListener(storeSettings);
+	browser.runtime.onMessage.addListener(onMessageListener);
 
 	const recursiveRefresh = () => {
 		refreshInstanceData().then((data) => {

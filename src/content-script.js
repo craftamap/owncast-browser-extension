@@ -20,7 +20,7 @@ function foundSocialList(response, container) {
 			button.removeEventListener('click', onClick);
 			button.textContent = 'Wait...';
 			browser.runtime.sendMessage({
-				type: 'follow',
+				type: 'followButtonFollow',
 				data: {
 					url: window.location.href
 				},
@@ -45,7 +45,7 @@ function foundSocialList(response, container) {
 			button.removeEventListener('click', onClick);
 			button.textContent = 'Wait...';
 			browser.runtime.sendMessage({
-				type: 'unfollow',
+				type: 'followButtonUnfollow',
 				data: {
 					url: window.location.href
 				},
@@ -75,7 +75,7 @@ function waitForContainer() {
 	} else {
 		console.log('trying to send message');
 		browser.runtime.sendMessage({
-			type: 'getStatus',
+			type: 'followButtonGetStatus',
 			data: {
 				url: window.location.href
 			},
