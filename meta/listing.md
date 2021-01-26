@@ -53,3 +53,16 @@ This extension is developed open-source under the MIT-License.
 You can find the code here:
 https://github.com/craftamap/owncast-browser-extension/
 ```
+
+
+### Category
+
+- Chrome: `Social Networks & Communication`
+- Firefox: `Alerts & Updates, Games & Entertainment`
+
+
+### Additional Details
+
+Homepage: https://github.com/craftamap/owncast-browser-extension 
+Tags (Firefox only): `owncast, stream, twitch`
+Default Locale (Firefox only): `English (US)`
