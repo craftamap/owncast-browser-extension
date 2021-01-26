@@ -1,7 +1,7 @@
 <template>
   <div
     id="add-bar"
-    class="flex justify-between p-4 mt-2 rounded shadow-md w-95% items-center dark:bg-gray-800"
+    class="add-bar"
   >
     <input
       id="add-url"
@@ -100,3 +100,22 @@ export default {
 	},
 };
 </script>
+
+<style lang="scss" scoped>
+@import "../scss/mixins.scss";
+@import "../scss/colors.scss";
+
+.add-bar {
+  @include shadow;
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
+  margin-top: 0.5rem;
+  border-radius: 0.25rem;
+  align-items: center;
+
+  .dark & {
+   background-color: $gray-800; 
+  }
+}
+</style>
