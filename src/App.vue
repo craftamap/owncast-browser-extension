@@ -53,7 +53,6 @@ export default {
 	min-width: 24rem;
 	max-width: 30rem;
 	min-height: 32rem;
-	overflow-y: scroll;
 	
 	.dark & {
 		background-color: $gray-900;
