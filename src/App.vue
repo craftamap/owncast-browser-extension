@@ -35,7 +35,10 @@ export default {
 		},
 		getTheme() {
 			return this.$store.state.theme;
-		}
+		},
+		getLayout() {
+			return this.$store.state.layout;
+		},
 	},
 	created() {
 		console.log('created App');
