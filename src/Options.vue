@@ -173,7 +173,7 @@ html, body {
 form {
   font-size: 1rem;
   line-height: 1.5rem;
-  margin: 8;
+  margin: 2rem;
 
   input[type='checkbox'] + label {
     margin-left: 1rem;
