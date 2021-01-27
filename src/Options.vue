@@ -20,6 +20,19 @@
       </label>
     </div>
     <div class="form-section">
+      <label>
+        <div>pop-up layout</div>
+        <select
+          id="layout"
+          v-model="layout"
+          name="layout"
+        >
+          <option>normal</option>
+          <option>compact</option>
+        </select>
+      </label>
+    </div>
+    <div class="form-section">
       <input
         id="notifications"
         v-model="notifications"
@@ -150,6 +163,14 @@ export default {
 			},
 			set (value) {
 				this.$store.commit('setTheme', value)
+			}
+		},
+		layout: {
+			get () {
+				return this.$store.state.options.layout
+			},
+			set (value) {
+				this.$store.commit('setLayout', value)
 			}
 		}
 	},	
