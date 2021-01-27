@@ -6,8 +6,7 @@
     :class="[getTheme === 'dark' ? 'dark' : 'light' ]"
   >
     <div
-      class="flex flex-col w-96 p-2 overflow-y-scroll dark:bg-gray-900 dark:text-white"
-      style="height: 32rem"
+			class="app"
     >
       <IconBar />
       <AddBar v-if="showAddBar" />
@@ -43,3 +42,22 @@ export default {
 	}
 }
 </script>
+
+<style lang="scss">
+@import "./scss/colors.scss";
+
+.app {
+	display: flex;
+	flex-direction: column;
+	padding: 0.5rem;
+	min-width: 24rem;
+	min-height: 32rem;
+	overflow-y: scroll;
+	
+	.dark & {
+		background-color: $gray-900;
+		color: white;
+	}
+}
+	
+</style>

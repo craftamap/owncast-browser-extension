@@ -1,87 +1,56 @@
 <template>
   <div
     id="instance"
-    class="flex flex-col mt-2 p-4 rounded shadow-md w-95% dark:bg-gray-800"
+    class="instance"
     :data-instance="instance.instance"
   >
-    <div class="flex flex-row items-center">
+    <div class="instance-main">
       <a
         :href="instance.instance"
         target="_blank"
       >
         <div
-          class="rounded h-24 w-32 bg-cover bg-center mr-4 flex-shrink-0"
+          class="instance-image"
           :style="backgroundSrc"
         />
       </a>
-      <div class="flex flex-col flex-grow text-base">
-        <div class="mb-2">
+      <div class="instance-text">
+        <div class="instance-text-header">
           <a
             :href="instance.instance"
             target="_blank"
-          ><span class="font-bold">{{ instance.name }}</span> is
+          ><span class="instance-text-bold">{{ instance.name }}</span> is
             <span
-              :class="[instance.online ? 'text-green-600' : 'text-gray-500' ]"
+              :class="[instance.online ? 'instance-text-online' : 'instance-text-offline' ]"
             >{{ instance.status }}</span></a>
         </div>
-        <div class="text-sm mb-2">
+        <div class="instance-text-description">
           {{ instance.description }}
         </div>
-        <div class="flex justify-between items-center">
+        <div class="instance-icon-bar">
           <div id="left">
             <div
               v-if="instance.online"
-              class="inline-block align-middle"
+              class="instance-icon-bar-viewers"
               title="current number of viewers"
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-                class="w-4 h-4 inline-block"
-              >
-                <path
-                  d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"
-                />
-              </svg>
+              <ViewerIcon />
               {{ instance.viewer }}
             </div>
             <div
               v-if="instance.online"
-              class="inline-block align-middle"
+              class="instance-icon-bar-uptime"
               title="uptime"
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-                class="w-4 h-4 inline-block"
-              >
-                <path
-                  fill-rule="evenodd"
-                  d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"
-                  clip-rule="evenodd"
-                />
-              </svg>
+              <UptimeIcon />
               {{ instance.onlineSince.hour }}h {{ instance.onlineSince.minute }}m 
             </div>
           </div>
           <div id="right">
-            <div class="inline-block align-middle">
-              <svg
-                id="show-remove"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-                class="w-4 h-4 cursor-pointer"
+            <div class="instance-icon-bar-remove">
+              <RemoveIcon
                 @click="toggleRemove"
-              >
-                <path
-                  fill-rule="evenodd"
-                  d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
-                  clip-rule="evenodd"
-                />
-              </svg>
+              />
             </div>
           </div>
         </div>
@@ -89,12 +58,10 @@
     </div>
     <div
       v-if="showRemove"
-      id="delete-section"
-      class="my-2"
+      class="delete-section"
     >
       <button
         id="remove"
-        class="bg-red-500 px-4 py-2 text-white rounded"
         @click="remove"
       >
         remove
@@ -104,8 +71,17 @@
 </template>
 
 <script>
+import ViewerIcon from './icons/ViewerIcon.vue';
+import UptimeIcon from './icons/UptimeIcon.vue';
+import RemoveIcon from './icons/RemoveIcon.vue';
+
 export default {
 	name: 'Instance',
+	components: {
+		ViewerIcon,
+		UptimeIcon,
+		RemoveIcon,
+	},
 	props: {
 		instance: {
 			type: Object,
@@ -136,3 +112,89 @@ export default {
 	}
 }
 </script>
+
+<style lang="scss">
+@import "../scss/mixins.scss";
+@import "../scss/colors.scss";
+
+.instance {
+  @include shadow;
+  display: flex;
+  flex-direction: column;
+  margin-top: 0.5rem;
+  padding: 1rem;
+  border-radius: 0.25rem; 
+
+  .dark & {
+   background-color: $gray-800; 
+  }
+
+  .delete-section {
+    margin-bottom: 0.5rem;    
+
+    button {
+        background-color: $red-500;
+        padding: 0.5rem 1rem;
+        color: white;
+        border-radius: 0.25rem;
+    }
+  }
+
+  .instance-main {
+  /* class="flex flex-row items-center" */
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .instance-image {
+    border-radius: 0.25rem;
+    width: 8rem;
+    height: 6rem;
+    background-size: cover;
+    background-position: center;
+    margin-right: 1rem;
+    flex-shrink: 0;
+  }
+
+  .instance-text {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 0;
+
+    .instance-text-header {
+      margin-bottom: 0.5rem;
+    }
+
+    .instance-text-bold {
+      font-weight: 700;
+    }
+
+    .instance-text-online {
+      color: $green-600;
+    }
+
+    .instance-text-offline {
+      color: $gray-500;
+    }
+
+    .instance-text-description {
+      font-size: 0.875rem;
+      line-height: 1.25rem;
+      margin-bottom: 0.5rem;
+    }
+  }
+
+  .instance-icon-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .instance-icon-bar-viewers, .instance-icon-bar-uptime, .instance-icon-bar-remove {
+      display: inline-block;
+      vertical-align: middle;
+    }
+  }
+}
+
+</style>
