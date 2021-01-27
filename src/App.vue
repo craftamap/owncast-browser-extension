@@ -49,6 +49,7 @@ export default {
 .app {
 	display: flex;
 	flex-direction: column;
+	padding: 0.5rem;
 	min-width: 24rem;
 	min-height: 32rem;
 	overflow-y: scroll;
