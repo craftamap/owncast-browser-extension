@@ -180,7 +180,6 @@ form {
   }
 
   input[type='submit'] {
-"bg-blue-600 active:bg-blue-800 py-2 w-32 my-2 rounded text-white mr-2"
     background-color: $blue-600; 
     padding: 0.5rem 0;
     width: 8rem;
