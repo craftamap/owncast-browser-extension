@@ -59,7 +59,10 @@ window.addEventListener('load', function (event) {
 			},
 			setTheme(state, theme) {
 				state.options.theme = theme;
-			}
+			},
+			setLayout(state, layout) {
+				state.options.layout = layout;
+			},
 		},
 		actions: {
 			getOptionsFromStorage({commit}) {

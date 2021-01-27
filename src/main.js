@@ -21,6 +21,9 @@ window.addEventListener('load', function (event) {
 			setTheme(state, theme) {
 				state.theme = theme;
 			},
+			setLayout(state, layout) {
+				state.layout = layout;
+			},
 			setLoading(state, newLoading) {
 				state.loading = newLoading
 			},
@@ -53,11 +56,14 @@ window.addEventListener('load', function (event) {
 			}
 		},
 		actions: {
-			fetchTheme({commit}) {
+			fetchThemeAndLayout({commit}) {
 				return browser.runtime.sendMessage({
 					type: 'getSettings'
 				}).then((options) => {
-					return commit('setTheme', options.theme)
+					return Promise.all([
+						commit('setTheme', options.theme),
+						commit('setLayout', options.layout),
+					])
 				})
 			},
 			updateInstanceData({commit}) {
@@ -144,7 +150,7 @@ window.addEventListener('load', function (event) {
 		}
 	});
 	
-	store.dispatch('fetchTheme').then(() => {
+	store.dispatch('fetchThemeAndLayout').then(() => {
 		window.app = new Vue({
 			store: store,
 			el: '#app-root',

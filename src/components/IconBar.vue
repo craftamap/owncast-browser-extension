@@ -74,6 +74,10 @@ export default {
   border-radius: 0.25rem;
   align-items: center;
 
+	.layout-compact & {
+		padding: 0.25rem 0.5rem;
+	}
+
   .dark & {
    background-color: $gray-800; 
   }
