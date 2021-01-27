@@ -125,8 +125,13 @@ export default {
   padding: 1rem;
   border-radius: 0.25rem; 
 
+	.layout-compact & {
+    margin-top: 0.125rem;
+		padding: 0.25rem 0.5rem;
+	}
+
   .dark & {
-   background-color: $gray-800; 
+    background-color: $gray-800; 
   }
 
   .delete-section {
@@ -155,6 +160,10 @@ export default {
     background-position: center;
     margin-right: 1rem;
     flex-shrink: 0;
+	  .layout-compact & {
+      width: 6rem;
+      height: 4rem;
+    }
   }
 
   .instance-text {

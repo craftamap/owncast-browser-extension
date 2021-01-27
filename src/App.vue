@@ -3,8 +3,9 @@
        TODO: add themes to not-trim list -->
   <div
     id="theme-wrapper"
-    :class="[getTheme === 'dark' ? 'dark' : 'light' ]"
+    :class="[getTheme === 'dark' ? 'dark' : 'light', getLayout === 'compact' ? 'layout-compact' : 'layout-normal' ]" 
   >
+	<!-- FIXME: layout-compact : layout-normal -->
     <div
 			class="app"
     >
@@ -53,7 +54,10 @@ export default {
 	min-width: 24rem;
 	max-width: 30rem;
 	min-height: 32rem;
-	overflow-y: scroll;
+
+	.layout-compact & {
+		padding: 0;
+	}
 	
 	.dark & {
 		background-color: $gray-900;
