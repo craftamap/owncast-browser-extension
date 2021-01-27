@@ -13,6 +13,7 @@
     <div class="icons">
       <AddIcon
         v-if="displayButton"
+        @click="submit"
       />
       <LoadingIcon 
         v-if="displayLoading"
@@ -62,7 +63,7 @@ export default {
 		submit() {
 			console.log(this.url);
 			this.$store.dispatch('checkConnectionAndAddInStorage', this.url);
-		},
+		}
 	}
 };
 </script>

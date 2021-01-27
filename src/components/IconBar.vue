@@ -1,7 +1,7 @@
 <template>
   <div
     id="icons"
-    class="flex justify-between p-4 rounded shadow-md w-95% dark:bg-gray-800"
+    class="icon-bar"
   >
     <div id="left">
       <a
@@ -9,8 +9,7 @@
         target="_blank"
       >
         <div
-          class="w-6 h-6 bg-contain"
-          style="background-image: url('/resources/icon-96.png')"
+          class="logo-big"
         />
       </a>
     </div>
@@ -32,27 +31,22 @@
       </svg>
     </div>
     <div id="right">
-      <svg
-        id="add"
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 20 20"
-        fill="currentColor"
-        class="w-6 h-6 flex-shrink-0 cursor-pointer"
+      <AddIcon
+        class="add-icon-big" 
         @click="toggleShowAddBar"
-      >
-        <path
-          fill-rule="evenodd"
-          d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
-          clip-rule="evenodd"
-        />
-      </svg>
+      />
     </div>
   </div>
 </template>
 
 <script>
+import AddIcon from './icons/AddIcon.vue';
+
 export default {
 	name: 'IconBar',
+	components: {
+		AddIcon,
+	},
 	computed: {
 		isLoading() {
 			return this.$store.state.loading
@@ -68,3 +62,31 @@ export default {
 	}
 }
 </script>
+
+
+<style lang="scss">
+@import "../scss/mixins.scss";
+@import "../scss/colors.scss";
+
+.logo-big {
+  width: 1.5rem;
+  height: 1.5rem;
+  background-size: contain;
+  background-image: url('../resources/icon-96.png');
+}
+
+.icon-bar {
+  @include shadow;
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
+  margin-top: 0.5rem;
+  border-radius: 0.25rem;
+  align-items: center;
+
+  .dark & {
+   background-color: $gray-800; 
+  }
+}
+
+</style>
