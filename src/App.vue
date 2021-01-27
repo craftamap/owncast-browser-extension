@@ -52,6 +52,7 @@ export default {
 	flex-direction: column;
 	padding: 0.5rem;
 	min-width: 24rem;
+	width: 26rem;
 	max-width: 30rem;
 	min-height: 32rem;
 
