@@ -51,6 +51,7 @@ export default {
 	flex-direction: column;
 	padding: 0.5rem;
 	min-width: 24rem;
+	max-width: 24rem;
 	min-height: 32rem;
 	overflow-y: scroll;
 	
