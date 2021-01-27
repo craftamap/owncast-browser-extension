@@ -11,7 +11,7 @@
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .no-instances {
   margin: 1rem;
   margin-bottom: 1rem;
