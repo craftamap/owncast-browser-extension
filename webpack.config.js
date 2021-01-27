@@ -30,16 +30,6 @@ module.exports = {
 					MiniCssExtractPlugin.loader,
 					{loader: 'css-loader', options: {importLoaders: 1}},
 					{loader: 'sass-loader'},
-					{
-						loader: 'postcss-loader',
-						options: {
-							postcssOptions: {
-								plugins: [
-									'tailwindcss',
-								]
-							}
-						}
-					},
 				],
 			},
 			{
