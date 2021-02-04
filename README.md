@@ -4,13 +4,13 @@
 
 ![Screenshot](meta/screenshot-chrome.png)
 
-Owncast Browser Extension is a Firefox extension used to follow various
-Owncast Instances
+Owncast Browser Extension is a Firefox and Chrome/Chromium extension used to 
+follow various Owncast Instances
 
 
 ## Installation
 
-The addon can be installed from [addons.mozilla.com](https://addons.mozilla.org/en-US/firefox/addon/owncast-extension/).
+The addon can be installed from [addons.mozilla.com](https://addons.mozilla.org/en-US/firefox/addon/owncast-extension/) or from the [Chrome Web Store](https://chrome.google.com/webstore/detail/owncast-extension/djgneammmklaajinkihpibdpaflehgio?hl=de).
 
 ## Building and Development
 
