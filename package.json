@@ -31,7 +31,7 @@
     "vue": "^2.6.12",
     "vue-loader": "^15.9.6",
     "vue-template-compiler": "^2.6.12",
-    "vuex": "^3.6.0",
+    "vuex": "^3.6.2",
     "webextension-polyfill": "^0.7.0"
   },
   "webExt": {
