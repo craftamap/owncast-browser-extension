@@ -23,6 +23,9 @@
         class="add-icon-big" 
         @click="toggleShowAddBar"
       />
+      <CogWheelIcon 
+        @click="openSettingsPage"
+      />
     </div>
   </div>
 </template>
@@ -30,12 +33,15 @@
 <script>
 import AddIcon from './icons/AddIcon.vue';
 import RefreshIcon from './icons/RefreshIcon.vue';
+import CogWheelIcon from './icons/CogWheelIcon.vue';
+import browser from 'webextension-polyfill';
 
 export default {
 	name: 'IconBar',
 	components: {
 		AddIcon,
-		RefreshIcon
+		RefreshIcon,
+		CogWheelIcon,
 	},
 	computed: {
 		isLoading() {
@@ -48,7 +54,10 @@ export default {
 		},
 		toggleShowAddBar(event) {
 			this.$store.commit('toggleShowAddBar'); 
-		}
+		},
+		openSettingsPage() {
+			browser.runtime.openOptionsPage();
+		},
 	}
 }
 </script>
@@ -67,12 +76,22 @@ export default {
 
 .icon-bar {
   @include shadow;
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
   justify-content: space-between;
+  justify-items: center;
   padding: 1rem;
   margin-top: 0.5rem;
   border-radius: 0.25rem;
   align-items: center;
+
+  div#left {
+    justify-self: start; 
+  }
+
+  div#right {
+    justify-self: end;
+  }
 
 	.layout-compact & {
 		padding: 0.25rem 0.5rem;
