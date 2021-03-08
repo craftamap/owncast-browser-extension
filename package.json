@@ -23,7 +23,7 @@
     "sass-loader": "^11.0.1",
     "web-ext": "^5.5.0",
     "webextension-polyfill-ts": "^0.25.0",
-    "webpack": "^5.24.2",
+    "webpack": "^5.24.3",
     "webpack-cli": "^4.5.0"
   },
   "dependencies": {
