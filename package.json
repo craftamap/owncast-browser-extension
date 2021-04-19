@@ -14,7 +14,7 @@
     "copy-webpack-plugin": "^8.1.1",
     "css-loader": "^5.2.2",
     "eslint": "^7.24.0",
-    "eslint-plugin-mozilla": "^2.9.2",
+    "eslint-plugin-mozilla": "^2.10.0",
     "eslint-plugin-vue": "^7.8.0",
     "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.3.1",
