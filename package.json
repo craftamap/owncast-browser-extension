@@ -29,7 +29,7 @@
   "dependencies": {
     "urlcat": "^2.0.4",
     "vue": "^2.6.12",
-    "vue-loader": "^15.9.6",
+    "vue-loader": "^15.9.7",
     "vue-template-compiler": "^2.6.12",
     "vuex": "^3.6.2",
     "webextension-polyfill": "^0.8.0"
