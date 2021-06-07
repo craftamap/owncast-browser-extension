@@ -28,9 +28,9 @@
   },
   "dependencies": {
     "urlcat": "^2.0.4",
-    "vue": "^2.6.12",
+    "vue": "^2.6.13",
     "vue-loader": "^15.9.7",
-    "vue-template-compiler": "^2.6.12",
+    "vue-template-compiler": "^2.6.13",
     "vuex": "^3.6.2",
     "webextension-polyfill": "^0.8.0"
   },
