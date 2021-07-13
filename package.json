@@ -11,7 +11,7 @@
   },
   "devDependencies": {
     "base64-inline-loader": "^1.1.1",
-    "copy-webpack-plugin": "^9.0.0",
+    "copy-webpack-plugin": "^9.0.1",
     "css-loader": "^5.2.6",
     "eslint": "^7.28.0",
     "eslint-plugin-mozilla": "^2.10.0",
