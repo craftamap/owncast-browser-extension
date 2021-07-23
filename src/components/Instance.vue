@@ -20,7 +20,7 @@
             >{{ instance.status }}</span></a>
         </div>
         <div class="text-sm">
-          {{ instance.description }}
+          {{ instance.description | stripHTML }}
         </div>
         <div class="flex justify-between items-center">
           <div id="left">
@@ -105,6 +105,11 @@ export default {
 			console.log('clicked remove on', instanceUrl);
 			this.$store.dispatch('removeInstanceInStorage', instanceUrl);
 		}
-	}
+	},
+        filters: {
+                stripHTML: function(string) {
+                        return string.replace(/<\/?[^>]+>/ig, " ");
+                }
+        }
 }
 </script>
