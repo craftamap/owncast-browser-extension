@@ -1,15 +1,16 @@
 # Owncast Browser Extension 
 
-![tag](https://img.shields.io/github/v/tag/craftamap/owncast-browser-extension?style=flat-square) ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/craftamap/owncast-browser-extension/build?style=flat-square)
+![release](https://img.shields.io/github/v/release/craftamap/owncast-browser-extension?style=flat-square) ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/craftamap/owncast-browser-extension/build?style=flat-square)
 
-Owncast Browser Extension is a Firefox extension used to follow various
-Owncast Instances
+![Screenshot](meta/screenshot-chrome.png)
 
-![Screenshot](.github/screenshot.png)
+Owncast Browser Extension is a Firefox and Chrome/Chromium extension used to 
+follow various Owncast Instances
+
 
 ## Installation
 
-The addon can be installed from [addons.mozilla.com](https://addons.mozilla.org/en-US/firefox/addon/owncast-extension/).
+The addon can be installed from [addons.mozilla.com](https://addons.mozilla.org/en-US/firefox/addon/owncast-extension/) or from the [Chrome Web Store](https://chrome.google.com/webstore/detail/owncast-extension/djgneammmklaajinkihpibdpaflehgio?hl=de).
 
 ## Building and Development
 

@@ -1,6 +1,6 @@
 {
   "name": "firefox-owncast-extension",
-  "version": "0.1.3-dev",
+  "version": "0.3.0",
   "author": "Fabian Siegel <fabians1999@gmail.com>",
   "license": "MIT",
   "scripts": {
@@ -10,34 +10,29 @@
     "start": "web-ext run"
   },
   "devDependencies": {
-    "copy-webpack-plugin": "^7.0.0",
-    "eslint": "^7.18.0",
-    "eslint-plugin-mozilla": "^2.9.2",
-    "handlebars": "^4.7.6",
-    "handlebars-loader": "^1.7.1",
-    "html-webpack-plugin": "^4.5.1",
-    "mini-css-extract-plugin": "^1.3.4",
-    "sass": "^1.32.5",
-    "web-ext": "^5.5.0",
-    "webextension-polyfill-ts": "^0.22.0",
-    "webpack": "^5.16.0",
-    "webpack-cli": "^4.3.1"
+    "base64-inline-loader": "^1.1.1",
+    "copy-webpack-plugin": "^9.0.1",
+    "css-loader": "^5.2.6",
+    "eslint": "^7.28.0",
+    "eslint-plugin-mozilla": "^2.10.0",
+    "eslint-plugin-vue": "^7.12.1",
+    "file-loader": "^6.2.0",
+    "html-webpack-plugin": "^5.3.2",
+    "mini-css-extract-plugin": "^2.0.0",
+    "sass": "^1.35.2",
+    "sass-loader": "^12.1.0",
+    "web-ext": "^6.2.0",
+    "webextension-polyfill-ts": "^0.25.0",
+    "webpack": "^5.44.0",
+    "webpack-cli": "^4.7.2"
   },
   "dependencies": {
-    "@tailwindcss/forms": "^0.2.1",
-    "css-loader": "^5.0.1",
-    "eslint-plugin-vue": "^7.4.1",
-    "jquery": "^3.5.1",
-    "postcss-loader": "^4.1.0",
-    "sass-loader": "^10.1.1",
-    "scss-loader": "^0.0.1",
-    "tailwindcss": "^2.0.2",
     "urlcat": "^2.0.4",
-    "vue": "^2.6.12",
-    "vue-loader": "^15.9.6",
-    "vue-template-compiler": "^2.6.12",
-    "vuex": "^3.6.0",
-    "webextension-polyfill": "^0.7.0"
+    "vue": "^2.6.14",
+    "vue-loader": "^15.9.7",
+    "vue-template-compiler": "^2.6.14",
+    "vuex": "^3.6.2",
+    "webextension-polyfill": "^0.8.0"
   },
   "webExt": {
     "sourceDir": "addon",
@@ -52,7 +47,8 @@
       "webextensions": true
     },
     "globals": {
-      "browser": "off"
+      "browser": "off",
+      "process": "readonly"
     },
     "extends": [
       "eslint:recommended",

@@ -20,22 +20,24 @@ function foundSocialList(response, container) {
 			button.removeEventListener('click', onClick);
 			button.textContent = 'Wait...';
 			browser.runtime.sendMessage({
-				type: 'follow',
+				type: 'followButtonFollow',
 				data: {
 					url: window.location.href
 				},
 			}).then((response) => {
-				console.log(response);
+				process.env.NODE_ENV === 'development' && console.log(response);
 				return button.textContent = 'Done!';
 			}).catch((reason) => {
-				console.error('[foundSocialList]', reason);
+				process.env.NODE_ENV === 'development' && console.error('[foundSocialList]', reason);
 				return button.textContent = 'Failed...';
 			}).then(() => {
 				setTimeout(() => {
 					button.remove();
 					waitForContainer();
 				}, 3000)
-			}, console.trace);
+			}, (error) => {
+				process.env.NODE_ENV === 'development'  && console.trace(error);
+			});
 		};
 		button.addEventListener('click', onClick);
 		buttonContainer.after(button);
@@ -45,15 +47,15 @@ function foundSocialList(response, container) {
 			button.removeEventListener('click', onClick);
 			button.textContent = 'Wait...';
 			browser.runtime.sendMessage({
-				type: 'unfollow',
+				type: 'followButtonUnfollow',
 				data: {
 					url: window.location.href
 				},
 			}).then((response) => {
-				console.log(response);
+				process.env.NODE_ENV === 'development' && console.log(response);
 				return button.textContent = 'Done!';
 			}).catch((reason) => {
-				console.error('[foundSocialList]', reason);
+				process.env.NODE_ENV === 'development' && console.error('[foundSocialList]', reason);
 				return button.textContent = 'Failed...';
 			}).then(() => {
 				setTimeout(() => {
@@ -73,33 +75,33 @@ function waitForContainer() {
 	if (container === null) {
 		setTimeout(waitForContainer, 100);
 	} else {
-		console.log('trying to send message');
+		process.env.NODE_ENV === 'development' && console.log('trying to send message');
 		browser.runtime.sendMessage({
-			type: 'getStatus',
+			type: 'followButtonGetStatus',
 			data: {
 				url: window.location.href
 			},
 		}).then((response) => {
-			console.log('got response', response);
-			console.log(container);
+			process.env.NODE_ENV === 'development' && console.log('got response', response);
+			process.env.NODE_ENV === 'development' && console.log(container);
 			foundSocialList(response, container);
 		});
 	}
 }
 
 function autoChangeUsername() {
-	console.log('[autoChangeUsername]')
+	process.env.NODE_ENV === 'development' && console.log('[autoChangeUsername]')
 	browser.runtime.sendMessage({
 		type: 'getStoredUsername'
 	}).then((response) => {
-		console.log('[autoChangeUsername] got response', response);
+		process.env.NODE_ENV === 'development' && console.log('[autoChangeUsername] got response', response);
 		const username = response;
 		if (username) {
-			console.log('[autoChangeUsername] got valid username')
+			process.env.NODE_ENV === 'development' && console.log('[autoChangeUsername] got valid username')
 			
 			const usernameAlreadyStored = localStorage.getItem('owncast_username')
 			if (usernameAlreadyStored) {
-				console.log('[autoChangeUsername] found username', usernameAlreadyStored, 'associated with this instance - not changing username automatically')
+				process.env.NODE_ENV === 'development' && console.log('[autoChangeUsername] found username', usernameAlreadyStored, 'associated with this instance - not changing username automatically')
 				return;
 			}
 
@@ -108,15 +110,15 @@ function autoChangeUsername() {
 			const usernameUpdateButton = userInfoChange.querySelector('#button-update-username')
 
 			if (usernameUpdateInput.value === username) {
-				console.log('[autoChangeUsername] username already', usernameUpdateInput.value, 'not changing')
+				process.env.NODE_ENV === 'development' && console.log('[autoChangeUsername] username already', usernameUpdateInput.value, 'not changing')
 			} else {
-				console.log('[autoChangeUsername] changing username to', username)
+				process.env.NODE_ENV === 'development' && console.log('[autoChangeUsername] changing username to', username)
 				usernameUpdateInput.value = username;
 				usernameUpdateButton.click();
-				console.log('[autoChangeUsername] done!')
+				process.env.NODE_ENV === 'development' && console.log('[autoChangeUsername] done!')
 			}
 		} else {
-			console.log('[autoChangeUsername] no or invalid username found in storage. Bummer.')
+			process.env.NODE_ENV === 'development' && console.log('[autoChangeUsername] no or invalid username found in storage. Bummer.')
 		}
 	})
 }
@@ -129,14 +131,14 @@ function init() {
 	// If a webpage has an owncast-video-container, its propably an owncast instance
 	const timeouts = {};
 	const onTimeout = () => {
-		console.log('check for owncast video container');
+		process.env.NODE_ENV === 'development' && console.log('check for owncast video container');
 		if (document.getElementsByClassName('owncast-video-container').length < 1) {
-			console.log('no video container');
+			process.env.NODE_ENV === 'development' && console.log('no video container');
 			return;
 		}
 		clearTimeout(timeouts.thousendfivehundered);
 		clearTimeout(timeouts.threethousand);
-		console.log('found video container');
+		process.env.NODE_ENV === 'development' && console.log('found video container');
 		waitForContainer();
 		autoChangeUsername();
 	}

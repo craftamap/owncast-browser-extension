@@ -18,6 +18,12 @@ window.addEventListener('load', function (event) {
 			}
 		},
 		mutations: {
+			setTheme(state, theme) {
+				state.theme = theme;
+			},
+			setLayout(state, layout) {
+				state.layout = layout;
+			},
 			setLoading(state, newLoading) {
 				state.loading = newLoading
 			},
@@ -50,6 +56,16 @@ window.addEventListener('load', function (event) {
 			}
 		},
 		actions: {
+			fetchThemeAndLayout({commit}) {
+				return browser.runtime.sendMessage({
+					type: 'getSettings'
+				}).then((options) => {
+					return Promise.all([
+						commit('setTheme', options.theme),
+						commit('setLayout', options.layout),
+					])
+				})
+			},
 			updateInstanceData({commit}) {
 				commit('setLoading', true);
 				return browser.runtime.sendMessage({
@@ -133,10 +149,12 @@ window.addEventListener('load', function (event) {
 			store.commit('setInstances', request.data.instances);
 		}
 	});
-
-	window.app = new Vue({
-		store: store,
-		el: '#app-root',
-		render: h => h(App)
+	
+	store.dispatch('fetchThemeAndLayout').then(() => {
+		window.app = new Vue({
+			store: store,
+			el: '#app-root',
+			render: h => h(App)
+		});
 	});
 });
