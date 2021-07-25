@@ -98,6 +98,9 @@ window.addEventListener('load', function (event) {
 			},
 			checkConnectionAndAddInStorage({commit, dispatch}, url) {
 				commit('setAddLoading');
+				if (url.substr(-1) !== '/') {
+					url = url + '/';
+				}
 				new Promise((res, rej) => {
 					const urlObj = new URL(url);
 					if (!(urlObj.protocol === 'http:' || urlObj.protocol === 'https:')) {
