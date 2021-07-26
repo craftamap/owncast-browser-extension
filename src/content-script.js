@@ -99,9 +99,10 @@ function autoChangeUsername() {
 		if (username) {
 			process.env.NODE_ENV === 'development' && console.log('[autoChangeUsername] got valid username')
 			
-			const usernameAlreadyStored = localStorage.getItem('owncast_username')
-			if (usernameAlreadyStored) {
-				process.env.NODE_ENV === 'development' && console.log('[autoChangeUsername] found username', usernameAlreadyStored, 'associated with this instance - not changing username automatically')
+			const isCustomUsernameSet = localStorage.getItem('owncast_custom_username_set')
+			const potentialUsername = localStorage.getItem('owncast_username')
+			if (isCustomUsernameSet === 'true') {
+				process.env.NODE_ENV === 'development' && console.log('[autoChangeUsername] found username', potentialUsername, 'associated with this instance - not changing username automatically')
 				return;
 			}
 
