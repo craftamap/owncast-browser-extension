@@ -63,7 +63,7 @@ export default new Vuex.Store({
 		},
 	},
 	actions: {
-		getOptionsFromStorage({ commit }) {
+		async getOptionsFromStorage({ commit }) {
 			return browser.runtime.sendMessage({
 				type: 'getSettings',
 			}).then((options) => {
@@ -71,7 +71,7 @@ export default new Vuex.Store({
 				commit('setOptions', options);
 			})
 		},
-		storeOptionsInStorage({ commit, dispatch, state }) {
+		async storeOptionsInStorage({ commit, dispatch, state }) {
 			// Although not mutating, we should propably move this sendMessage to an
 			// vuex action as well
 			console.log('[store]', state.options);

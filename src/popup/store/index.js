@@ -54,7 +54,7 @@ export default new Vuex.Store({
 		}
 	},
 	actions: {
-		fetchThemeAndLayout({ commit }) {
+		async fetchThemeAndLayout({ commit }) {
 			console.log('fetch')
 			return browser.runtime.sendMessage({
 				type: 'getSettings'
@@ -65,7 +65,7 @@ export default new Vuex.Store({
 				])
 			})
 		},
-		updateInstanceData({ commit }) {
+		async updateInstanceData({ commit }) {
 			commit('setLoading', true);
 			return browser.runtime.sendMessage({
 				type: 'updateInstanceData',
@@ -76,7 +76,7 @@ export default new Vuex.Store({
 				commit('setLoading', false);
 			})
 		},
-		getInstanceData({ commit }) {
+		async getInstanceData({ commit }) {
 			console.log('action setInstances')
 			return browser.runtime.sendMessage({
 				type: 'getInstanceData',
@@ -85,7 +85,7 @@ export default new Vuex.Store({
 				commit('setInstances', instances)
 			})
 		},
-		removeInstanceInStorage({ commit, dispatch }, url) {
+		async removeInstanceInStorage({ dispatch }, url) {
 			return browser.runtime.sendMessage({
 				type: 'removeInstanceInStorage',
 				data: {
