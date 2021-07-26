@@ -8,10 +8,10 @@ module.exports = {
 	mode: 'production',
 	node: false,
 	entry: {
-		main: './src/main.js',
-		background: '/src/background.js',
-		'content-script': '/src/content-script.js',
-		'options': '/src/options.js',
+		main: './src/popup/main.js',
+		background: '/src/background/background.js',
+		'content-script': '/src/content-script/content-script.js',
+		'options': '/src/options/options.js',
 	},
 	output: {
 		publicPath: '',

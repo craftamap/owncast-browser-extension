@@ -103,9 +103,9 @@
 </template>
 
 <script>
-import LoadingIcon from './components/icons/LoadingIcon.vue';
-import ErrorIcon from './components/icons/ErrorIcon.vue';
-import SuccessIcon from './components/icons/SuccessIcon.vue';
+import LoadingIcon from '../shared/components/icons/LoadingIcon.vue';
+import ErrorIcon from '../shared/components/icons/ErrorIcon.vue';
+import SuccessIcon from '../shared/components/icons/SuccessIcon.vue';
 
 export default {
 
@@ -184,7 +184,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import "./scss/colors.scss";
+@import "../scss/colors.scss";
 
 html, body {
   min-height: 200px;

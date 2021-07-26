@@ -48,7 +48,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import "./scss/colors.scss";
+@import "../scss/colors.scss";
 
 .app {
 	display: flex;

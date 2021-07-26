@@ -29,9 +29,9 @@
 </template>
 
 <script>
-import LoadingIcon from './icons/LoadingIcon.vue';
-import SuccessIcon from './icons/SuccessIcon.vue';
-import ErrorIcon from './icons/ErrorIcon.vue';
+import LoadingIcon from '../../shared/components/icons/LoadingIcon.vue';
+import SuccessIcon from '../../shared/components/icons/SuccessIcon.vue';
+import ErrorIcon from '../../shared/components/icons/ErrorIcon.vue';
 import AddIcon from './icons/AddIcon.vue';
 
 export default {
@@ -69,8 +69,8 @@ export default {
 </script>
 
 <style lang="scss">
-@import "../scss/mixins.scss";
-@import "../scss/colors.scss";
+@import "../../scss/mixins.scss";
+@import "../../scss/colors.scss";
 
 .add-bar {
   @include shadow;

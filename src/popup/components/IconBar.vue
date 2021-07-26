@@ -64,14 +64,14 @@ export default {
 
 
 <style lang="scss">
-@import "../scss/mixins.scss";
-@import "../scss/colors.scss";
+@import "../../scss/mixins.scss";
+@import "../../scss/colors.scss";
 
 .logo-big {
   width: 1.5rem;
   height: 1.5rem;
   background-size: contain;
-  background-image: url('../resources/icon-96.png');
+  background-image: url('../../resources/icon-96.png');
 }
 
 .icon-bar {

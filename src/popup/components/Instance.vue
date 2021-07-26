@@ -119,8 +119,8 @@ export default {
 </script>
 
 <style lang="scss">
-@import "../scss/mixins.scss";
-@import "../scss/colors.scss";
+@import "../../scss/mixins.scss";
+@import "../../scss/colors.scss";
 
 .instance {
   @include shadow;

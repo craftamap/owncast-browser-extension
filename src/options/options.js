@@ -2,9 +2,9 @@ import browser from 'webextension-polyfill';
 import Vue from 'vue';
 import Vuex from 'vuex'
 import Options from './Options.vue';
-import './scss/main.scss';
+import '../scss/main.scss';
 
-window.addEventListener('load', function (event) {
+window.addEventListener('load', function (_) {
 	Vue.use(Vuex);
 	const store = new Vuex.Store({
 		state: {

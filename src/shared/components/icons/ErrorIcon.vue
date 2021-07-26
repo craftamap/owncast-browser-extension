@@ -22,7 +22,7 @@ export default {
 
 
 <style lang="scss">
-@import "../../scss/colors.scss";
+@import "../../../scss/colors.scss";
 
 .error-icon {
   width: 1rem;

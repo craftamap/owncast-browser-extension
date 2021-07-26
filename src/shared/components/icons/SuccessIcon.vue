@@ -21,7 +21,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import "../../scss/colors.scss";
+@import "../../../scss/colors.scss";
 
 .success-icon {
   width: 1rem;
