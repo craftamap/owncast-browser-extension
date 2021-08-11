@@ -1,6 +1,6 @@
 {
   "name": "firefox-owncast-extension",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "author": "Fabian Siegel <fabians1999@gmail.com>",
   "license": "MIT",
   "scripts": {
@@ -23,7 +23,7 @@
     "sass-loader": "^12.1.0",
     "web-ext": "^6.2.0",
     "webextension-polyfill-ts": "^0.26.0",
-    "webpack": "^5.44.0",
+    "webpack": "^5.50.0",
     "webpack-cli": "^4.7.2"
   },
   "dependencies": {
