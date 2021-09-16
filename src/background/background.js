@@ -79,7 +79,7 @@ const sendNotifications = async (oldData, newData) => {
 			browser.notifications.create({
 				type: 'basic',
 				title: item.name + ' is online',
-				message: item.description,
+				message: item.description.replace(/<\/?[^>]+>/ig, " "),
 				iconUrl: item.logo,
 			})
 		})
