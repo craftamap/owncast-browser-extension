@@ -110,11 +110,11 @@ export default {
 			this.$store.dispatch('removeInstanceInStorage', instanceUrl);
 		}
 	},
-        filters: {
-                stripHTML: function(string) {
-                        return string.replace(/<\/?[^>]+>/ig, " ");
-                }
-        }
+  filters: {
+    stripHTML: function(string) {
+      return string.replace(/<\/?[^>]+>/ig, " ");
+    }
+  }
 }
 </script>
 
