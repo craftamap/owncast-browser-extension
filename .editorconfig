@@ -8,6 +8,6 @@ insert_final_newline = false
 
 # Matches multiple files with brace expansion notation
 # Set default charset
-[*js]
+[*.{js,vue}]
 charset = utf-8
 indent_style = tab
