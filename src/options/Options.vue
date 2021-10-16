@@ -5,7 +5,7 @@
   >
     <h1>
       Pop-Up and Notifications
-    </h1> 
+    </h1>
     <div class="form-section">
       <label>
         <div>pop-up theme</div>
@@ -69,7 +69,7 @@
     </div>
     <h1>
       Automatic Username
-    </h1> 
+    </h1>
     <div class="form-section">
       <label>
         <div>your username</div>
@@ -89,10 +89,10 @@
         type="submit"
         value="Save"
       >
-      <LoadingIcon 
+      <LoadingIcon
         v-if="displayLoading"
       />
-      <ErrorIcon 
+      <ErrorIcon
         v-if="displayError"
       />
       <SuccessIcon
@@ -103,27 +103,27 @@
 </template>
 
 <script>
-import LoadingIcon from '../shared/components/icons/LoadingIcon.vue';
-import ErrorIcon from '../shared/components/icons/ErrorIcon.vue';
-import SuccessIcon from '../shared/components/icons/SuccessIcon.vue';
+import LoadingIcon from '../shared/components/icons/LoadingIcon.vue'
+import ErrorIcon from '../shared/components/icons/ErrorIcon.vue'
+import SuccessIcon from '../shared/components/icons/SuccessIcon.vue'
 
 export default {
 
-	name:'Options',
+	name: 'Options',
 	components: {
 		LoadingIcon,
-		ErrorIcon, 
+		ErrorIcon,
 		SuccessIcon,
 	},
 	computed: {
-		displayLoading() {
-			return this.$store.state.display.loading;
+		displayLoading () {
+			return this.$store.state.display.loading
 		},
-		displayError() {
-			return this.$store.state.display.error;
+		displayError () {
+			return this.$store.state.display.error
 		},
-		displaySuccess() {
-			return this.$store.state.display.success;
+		displaySuccess () {
+			return this.$store.state.display.success
 		},
 		badge: {
 			get () {
@@ -131,7 +131,7 @@ export default {
 			},
 			set (value) {
 				this.$store.commit('setBadge', value)
-			}
+			},
 		},
 		notifications: {
 			get () {
@@ -139,7 +139,7 @@ export default {
 			},
 			set (value) {
 				this.$store.commit('setNotifications', value)
-			}
+			},
 		},
 		interval: {
 			get () {
@@ -147,7 +147,7 @@ export default {
 			},
 			set (value) {
 				this.$store.commit('setInterval', value)
-			}
+			},
 		},
 		username: {
 			get () {
@@ -155,7 +155,7 @@ export default {
 			},
 			set (value) {
 				this.$store.commit('setUsername', value)
-			}
+			},
 		},
 		theme: {
 			get () {
@@ -163,7 +163,7 @@ export default {
 			},
 			set (value) {
 				this.$store.commit('setTheme', value)
-			}
+			},
 		},
 		layout: {
 			get () {
@@ -171,15 +171,15 @@ export default {
 			},
 			set (value) {
 				this.$store.commit('setLayout', value)
-			}
-		}
-	},	
+			},
+		},
+	},
 	methods: {
-		async store(e) {
-			e.preventDefault();
-			return this.$store.dispatch('storeOptionsInStorage');
-		}
-	}
+		async store (e) {
+			e.preventDefault()
+			return this.$store.dispatch('storeOptionsInStorage')
+		},
+	},
 }
 </script>
 
@@ -201,7 +201,7 @@ form {
   }
 
   input[type='submit'] {
-    background-color: $blue-600; 
+    background-color: $blue-600;
     padding: 0.5rem 0;
     width: 8rem;
     margin: 0.5rem 0.5rem 0.5rem 0;
@@ -209,7 +209,7 @@ form {
     color: white;
 
     &:active {
-      background-color: $blue-800; 
+      background-color: $blue-800;
     }
   }
 }

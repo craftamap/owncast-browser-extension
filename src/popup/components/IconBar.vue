@@ -20,10 +20,10 @@
     </div>
     <div id="right">
       <AddIcon
-        class="add-icon-big" 
+        class="add-icon-big"
         @click="toggleShowAddBar"
       />
-      <CogWheelIcon 
+      <CogWheelIcon
         @click="openSettingsPage"
       />
     </div>
@@ -31,10 +31,10 @@
 </template>
 
 <script>
-import AddIcon from './icons/AddIcon.vue';
-import RefreshIcon from './icons/RefreshIcon.vue';
-import CogWheelIcon from './icons/CogWheelIcon.vue';
-import browser from 'webextension-polyfill';
+import AddIcon from './icons/AddIcon.vue'
+import RefreshIcon from './icons/RefreshIcon.vue'
+import CogWheelIcon from './icons/CogWheelIcon.vue'
+import browser from 'webextension-polyfill'
 
 export default {
 	name: 'IconBar',
@@ -44,24 +44,23 @@ export default {
 		CogWheelIcon,
 	},
 	computed: {
-		isLoading() {
+		isLoading () {
 			return this.$store.state.loading
-		}
+		},
 	},
 	methods: {
-		refresh(event) {
-			this.$store.dispatch('updateInstanceData');
+		refresh (event) {
+			this.$store.dispatch('updateInstanceData')
 		},
-		toggleShowAddBar(event) {
-			this.$store.commit('toggleShowAddBar'); 
+		toggleShowAddBar (event) {
+			this.$store.commit('toggleShowAddBar')
 		},
-		openSettingsPage() {
-			browser.runtime.openOptionsPage();
+		openSettingsPage () {
+			browser.runtime.openOptionsPage()
 		},
-	}
+	},
 }
 </script>
-
 
 <style lang="scss">
 @import "../../scss/mixins.scss";
@@ -86,7 +85,7 @@ export default {
   align-items: center;
 
   div#left {
-    justify-self: start; 
+    justify-self: start;
   }
 
   div#right {
@@ -98,7 +97,7 @@ export default {
 	}
 
   .dark & {
-   background-color: $gray-800; 
+   background-color: $gray-800;
   }
 }
 

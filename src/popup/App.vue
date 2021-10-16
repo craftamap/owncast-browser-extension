@@ -3,11 +3,11 @@
        TODO: add themes to not-trim list -->
   <div
     id="theme-wrapper"
-    :class="[getTheme === 'dark' ? 'dark' : 'light', getLayout === 'compact' ? 'layout-compact' : 'layout-normal' ]" 
+    :class="[getTheme === 'dark' ? 'dark' : 'light', getLayout === 'compact' ? 'layout-compact' : 'layout-normal' ]"
   >
-	<!-- FIXME: layout-compact : layout-normal -->
+    <!-- FIXME: layout-compact : layout-normal -->
     <div
-			class="app"
+      class="app"
     >
       <IconBar />
       <AddBar v-if="showAddBar" />
@@ -16,34 +16,33 @@
   </div>
 </template>
 
-
 <script>
-import IconBar from './components/IconBar.vue';
-import Instances from './components/Instances.vue';
-import AddBar from './components/AddBar.vue';
+import IconBar from './components/IconBar.vue'
+import Instances from './components/Instances.vue'
+import AddBar from './components/AddBar.vue'
 
 export default {
 	name: 'App',
 	components: {
 		IconBar,
 		Instances,
-		AddBar
+		AddBar,
 	},
 	computed: {
-		showAddBar() {
-			return this.$store.state.add.show;
+		showAddBar () {
+			return this.$store.state.add.show
 		},
-		getTheme() {
-			return this.$store.state.theme;
+		getTheme () {
+			return this.$store.state.theme
 		},
-		getLayout() {
-			return this.$store.state.layout;
+		getLayout () {
+			return this.$store.state.layout
 		},
 	},
-	created() {
-		console.log('created App');
-		this.$store.dispatch('getInstanceData');
-	}
+	created () {
+		console.log('created App')
+		this.$store.dispatch('getInstanceData')
+	},
 }
 </script>
 
@@ -62,11 +61,11 @@ export default {
 	.layout-compact & {
 		padding: 0;
 	}
-	
+
 	.dark & {
 		background-color: $gray-900;
 		color: white;
 	}
 }
-	
+
 </style>

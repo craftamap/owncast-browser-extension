@@ -15,13 +15,13 @@
         v-if="displayButton"
         @click="submit"
       />
-      <LoadingIcon 
+      <LoadingIcon
         v-if="displayLoading"
       />
       <ErrorIcon
         v-if="displayError"
       />
-      <SuccessIcon 
+      <SuccessIcon
         v-if="displaySuccess"
       />
     </div>
@@ -29,10 +29,10 @@
 </template>
 
 <script>
-import LoadingIcon from '../../shared/components/icons/LoadingIcon.vue';
-import SuccessIcon from '../../shared/components/icons/SuccessIcon.vue';
-import ErrorIcon from '../../shared/components/icons/ErrorIcon.vue';
-import AddIcon from './icons/AddIcon.vue';
+import LoadingIcon from '../../shared/components/icons/LoadingIcon.vue'
+import SuccessIcon from '../../shared/components/icons/SuccessIcon.vue'
+import ErrorIcon from '../../shared/components/icons/ErrorIcon.vue'
+import AddIcon from './icons/AddIcon.vue'
 
 export default {
 	name: 'AddBar',
@@ -43,29 +43,29 @@ export default {
 		AddIcon,
 	},
 	computed: {
-		displayButton() {
-			const loading = this.$store.state.add.loading;
-			const error = this.$store.state.add.error;
-			const success = this.$store.state.add.success;
-			return !(loading || error || success);
+		displayButton () {
+			const loading = this.$store.state.add.loading
+			const error = this.$store.state.add.error
+			const success = this.$store.state.add.success
+			return !(loading || error || success)
 		},
-		displayLoading() {
-			return this.$store.state.add.loading;
+		displayLoading () {
+			return this.$store.state.add.loading
 		},
-		displayError() {
-			return this.$store.state.add.error;
+		displayError () {
+			return this.$store.state.add.error
 		},
-		displaySuccess() {
-			return this.$store.state.add.success;
+		displaySuccess () {
+			return this.$store.state.add.success
 		},
 	},
 	methods: {
-		submit() {
-			console.log(this.url);
-			this.$store.dispatch('checkConnectionAndAddInStorage', this.url);
-		}
-	}
-};
+		submit () {
+			console.log(this.url)
+			this.$store.dispatch('checkConnectionAndAddInStorage', this.url)
+		},
+	},
+}
 </script>
 
 <style lang="scss">
@@ -87,7 +87,7 @@ export default {
 	}
 
   .dark & {
-   background-color: $gray-800; 
+   background-color: $gray-800;
   }
 }
 

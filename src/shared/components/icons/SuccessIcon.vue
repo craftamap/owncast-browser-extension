@@ -16,7 +16,7 @@
 
 <script>
 export default {
-	name: 'SuccessIcon'
+	name: 'SuccessIcon',
 }
 </script>
 

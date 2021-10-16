@@ -1,7 +1,7 @@
 <template>
   <svg
-    class="refresh-icon"
     id="refresh"
+    class="refresh-icon"
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 20 20"
     fill="currentColor"
@@ -16,15 +16,17 @@
   </svg>
 </template>
 
-
 <script>
 export default {
 	name: 'RefreshIcon',
+	emits: [
+		'click',
+	],
 	methods: {
-		emitClick() {
-			this.$emit('click');
-		}
-	}
+		emitClick () {
+			this.$emit('click')
+		},
+	},
 }
 </script>
 

@@ -25,7 +25,7 @@
 
   .no-instances--description {
     font-size: 0.875rem;
-    line-height: 1.25rem;  
+    line-height: 1.25rem;
   }
 }
 </style>

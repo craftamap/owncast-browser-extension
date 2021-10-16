@@ -43,7 +43,7 @@
               title="uptime"
             >
               <UptimeIcon />
-              {{ instance.onlineSince.hour }}h {{ instance.onlineSince.minute }}m 
+              {{ instance.onlineSince.hour }}h {{ instance.onlineSince.minute }}m
             </div>
           </div>
           <div id="right">
@@ -71,9 +71,9 @@
 </template>
 
 <script>
-import ViewerIcon from './icons/ViewerIcon.vue';
-import UptimeIcon from './icons/UptimeIcon.vue';
-import RemoveIcon from './icons/RemoveIcon.vue';
+import ViewerIcon from './icons/ViewerIcon.vue'
+import UptimeIcon from './icons/UptimeIcon.vue'
+import RemoveIcon from './icons/RemoveIcon.vue'
 
 export default {
 	name: 'Instance',
@@ -82,39 +82,39 @@ export default {
 		UptimeIcon,
 		RemoveIcon,
 	},
+	filters: {
+		stripHTML: function (string) {
+			return string.replace(/<\/?[^>]+>/ig, ' ')
+		},
+	},
 	props: {
 		instance: {
 			type: Object,
-			default: () => {return {}}
-		}
+			default: () => { return {} },
+		},
 	},
-	data() {
+	data () {
 		return {
 			showRemove: false,
 		}
 	},
 	computed: {
-		backgroundSrc() {
+		backgroundSrc () {
 			return {
-				'background-image': 'url('+(this.instance.online ? this.instance.thumbnail : this.instance.logo) +')',
+				'background-image': 'url(' + (this.instance.online ? this.instance.thumbnail : this.instance.logo) + ')',
 			}
-		}
-	}, 
-	methods: {
-		toggleRemove() {
-			this.showRemove = !this.showRemove;
 		},
-		remove() {
-			const instanceUrl = this.instance.instance;
-			console.log('clicked remove on', instanceUrl);
-			this.$store.dispatch('removeInstanceInStorage', instanceUrl);
-		}
 	},
-  filters: {
-    stripHTML: function(string) {
-      return string.replace(/<\/?[^>]+>/ig, " ");
-    }
-  }
+	methods: {
+		toggleRemove () {
+			this.showRemove = !this.showRemove
+		},
+		remove () {
+			const instanceUrl = this.instance.instance
+			console.log('clicked remove on', instanceUrl)
+			this.$store.dispatch('removeInstanceInStorage', instanceUrl)
+		},
+	},
 }
 </script>
 
@@ -128,19 +128,19 @@ export default {
   flex-direction: column;
   margin-top: 0.5rem;
   padding: 1rem;
-  border-radius: 0.25rem; 
+  border-radius: 0.25rem;
 
-	.layout-compact & {
+  .layout-compact & {
     margin-top: 0.125rem;
-		padding: 0.25rem 0.5rem;
-	}
+    padding: 0.25rem 0.5rem;
+  }
 
   .dark & {
-    background-color: $gray-800; 
+    background-color: $gray-800;
   }
 
   .delete-section {
-    margin-bottom: 0.5rem;    
+    margin-bottom: 0.5rem;
 
     button {
         background-color: $red-500;
@@ -165,7 +165,7 @@ export default {
     background-position: center;
     margin-right: 1rem;
     flex-shrink: 0;
-	  .layout-compact & {
+    .layout-compact & {
       width: 6rem;
       height: 4rem;
     }

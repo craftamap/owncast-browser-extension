@@ -18,12 +18,15 @@
 <script>
 export default {
 	name: 'RemoveIcon',
+	emits: [
+		'click',
+	],
 	methods: {
-		emitClick() {
-			this.$emit('click');
-		}
-	}
-  
+		emitClick () {
+			this.$emit('click')
+		},
+	},
+
 }
 </script>
 

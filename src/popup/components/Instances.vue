@@ -5,24 +5,24 @@
       :key="instance.instance"
       :instance="instance"
     />
-		<NoInstances v-if="instances.length == 0" />
+    <NoInstances v-if="instances.length == 0" />
   </div>
 </template>
 
 <script>
-import Instance from './Instance.vue';
-import NoInstances from './NoInstances.vue';
+import Instance from './Instance.vue'
+import NoInstances from './NoInstances.vue'
 
 export default {
-	name:'Instances',
+	name: 'Instances',
 	components: {
 		Instance,
-		NoInstances
+		NoInstances,
 	},
 	computed: {
-		instances() {
-			return this.$store.state.instances;
-		}
-	}
+		instances () {
+			return this.$store.state.instances
+		},
+	},
 }
 </script>

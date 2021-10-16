@@ -18,11 +18,15 @@
 <script>
 export default {
 	name: 'AddIcon',
+	emits: [
+		'click',
+	],
 	methods: {
-		emitClick() {
-			this.$emit('click');
-		}  
-	}
+		emitClick () {
+			this.$emit('click')
+		},
+
+	},
 }
 </script>
 
@@ -39,4 +43,3 @@ export default {
   height: 1.5rem;
 }
 </style>
-

@@ -1,8 +1,8 @@
-import browser from 'webextension-polyfill';
-import Vue from 'vue';
+import browser from 'webextension-polyfill'
+import Vue from 'vue'
 import Vuex from 'vuex'
 
-Vue.use(Vuex);
+Vue.use(Vuex)
 
 export default new Vuex.Store({
 	state: {
@@ -16,71 +16,71 @@ export default new Vuex.Store({
 			notifications: false,
 			interval: 0,
 			username: '',
-		}
+		},
 	},
 	mutations: {
-		setDisplayLoading(state) {
-			state.display.loading = true;
-			state.display.success = false;
-			state.display.error = false;
+		setDisplayLoading (state) {
+			state.display.loading = true
+			state.display.success = false
+			state.display.error = false
 		},
-		setDisplaySuccess(state) {
-			state.display.loading = false;
-			state.display.success = true;
-			state.display.error = false;
+		setDisplaySuccess (state) {
+			state.display.loading = false
+			state.display.success = true
+			state.display.error = false
 		},
-		setDisplayError(state) {
-			state.display.loading = false;
-			state.display.success = false;
-			state.display.error = true;
+		setDisplayError (state) {
+			state.display.loading = false
+			state.display.success = false
+			state.display.error = true
 		},
-		unsetDisplay(state) {
-			state.display.loading = false;
-			state.display.success = false;
-			state.display.error = false;
+		unsetDisplay (state) {
+			state.display.loading = false
+			state.display.success = false
+			state.display.error = false
 		},
-		setOptions(state, options) {
-			state.options = options;
-			console.log('[setOptions]', state.options);
+		setOptions (state, options) {
+			state.options = options
+			console.log('[setOptions]', state.options)
 		},
-		setBadge(state, badge) {
-			state.options.badge = badge;
+		setBadge (state, badge) {
+			state.options.badge = badge
 		},
-		setNotifications(state, notifications) {
-			state.options.notifications = notifications;
+		setNotifications (state, notifications) {
+			state.options.notifications = notifications
 		},
-		setInterval(state, interval) {
-			state.options.interval = interval;
+		setInterval (state, interval) {
+			state.options.interval = interval
 		},
-		setUsername(state, username) {
-			state.options.username = username;
+		setUsername (state, username) {
+			state.options.username = username
 		},
-		setTheme(state, theme) {
-			state.options.theme = theme;
+		setTheme (state, theme) {
+			state.options.theme = theme
 		},
-		setLayout(state, layout) {
-			state.options.layout = layout;
+		setLayout (state, layout) {
+			state.options.layout = layout
 		},
 	},
 	actions: {
-		async getOptionsFromStorage({ commit }) {
+		async getOptionsFromStorage ({ commit }) {
 			return browser.runtime.sendMessage({
 				type: 'getSettings',
 			}).then((options) => {
-				console.log('[getOptionsFromStorage]', options);
-				commit('setOptions', options);
+				console.log('[getOptionsFromStorage]', options)
+				commit('setOptions', options)
 			})
 		},
-		async storeOptionsInStorage({ commit, dispatch, state }) {
+		async storeOptionsInStorage ({ commit, dispatch, state }) {
 			// Although not mutating, we should propably move this sendMessage to an
 			// vuex action as well
-			console.log('[store]', state.options);
-			commit('setDisplayLoading');
+			console.log('[store]', state.options)
+			commit('setDisplayLoading')
 			return browser.runtime.sendMessage({
 				type: 'storeSettings',
 				data: {
-					options: { ...state.options }
-				}
+					options: { ...state.options },
+				},
 			}).then(() => {
 				return dispatch('getOptionsFromStorage')
 			}).then(() => {
@@ -88,15 +88,12 @@ export default new Vuex.Store({
 			}).catch(() => {
 				return commit('setDisplayError')
 			}).then(() => {
-				new Promise((res) => {
+				return new Promise(() => {
 					setTimeout(() => {
 						commit('unsetDisplay')
-						res();
-					}, 3000);
+					}, 3000)
 				})
 			})
-
-		}
-	}
-});
-
+		},
+	},
+})

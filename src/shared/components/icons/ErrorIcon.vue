@@ -16,10 +16,9 @@
 
 <script>
 export default {
-	name: 'ErrorIcon'
+	name: 'ErrorIcon',
 }
 </script>
-
 
 <style lang="scss">
 @import "../../../scss/colors.scss";

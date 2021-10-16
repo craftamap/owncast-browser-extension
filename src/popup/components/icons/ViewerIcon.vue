@@ -13,7 +13,7 @@
 
 <script>
 export default {
-	name: 'ViewerIcon' 
+	name: 'ViewerIcon',
 }
 </script>
 
