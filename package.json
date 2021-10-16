@@ -6,7 +6,7 @@
   "scripts": {
     "build": "webpack && web-ext build",
     "watch": "webpack --watch",
-    "lint": "eslint src/ && web-ext lint",
+    "lint": "eslint src/ --ext .js --ext .vue && web-ext lint",
     "start": "web-ext run"
   },
   "devDependencies": {
@@ -14,7 +14,11 @@
     "copy-webpack-plugin": "^9.0.1",
     "css-loader": "^6.2.0",
     "eslint": "^7.28.0",
+    "eslint-config-standard": "^16.0.3",
+    "eslint-plugin-import": "^2.23.4",
     "eslint-plugin-mozilla": "^2.10.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^5.1.0",
     "eslint-plugin-vue": "^7.12.1",
     "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.3.2",
@@ -52,7 +56,8 @@
     },
     "extends": [
       "eslint:recommended",
-      "plugin:vue/vue3-recommended"
+      "plugin:vue/vue3-recommended",
+      "standard"
     ],
     "parserOptions": {
       "sourceType": "module",
@@ -69,6 +74,8 @@
           "SwitchCase": 1
         }
       ],
+      "no-tabs": ["error", { "allowIndentationTabs": true }],
+      "comma-dangle": ["error", "always-multiline"],
       "no-unused-vars": [
         "error",
         {
@@ -82,6 +89,10 @@
       ],
       "camelcase": 2,
       "curly": 2,
+      "object-curly-spacing": [
+        "error",
+        "always"
+      ],
       "space-in-parens": [
         "error",
         "never"
