@@ -25,7 +25,7 @@
             >{{ instance.status }}</span></a>
         </div>
         <div class="instance-text-description">
-          {{ instance.description | stripHTML }}
+          {{ instanceDescription }}
         </div>
         <div class="instance-icon-bar">
           <div id="left">
@@ -71,6 +71,7 @@
 </template>
 
 <script>
+import stripHtml from '../../shared/util/stripHtml'
 import ViewerIcon from './icons/ViewerIcon.vue'
 import UptimeIcon from './icons/UptimeIcon.vue'
 import RemoveIcon from './icons/RemoveIcon.vue'
@@ -81,11 +82,6 @@ export default {
 		ViewerIcon,
 		UptimeIcon,
 		RemoveIcon,
-	},
-	filters: {
-		stripHTML: function (string) {
-			return string.replace(/<\/?[^>]+>/ig, ' ')
-		},
 	},
 	props: {
 		instance: {
@@ -103,6 +99,9 @@ export default {
 			return {
 				'background-image': 'url(' + (this.instance.online ? this.instance.thumbnail : this.instance.logo) + ')',
 			}
+		},
+		instanceDescription () {
+			return stripHtml(this.instance.description)
 		},
 	},
 	methods: {

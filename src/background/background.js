@@ -1,6 +1,7 @@
 import browser from 'webextension-polyfill'
 import api from './api/owncast'
 import Storage from './util/storage'
+import stripHtml from '../shared/util/stripHtml'
 import urlcat from 'urlcat'
 
 function dateDiff (timestamp, structure = dateDiff.structure) {
@@ -80,7 +81,7 @@ const sendNotifications = async (oldData, newData) => {
 			browser.notifications.create({
 				type: 'basic',
 				title: item.name + ' is online',
-				message: item.description.replace(/<\/?[^>]+>/ig, ' '),
+				message: stripHtml(item.description),
 				iconUrl: item.logo,
 			})
 		})
