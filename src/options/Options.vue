@@ -1,112 +1,127 @@
 <template>
-  <form
-    id="options"
-    @submit="store"
-  >
-    <h1>
-      Pop-Up and Notifications
-    </h1>
-    <div class="form-section">
-      <label>
-        <div>pop-up theme</div>
-        <select
-          id="theme"
-          v-model="theme"
-          name="theme"
+  <div>
+    <form
+      id="options"
+      @submit="store"
+    >
+      <h1>
+        Pop-Up and Notifications
+      </h1>
+      <div class="form-section">
+        <label>
+          <div>pop-up theme</div>
+          <select
+            id="theme"
+            v-model="theme"
+            name="theme"
+          >
+            <option>dark</option>
+            <option>light</option>
+          </select>
+        </label>
+      </div>
+      <div class="form-section">
+        <label>
+          <div>pop-up layout</div>
+          <select
+            id="layout"
+            v-model="layout"
+            name="layout"
+          >
+            <option>normal</option>
+            <option>compact</option>
+          </select>
+        </label>
+      </div>
+      <div class="form-section">
+        <input
+          id="notifications"
+          v-model="notifications"
+          type="checkbox"
+          name="notifications"
         >
-          <option>dark</option>
-          <option>light</option>
-        </select>
-      </label>
-    </div>
-    <div class="form-section">
-      <label>
-        <div>pop-up layout</div>
-        <select
-          id="layout"
-          v-model="layout"
-          name="layout"
+        <label
+          for="notifications"
+        >Enable Notifications</label>
+      </div>
+      <div class="form-section">
+        <input
+          id="badge"
+          v-model="badge"
+          type="checkbox"
+          name="badge"
         >
-          <option>normal</option>
-          <option>compact</option>
-        </select>
-      </label>
-    </div>
-    <div class="form-section">
-      <input
-        id="notifications"
-        v-model="notifications"
-        type="checkbox"
-        name="notifications"
-      >
-      <label
-        for="notifications"
-      >Enable Notifications</label>
-    </div>
-    <div class="form-section">
-      <input
-        id="badge"
-        v-model="badge"
-        type="checkbox"
-        name="badge"
-      >
-      <label
-        for="badge"
-      >Enable Badge</label>
-    </div>
+        <label
+          for="badge"
+        >Enable Badge</label>
+      </div>
+      <div>
+        <label>
+          <div>interval for background refresh</div>
+          <input
+            id="interval"
+            v-model="interval"
+            type="number"
+            min="30"
+            max="86400"
+            name="interval"
+          >
+        </label>
+      </div>
+      <h1>
+        Automatic Username
+      </h1>
+      <div class="form-section">
+        <label>
+          <div>your username</div>
+          <div class="description">this username will be automatically set on new owncast instances. Leave empty if you don't want to set a username automatically.</div>
+          <input
+            id="username"
+            v-model="username"
+            class="input-text"
+            type="text"
+            name="username"
+            placeholder="your username..."
+          >
+        </label>
+      </div>
+      <div class="flex items-center">
+        <input
+          type="submit"
+          value="Save"
+        >
+        <LoadingIcon
+          v-if="displayLoading"
+        />
+        <ErrorIcon
+          v-if="displayError"
+        />
+        <SuccessIcon
+          v-if="displaySuccess"
+        />
+      </div>
+    </form>
     <div>
-      <label>
-        <div>interval for background refresh</div>
+      <div class="flex items-center">
         <input
-          id="interval"
-          v-model="interval"
-          type="number"
-          min="30"
-          max="86400"
-          name="interval"
+          type="button"
+          value="Export"
+          @click="triggerExport"
         >
-      </label>
-    </div>
-    <h1>
-      Automatic Username
-    </h1>
-    <div class="form-section">
-      <label>
-        <div>your username</div>
-        <div class="description">this username will be automatically set on new owncast instances. Leave empty if you don't want to set a username automatically.</div>
+      </div>
+      <div class="flex items-center">
         <input
-          id="username"
-          v-model="username"
-          class="input-text"
-          type="text"
-          name="username"
-          placeholder="your username..."
+          ref="importFile"
+          type="file"
         >
-      </label>
+        <input
+          type="button"
+          value="Import"
+          @click="triggerImport"
+        >
+      </div>
     </div>
-    <div class="flex items-center">
-      <input
-        type="submit"
-        value="Save"
-      >
-      <LoadingIcon
-        v-if="displayLoading"
-      />
-      <ErrorIcon
-        v-if="displayError"
-      />
-      <SuccessIcon
-        v-if="displaySuccess"
-      />
-    </div>
-    <div class="flex items-center">
-      <input
-        type="button"
-        value="Export"
-        @click="triggerExport"
-      >
-    </div>
-  </form>
+  </div>
 </template>
 
 <script>
@@ -190,6 +205,14 @@ export default {
 			e.preventDefault()
 			this.$store.dispatch('generateExport')
 		},
+		async triggerImport (e) {
+			e.preventDefault()
+			/** @type {HTMLInputElement} */
+			const importFile = this.$refs.importFile
+			if (importFile.files.length > 0) {
+				this.$store.dispatch('triggerImport', importFile.files[0])
+			}
+		},
 	},
 }
 </script>
@@ -206,22 +229,22 @@ form {
   font-size: 1rem;
   line-height: 1.5rem;
   margin: 2rem;
+}
 
-  input[type='checkbox'] + label {
-    margin-left: 1rem;
-  }
+input[type='checkbox'] + label {
+  margin-left: 1rem;
+}
 
-  input[type='submit'] {
-    background-color: $blue-600;
-    padding: 0.5rem 0;
-    width: 8rem;
-    margin: 0.5rem 0.5rem 0.5rem 0;
-    border-radius: 0.25rem;
-    color: white;
+input[type='submit'] {
+  background-color: $blue-600;
+  padding: 0.5rem 0;
+  width: 8rem;
+  margin: 0.5rem 0.5rem 0.5rem 0;
+  border-radius: 0.25rem;
+  color: white;
 
-    &:active {
-      background-color: $blue-800;
-    }
+  &:active {
+    background-color: $blue-800;
   }
 }
 

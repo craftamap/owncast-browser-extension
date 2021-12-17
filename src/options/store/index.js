@@ -22,7 +22,7 @@
 import browser from 'webextension-polyfill'
 import Vue from 'vue'
 import Vuex from 'vuex'
-import { generateExport } from '../util/export-import'
+import { generateExport, parseExport } from '../util/export-import'
 
 Vue.use(Vuex)
 export default new Vuex.Store({
@@ -132,18 +132,20 @@ export default new Vuex.Store({
 		},
 		async generateExport ({ commit, dispatch, state }) {
 			return Promise.all([dispatch('getInstancesFromStorage'), dispatch('getOptionsFromStorage')]).then(() => {
-				const exportData = generateExport(state)
-				console.log('[generateExport]', exportData)
-				const blob = new Blob([JSON.stringify(exportData)], { type: 'application/json' })
-				const url = URL.createObjectURL(blob)
+				const exportDataBlob = generateExport(state)
+				const url = URL.createObjectURL(exportDataBlob)
 				const link = document.createElement('a')
-				link.download = 'export.json'
+				link.download = 'owncast-browser-extension-export.json'
 				link.href = url
 				link.click()
 				URL.revokeObjectURL(link.href)
 
 				window.open(url, '_blank')
 			})
+		},
+		async triggerImport ({ dispatch }, file) {
+			const parsedExport = await parseExport(file)
+			console.log(parsedExport)
 		},
 	},
 })
