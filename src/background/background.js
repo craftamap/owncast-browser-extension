@@ -94,8 +94,13 @@ const setBadge = async (instanceData) => {
 	const options = await Storage.getOptionsFromStorage()
 	if (options.badge) {
 		const online = instanceData.filter((a) => { return a.online })
-		await browser.browserAction.setBadgeBackgroundColor({ color: '#3d007a' })
-		await browser.browserAction.setBadgeText({ text: `${online.length}` })
+		if (online.length > 0) {
+			await browser.browserAction.setBadgeBackgroundColor({ color: '#3d007a' })
+			await browser.browserAction.setBadgeText({ text: `${online.length}` })
+		} else {
+			// hide the badge if no followed instances are online
+			await browser.browserAction.setBadgeText({ text: '' })
+		}
 	} else {
 		await browser.browserAction.setBadgeText({ text: '' })
 	}
