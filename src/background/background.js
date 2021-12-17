@@ -148,6 +148,10 @@ const onMessageListener = (request, sender) => {
 			console.log('[getSettings]')
 			return Storage.getOptionsFromStorage()
 		},
+		getInstances (request) {
+			console.log('[getInstances]')
+			return Storage.getInstancesFromStorage()
+		},
 		storeSettings (request) {
 			console.log('[storeSettings]')
 			console.log('[storeSettings]', request.data.options)

@@ -1,10 +1,32 @@
+/**
+ * @typedef Options
+ * @type {object}
+ * @prop {boolean} badge
+ * @prop {boolean} notifications
+ * @prop {number}  interval
+ * @prop {string}  username
+ *
+ * @typedef Display
+ * @type {object}
+ * @prop {boolean} loading
+ * @prop {boolean} success
+ * @prop {boolean} error
+ *
+ * @typedef State
+ * @type {object}
+ * @prop {Display} display
+ * @prop {Options} options
+ * @prop {Array<String>} instances
+ */
+
 import browser from 'webextension-polyfill'
 import Vue from 'vue'
 import Vuex from 'vuex'
+import { generateExport } from '../util/export-import'
 
 Vue.use(Vuex)
-
 export default new Vuex.Store({
+	/** @type {State} */
 	state: {
 		display: {
 			loading: false,
@@ -17,6 +39,7 @@ export default new Vuex.Store({
 			interval: 0,
 			username: '',
 		},
+		instances: [],
 	},
 	mutations: {
 		setDisplayLoading (state) {
@@ -42,6 +65,10 @@ export default new Vuex.Store({
 		setOptions (state, options) {
 			state.options = options
 			console.log('[setOptions]', state.options)
+		},
+		setInstances (state, instances) {
+			state.instances = instances
+			console.log('[setInstances]', state.instances)
 		},
 		setBadge (state, badge) {
 			state.options.badge = badge
@@ -71,6 +98,14 @@ export default new Vuex.Store({
 				commit('setOptions', options)
 			})
 		},
+		async getInstancesFromStorage ({ commit }) {
+			return browser.runtime.sendMessage({
+				type: 'getInstances',
+			}).then((instances) => {
+				console.log('[getInstancesFromStorage]', instances)
+				commit('setInstances', instances)
+			})
+		},
 		async storeOptionsInStorage ({ commit, dispatch, state }) {
 			// Although not mutating, we should propably move this sendMessage to an
 			// vuex action as well
@@ -93,6 +128,21 @@ export default new Vuex.Store({
 						commit('unsetDisplay')
 					}, 3000)
 				})
+			})
+		},
+		async generateExport ({ commit, dispatch, state }) {
+			return Promise.all([dispatch('getInstancesFromStorage'), dispatch('getOptionsFromStorage')]).then(() => {
+				const exportData = generateExport(state)
+				console.log('[generateExport]', exportData)
+				const blob = new Blob([JSON.stringify(exportData)], { type: 'application/json' })
+				const url = URL.createObjectURL(blob)
+				const link = document.createElement('a')
+				link.download = 'export.json'
+				link.href = url
+				link.click()
+				URL.revokeObjectURL(link.href)
+
+				window.open(url, '_blank')
 			})
 		},
 	},
