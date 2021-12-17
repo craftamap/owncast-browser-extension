@@ -24,6 +24,9 @@
               :class="[instance.online ? 'instance-text-online' : 'instance-text-offline' ]"
             >{{ instance.status }}</span></a>
         </div>
+        <div class="instance-text-stream-title">
+          {{ instance.streamTitle }}
+        </div>
         <div class="instance-text-description">
           {{ instanceDescription }}
         </div>
@@ -175,10 +178,6 @@ export default {
     flex-direction: column;
     flex-grow: 0;
 
-    .instance-text-header {
-      margin-bottom: 0.5rem;
-    }
-
     .instance-text-bold {
       font-weight: 700;
     }
@@ -191,8 +190,12 @@ export default {
       color: $gray-500;
     }
 
+    .instance-text-stream-title {
+	font-size: 0.875rem;
+    }
+
     .instance-text-description {
-      font-size: 0.875rem;
+      font-size: 0.75rem;
       line-height: 1.25rem;
       margin-bottom: 0.5rem;
     }

@@ -82,7 +82,7 @@ const sendNotifications = async (oldData, newData) => {
 			browser.notifications.create({
 				type: 'basic',
 				title: item.name + ' is online',
-				message: stripHtml(item.description),
+				message: stripHtml(item.streamTitle) || stripHtml(item.description),
 				iconUrl: item.logo,
 			})
 		})
