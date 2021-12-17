@@ -99,6 +99,13 @@
         v-if="displaySuccess"
       />
     </div>
+    <div class="flex items-center">
+      <input
+        type="button"
+        value="Export"
+        @click="triggerExport"
+      >
+    </div>
   </form>
 </template>
 
@@ -178,6 +185,10 @@ export default {
 		async store (e) {
 			e.preventDefault()
 			return this.$store.dispatch('storeOptionsInStorage')
+		},
+		async triggerExport (e) {
+			e.preventDefault()
+			this.$store.dispatch('generateExport')
 		},
 	},
 }

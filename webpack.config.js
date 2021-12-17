@@ -2,7 +2,8 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
-const VueLoaderPlugin = require('vue-loader/lib/plugin')
+const VueLoaderPlugin = require('vue-loader/lib/plugin');
+const { webpack, DefinePlugin } = require('webpack');
 
 module.exports = {
 	mode: 'production',
@@ -78,5 +79,8 @@ module.exports = {
 			filename: 'css/[name].css',
 		}),
 		new VueLoaderPlugin(),
+		new DefinePlugin({
+			OWNCAST_BROWSER_EXTENSION: JSON.stringify(process.env.npm_package_version),
+		})
 	]
 };
