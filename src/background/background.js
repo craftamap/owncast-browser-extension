@@ -33,6 +33,7 @@ const refreshInstanceData = async () => {
 
 		return {
 			name: config.name,
+			streamTitle: status && status.streamTitle,
 			description: config.summary.length > 61
 				? config.summary.substring(0, 61) + '...'
 				: config.summary,
