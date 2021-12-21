@@ -4,17 +4,19 @@ function setOptionsInStorage (options) {
 	return browser.storage.local.set({ options: options })
 }
 
-function getOptionsFromStorage () {
+async function getOptionsFromStorage () {
 	return browser.storage.local.get('options').then(({ options }) => {
 		return Object.assign({
 			notifications: true,
 			badge: true,
 			interval: 60,
+			theme: 'light',
+			layout: 'normal',
 		}, (options || {}))
 	})
 }
 
-function getInstancesFromStorage () {
+async function getInstancesFromStorage () {
 	// TODO: Implement
 	// TODO: Replace with actual data
 	return browser.storage.local.get('instances').then((data) => {

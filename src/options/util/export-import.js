@@ -1,3 +1,6 @@
+import { Validator } from '@cfworker/json-schema'
+import Schema05 from './export-0.5.0.schema.json'
+
 /**
  * @typedef {import('../store/index.js').Options} Options
  * @typedef {import('../store/index.js').State} State
@@ -13,7 +16,7 @@
  * @param {State} state
  * @returns {Blob}
  */
-function generateExport(state) {
+function generateExport (state) {
 	/** @type {Export} */
 	const exportData = {
 		version: OWNCAST_BROWSER_EXTENSION,
@@ -27,7 +30,7 @@ function generateExport(state) {
 /**
  * @param {Blob} exportBlob
  */
-async function parseExport(exportBlob) {
+async function parseExport (exportBlob) {
 	if (exportBlob.type !== 'application/json') {
 		throw new Error('wrong filetype')
 	}
@@ -35,40 +38,17 @@ async function parseExport(exportBlob) {
 	/** @type {Export} */
 	const potentialExportData = JSON.parse(exportText)
 
-	/** @type {Export} */
-	const returnedExportData = {
-		options: {},
-		instances: [],
-	}
-	// TODO: check version!
-	// only copy values if they are of the correct data type
-	// TODO: check if we have further limits
-	// TODO: could we somehow automate this?
-	if (potentialExportData.options) {
-		if (typeof potentialExportData.options.badge === 'boolean') {
-			returnedExportData.options.badge = potentialExportData.options.badge
+	const validator = new Validator(Schema05)
+	const result = validator.validate(potentialExportData)
+	if (!result.valid) {
+		let errorMsg = 'Error while validating export. The following issues were found:\n'
+		for (const error of result.errors) {
+			errorMsg += '-' + error.error + '\n'
 		}
-		if (typeof potentialExportData.options.interval === 'number') {
-			returnedExportData.options.interval = potentialExportData.options.interval
-		}
-		if (typeof potentialExportData.options.notifications === 'boolean') {
-			returnedExportData.options.notifications = potentialExportData.options.notifications
-		}
-		if (typeof potentialExportData.options.username === 'string') {
-			returnedExportData.options.username = potentialExportData.options.username
-		}
-	}
-	if (Array.isArray(potentialExportData.instances)) {
-		for (const potentialInstance of potentialExportData.instances) {
-			const urlObj = new URL(potentialInstance)
-			if (!(urlObj.protocol === 'http:' || urlObj.protocol === 'https:')) {
-				throw new Error('Wrong Protocol!')
-			}
-			returnedExportData.instances.push(potentialInstance)
-		}
+		throw new Error(errorMsg)
 	}
 
-	return returnedExportData
+	return potentialExportData
 }
 
 export {
