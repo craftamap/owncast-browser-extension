@@ -224,6 +224,11 @@
     "@babel/helper-validator-identifier" "^7.14.9"
     to-fast-properties "^2.0.0"
 
+"@cfworker/json-schema@^1.12.0":
+  version "1.12.0"
+  resolved "https://registry.yarnpkg.com/@cfworker/json-schema/-/json-schema-1.12.0.tgz#1512f913fbdc2039c9f5a5e3cb0f97af1317f4ee"
+  integrity sha512-PyWe5QyAZrSJw5zoRe99IW/IiL5kDp47uENDG1cvNJuKBlgOHf5CXHcnhyvbwOeYC4+kQOpdmFp9Dzcj2CmoOg==
+
 "@devicefarmer/adbkit-logcat@^1.1.0":
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@devicefarmer/adbkit-logcat/-/adbkit-logcat-1.1.0.tgz#866d3406dc9f3791446adfe3ae622ffc48607db4"

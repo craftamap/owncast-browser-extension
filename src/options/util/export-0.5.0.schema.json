@@ -1,0 +1,60 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "type": "object",
+    "title": "The root schema",
+    "required": [
+        "version",
+        "options",
+        "instances"
+    ],
+    "properties": {
+        "version": {
+            "type": "string",
+            "title": "The version schema"
+        },
+        "options": {
+            "type": "object",
+            "title": "The options schema",
+            "required": [
+            ],
+            "properties": {
+                "badge": {
+                    "type": "boolean",
+                    "title": "The badge schema"
+                },
+                "notifications": {
+                    "type": "boolean",
+                    "title": "The notifications schema"
+                },
+                "interval": {
+                    "type": "integer",
+                    "title": "The interval schema"
+                },
+                "username": {
+                    "type": "string",
+                    "title": "The username schema"
+                },
+                "theme": {
+                    "type": "string",
+                    "title": "The theme schema"
+                },
+                "layout": {
+                    "type": "string",
+                    "title": "The layout schema"
+                }
+            },
+            "additionalProperties": false
+        },
+        "instances": {
+            "type": "array",
+            "title": "The instances schema",
+            "additionalItems": true,
+            "items": {
+                "type": "string",
+                "format": "uri",
+                "pattern": "^https?://"
+            }
+        }
+    },
+    "additionalProperties": false
+}
