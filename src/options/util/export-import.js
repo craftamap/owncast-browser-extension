@@ -19,7 +19,7 @@ import Schema05 from './export-0.5.0.schema.json'
 function generateExport (state) {
 	/** @type {Export} */
 	const exportData = {
-		version: OWNCAST_BROWSER_EXTENSION,
+		version: OWNCAST_BROWSER_EXTENSION_VERSION,
 		options: state.options,
 		instances: state.instances,
 	}
