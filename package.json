@@ -56,7 +56,7 @@
     "globals": {
       "browser": "off",
       "process": "readonly",
-      "OWNCAST_BROWSER_EXTENSION": "readonly"
+      "OWNCAST_BROWSER_EXTENSION_VERSION": "readonly"
     },
     "extends": [
       "eslint:recommended",

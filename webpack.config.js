@@ -80,7 +80,7 @@ module.exports = {
 		}),
 		new VueLoaderPlugin(),
 		new DefinePlugin({
-			OWNCAST_BROWSER_EXTENSION: JSON.stringify(process.env.npm_package_version),
+			OWNCAST_BROWSER_EXTENSION_VERSION: JSON.stringify(process.env.npm_package_version),
 		})
 	]
 };
