@@ -22,7 +22,7 @@
     "eslint-plugin-vue": "^7.12.1",
     "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.3.2",
-    "mini-css-extract-plugin": "^2.0.0",
+    "mini-css-extract-plugin": "^2.4.6",
     "sass": "^1.35.2",
     "sass-loader": "^12.1.0",
     "vls": "^0.7.6",
