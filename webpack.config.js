@@ -1,9 +1,9 @@
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const CopyPlugin = require('copy-webpack-plugin');
-const VueLoaderPlugin = require('vue-loader/lib/plugin');
-const { webpack, DefinePlugin } = require('webpack');
+const path = require('path')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const CopyPlugin = require('copy-webpack-plugin')
+const VueLoaderPlugin = require('vue-loader/lib/plugin')
+const { DefinePlugin } = require('webpack')
 
 module.exports = {
 	mode: 'production',
@@ -12,7 +12,7 @@ module.exports = {
 		main: './src/popup/main.js',
 		background: '/src/background/background.js',
 		'content-script': '/src/content-script/content-script.js',
-		'options': '/src/options/options.js',
+		options: '/src/options/options.js',
 	},
 	output: {
 		publicPath: 'auto',
@@ -23,19 +23,19 @@ module.exports = {
 		rules: [
 			{
 				test: /\.vue$/,
-				loader: 'vue-loader'
+				loader: 'vue-loader',
 			},
 			{
 				test: /\.s?css$/,
 				use: [
 					{ loader: MiniCssExtractPlugin.loader },
-					{loader: 'css-loader', options: {importLoaders: 1}},
-					{loader: 'sass-loader'},
+					{ loader: 'css-loader', options: { importLoaders: 1 } },
+					{ loader: 'sass-loader' },
 				],
 			},
 			{
 				test: /\.png$/,
-				type: 'asset/inline'
+				type: 'asset/inline',
 			},
 		]
 		,
@@ -53,7 +53,7 @@ module.exports = {
         <div id="app-root"></div>
       </body>
     </html>
-            `
+            `,
 		}),
 		new HtmlWebpackPlugin({
 			chunks: ['options'],
@@ -71,8 +71,8 @@ module.exports = {
 		}),
 		new CopyPlugin({
 			patterns: [
-				{from: 'src/manifest.json', to: 'manifest.json'},
-				{from: 'src/resources', to: 'resources'},
+				{ from: 'src/manifest.json', to: 'manifest.json' },
+				{ from: 'src/resources', to: 'resources' },
 			],
 		}),
 		new MiniCssExtractPlugin({
@@ -81,6 +81,9 @@ module.exports = {
 		new VueLoaderPlugin(),
 		new DefinePlugin({
 			OWNCAST_BROWSER_EXTENSION: JSON.stringify(process.env.npm_package_version),
-		})
-	]
-};
+
+		}),
+
+	],
+
+}
