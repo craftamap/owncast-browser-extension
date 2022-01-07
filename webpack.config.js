@@ -15,9 +15,9 @@ module.exports = {
 		'options': '/src/options/options.js',
 	},
 	output: {
-		publicPath: '',
+		publicPath: 'auto',
 		path: path.resolve(__dirname, 'addon'),
-		filename: 'js/[name].js'
+		filename: 'js/[name].js',
 	},
 	module: {
 		rules: [
@@ -28,15 +28,15 @@ module.exports = {
 			{
 				test: /\.s?css$/,
 				use: [
-					MiniCssExtractPlugin.loader,
+					{ loader: MiniCssExtractPlugin.loader },
 					{loader: 'css-loader', options: {importLoaders: 1}},
 					{loader: 'sass-loader'},
 				],
 			},
 			{
-				test: /\.(jpe?g|png|ttf|eot|svg|woff(2)?)(\?[a-z0-9=&.]+)?$/,
-				use: 'base64-inline-loader?limit=1000&name=[name].[ext]'
-			}
+				test: /\.png$/,
+				type: 'asset/inline'
+			},
 		]
 		,
 	},
@@ -80,7 +80,7 @@ module.exports = {
 		}),
 		new VueLoaderPlugin(),
 		new DefinePlugin({
-			OWNCAST_BROWSER_EXTENSION_VERSION: JSON.stringify(process.env.npm_package_version),
+			OWNCAST_BROWSER_EXTENSION: JSON.stringify(process.env.npm_package_version),
 		})
 	]
 };
