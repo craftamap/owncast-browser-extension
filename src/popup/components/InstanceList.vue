@@ -1,6 +1,6 @@
 <template>
   <div id="instances">
-    <Instance
+    <InstanceItem
       v-for="instance in instances"
       :key="instance.instance"
       :instance="instance"
@@ -10,13 +10,13 @@
 </template>
 
 <script>
-import Instance from './Instance.vue'
+import InstanceItem from './InstanceItem.vue'
 import NoInstances from './NoInstances.vue'
 
 export default {
-	name: 'Instances',
+	name: 'InstanceList',
 	components: {
-		Instance,
+		InstanceItem,
 		NoInstances,
 	},
 	computed: {

@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import Options from './Options.vue'
+import OptionView from './OptionView.vue'
 import '../scss/main.scss'
 import Store from './store'
 
@@ -8,7 +8,7 @@ window.addEventListener('load', function (_) {
 		window.app = new Vue({
 			store: Store,
 			el: '#app-root',
-			render: h => h(Options),
+			render: h => h(OptionView),
 		})
 	})
 })

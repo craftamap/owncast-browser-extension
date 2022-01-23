@@ -11,21 +11,21 @@
     >
       <IconBar />
       <AddBar v-if="showAddBar" />
-      <Instances />
+      <InstanceList />
     </div>
   </div>
 </template>
 
 <script>
 import IconBar from './components/IconBar.vue'
-import Instances from './components/Instances.vue'
+import InstanceList from './components/InstanceList.vue'
 import AddBar from './components/AddBar.vue'
 
 export default {
 	name: 'App',
 	components: {
 		IconBar,
-		Instances,
+		InstanceList,
 		AddBar,
 	},
 	computed: {

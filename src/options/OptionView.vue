@@ -146,7 +146,7 @@ import ErrorIcon from '../shared/components/icons/ErrorIcon.vue'
 import SuccessIcon from '../shared/components/icons/SuccessIcon.vue'
 
 export default {
-	name: 'Options',
+	name: 'OptionView',
 	components: {
 		LoadingIcon,
 		ErrorIcon,

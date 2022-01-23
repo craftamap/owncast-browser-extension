@@ -80,7 +80,7 @@ import UptimeIcon from './icons/UptimeIcon.vue'
 import RemoveIcon from './icons/RemoveIcon.vue'
 
 export default {
-	name: 'Instance',
+	name: 'InstanceItem',
 	components: {
 		ViewerIcon,
 		UptimeIcon,
