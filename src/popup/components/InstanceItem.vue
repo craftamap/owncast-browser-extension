@@ -50,13 +50,24 @@
             </div>
           </div>
           <div id="right">
-            <div class="instance-icon-bar-remove">
-              <RemoveIcon
-                @click="toggleRemove"
+            <div class="instance-icon-bar-chevron">
+              <ChevronIcon
+                :orientation="showHidden ? 'up' : 'down'"
+                @click="toggleHidden"
               />
             </div>
           </div>
         </div>
+      </div>
+    </div>
+    <div
+      v-if="showHidden"
+      class="instance-hidden-icon-bar"
+    >
+      <div class="instance-icon-bar-remove">
+        <RemoveIcon
+          @click="toggleRemove"
+        />
       </div>
     </div>
     <div
@@ -78,6 +89,7 @@ import stripHtml from '../../shared/util/stripHtml'
 import ViewerIcon from './icons/ViewerIcon.vue'
 import UptimeIcon from './icons/UptimeIcon.vue'
 import RemoveIcon from './icons/RemoveIcon.vue'
+import ChevronIcon from './icons/ChevronIcon.vue'
 
 export default {
 	name: 'InstanceItem',
@@ -85,6 +97,7 @@ export default {
 		ViewerIcon,
 		UptimeIcon,
 		RemoveIcon,
+		ChevronIcon,
 	},
 	props: {
 		instance: {
@@ -94,6 +107,7 @@ export default {
 	},
 	data () {
 		return {
+			showHidden: false,
 			showRemove: false,
 		}
 	},
@@ -108,6 +122,9 @@ export default {
 		},
 	},
 	methods: {
+		toggleHidden () {
+			this.showHidden = !this.showHidden
+		},
 		toggleRemove () {
 			this.showRemove = !this.showRemove
 		},
@@ -201,12 +218,12 @@ export default {
     }
   }
 
-  .instance-icon-bar {
+  .instance-icon-bar, .instance-hidden-icon-bar {
     display: flex;
     justify-content: space-between;
     align-items: center;
 
-    .instance-icon-bar-viewers, .instance-icon-bar-uptime, .instance-icon-bar-remove {
+    .instance-icon-bar-viewers, .instance-icon-bar-uptime, .instance-icon-bar-chevron, .instance-icon-bar-remove {
       display: inline-block;
       vertical-align: middle;
     }
