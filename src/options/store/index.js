@@ -29,12 +29,10 @@
  */
 
 import browser from 'webextension-polyfill'
-import Vue from 'vue'
-import Vuex from 'vuex'
+import { createStore } from 'vuex'
 import { generateExport, parseExport } from '../util/export-import'
 
-Vue.use(Vuex)
-export default new Vuex.Store({
+export const store = createStore({
 	/** @type {State} */
 	state: {
 		display: {

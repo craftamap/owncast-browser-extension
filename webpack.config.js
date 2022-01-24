@@ -2,12 +2,13 @@ const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const CopyPlugin = require('copy-webpack-plugin')
-const VueLoaderPlugin = require('vue-loader/lib/plugin')
+const { VueLoaderPlugin } = require('vue-loader')
 const { DefinePlugin } = require('webpack')
 
 module.exports = {
-	mode: 'production',
+	mode: 'development',
 	node: false,
+	devtool: 'inline-source-map',
 	entry: {
 		main: './src/popup/main.js',
 		background: '/src/background/background.js',
@@ -27,7 +28,7 @@ module.exports = {
 			},
 			{
 				test: /\.s?css$/,
-				use: [
+				use: [ 
 					{ loader: MiniCssExtractPlugin.loader },
 					{ loader: 'css-loader', options: { importLoaders: 1 } },
 					{ loader: 'sass-loader' },
