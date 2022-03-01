@@ -1,9 +1,7 @@
 <template>
-  <!-- theme names must be directly in here, otherwise they get trimmed
-       TODO: add themes to not-trim list -->
   <div
     id="theme-wrapper"
-    :class="[getTheme === 'dark' ? 'dark' : 'light', getLayout === 'compact' ? 'layout-compact' : 'layout-normal' ]"
+    :class="[theme === 'dark' ? 'dark' : 'light', layout === 'compact' ? 'layout-compact' : 'layout-normal' ]"
   >
     <!-- FIXME: layout-compact : layout-normal -->
     <div
@@ -20,6 +18,8 @@
 import IconBar from './components/IconBar.vue'
 import InstanceList from './components/InstanceList.vue'
 import AddBar from './components/AddBar.vue'
+import { useStore } from 'vuex'
+import { computed } from 'vue'
 
 export default {
 	name: 'App',
@@ -28,20 +28,17 @@ export default {
 		InstanceList,
 		AddBar,
 	},
-	computed: {
-		showAddBar () {
-			return this.$store.state.add.show
-		},
-		getTheme () {
-			return this.$store.state.theme
-		},
-		getLayout () {
-			return this.$store.state.layout
-		},
-	},
-	created () {
+	setup () {
+		const store = useStore()
+
 		console.log('created App')
-		this.$store.dispatch('getInstanceData')
+		store.dispatch('getInstanceData')
+
+		return {
+			showAddBar: computed(() => store.state.add.show),
+			theme: computed(() => store.state.theme),
+			layout: computed(() => store.state.layout),
+		}
 	},
 }
 </script>
