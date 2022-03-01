@@ -33,6 +33,8 @@ import LoadingIcon from '../../shared/components/icons/LoadingIcon.vue'
 import SuccessIcon from '../../shared/components/icons/SuccessIcon.vue'
 import ErrorIcon from '../../shared/components/icons/ErrorIcon.vue'
 import AddIcon from './icons/AddIcon.vue'
+import { useStore } from 'vuex'
+import { computed, ref } from 'vue'
 
 export default {
 	name: 'AddBar',
@@ -42,28 +44,32 @@ export default {
 		SuccessIcon,
 		AddIcon,
 	},
-	computed: {
-		displayButton () {
-			const loading = this.$store.state.add.loading
-			const error = this.$store.state.add.error
-			const success = this.$store.state.add.success
-			return !(loading || error || success)
-		},
-		displayLoading () {
-			return this.$store.state.add.loading
-		},
-		displayError () {
-			return this.$store.state.add.error
-		},
-		displaySuccess () {
-			return this.$store.state.add.success
-		},
-	},
-	methods: {
-		submit () {
-			console.log(this.url)
-			this.$store.dispatch('checkConnectionAndAddInStorage', this.url)
-		},
+	setup () {
+		const store = useStore()
+		const url = ref('')
+
+		return {
+			url,
+			submit: () => {
+				console.log(url.value)
+				store.dispatch('checkConnectionAndAddInStorage', url.value)
+			},
+			displayButton: computed(() => {
+				const loading = store.state.add.loading
+				const error = store.state.add.error
+				const success = store.state.add.success
+				return !(loading || error || success)
+			}),
+			displayLoading: computed(() => {
+				return store.state.add.loading
+			}),
+			displayError: computed(() => {
+				return store.state.add.error
+			}),
+			displaySuccess: computed(() => {
+				return store.state.add.success
+			}),
+		}
 	},
 }
 </script>

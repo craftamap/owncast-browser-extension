@@ -35,6 +35,8 @@ import AddIcon from './icons/AddIcon.vue'
 import RefreshIcon from './icons/RefreshIcon.vue'
 import CogWheelIcon from './icons/CogWheelIcon.vue'
 import browser from 'webextension-polyfill'
+import { useStore } from 'vuex'
+import { computed } from 'vue'
 
 export default {
 	name: 'IconBar',
@@ -43,21 +45,21 @@ export default {
 		RefreshIcon,
 		CogWheelIcon,
 	},
-	computed: {
-		isLoading () {
-			return this.$store.state.loading
-		},
-	},
-	methods: {
-		refresh (event) {
-			this.$store.dispatch('updateInstanceData')
-		},
-		toggleShowAddBar (event) {
-			this.$store.commit('toggleShowAddBar')
-		},
-		openSettingsPage () {
-			browser.runtime.openOptionsPage()
-		},
+	setup () {
+		const store = useStore()
+
+		return {
+			isLoading: computed(() => store.state.loading),
+			refresh: () => {
+				store.dispatch('updateInstanceData')
+			},
+			toggleShowAddBar: () => {
+				store.commit('toggleShowAddBar')
+			},
+			openSettingsPage: () => {
+				browser.runtime.openOptionsPage()
+			},
+		}
 	},
 }
 </script>

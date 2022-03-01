@@ -10,6 +10,8 @@
 </template>
 
 <script>
+import { useStore } from 'vuex'
+import { computed } from 'vue'
 import InstanceItem from './InstanceItem.vue'
 import NoInstances from './NoInstances.vue'
 
@@ -19,10 +21,12 @@ export default {
 		InstanceItem,
 		NoInstances,
 	},
-	computed: {
-		instances () {
-			return this.$store.state.instances
-		},
+	setup () {
+		const store = useStore()
+
+		return {
+			instances: computed(() => store.state.instances),
+		}
 	},
 }
 </script>

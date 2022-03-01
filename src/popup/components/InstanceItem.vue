@@ -90,6 +90,8 @@ import ViewerIcon from './icons/ViewerIcon.vue'
 import UptimeIcon from './icons/UptimeIcon.vue'
 import RemoveIcon from './icons/RemoveIcon.vue'
 import ChevronIcon from './icons/ChevronIcon.vue'
+import { ref, toRefs, computed } from 'vue'
+import { useStore } from 'vuex'
 
 export default {
 	name: 'InstanceItem',
@@ -105,34 +107,46 @@ export default {
 			default: () => { return {} },
 		},
 	},
-	data () {
+	setup (props) {
+		const store = useStore()
+		const { instance } = toRefs(props)
+
+		const showHidden = ref(false)
+		const toggleHidden = () => {
+			showHidden.value = !showHidden.value
+		}
+
+		const showRemove = ref(false)
+		const toggleRemove = () => {
+			showRemove.value = !showRemove.value
+		}
+
+		const remove = () => {
+			const instanceUrl = instance.value.instance
+			console.log('clicked remove on', instanceUrl)
+			store.dispatch('removeInstanceInStorage', instanceUrl)
+		}
+		const instanceDescription = computed(() => {
+			return stripHtml(instance.value.description)
+		})
+
+		const backgroundSrc = computed(() => {
+			return {
+				'background-image': 'url(' + (instance.value.online ? instance.value.thumbnail : instance.value.logo) + ')',
+			}
+		})
+
 		return {
-			showHidden: false,
-			showRemove: false,
+			showHidden,
+			toggleHidden,
+			showRemove,
+			toggleRemove,
+			remove,
+			instanceDescription,
+			backgroundSrc,
 		}
 	},
 	computed: {
-		backgroundSrc () {
-			return {
-				'background-image': 'url(' + (this.instance.online ? this.instance.thumbnail : this.instance.logo) + ')',
-			}
-		},
-		instanceDescription () {
-			return stripHtml(this.instance.description)
-		},
-	},
-	methods: {
-		toggleHidden () {
-			this.showHidden = !this.showHidden
-		},
-		toggleRemove () {
-			this.showRemove = !this.showRemove
-		},
-		remove () {
-			const instanceUrl = this.instance.instance
-			console.log('clicked remove on', instanceUrl)
-			this.$store.dispatch('removeInstanceInStorage', instanceUrl)
-		},
 	},
 }
 </script>
