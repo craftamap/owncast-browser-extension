@@ -30,7 +30,7 @@
     "web-ext": "6.7.0",
     "webextension-polyfill-ts": "^0.26.0",
     "webpack": "^5.65.0",
-    "webpack-cli": "^4.9.1"
+    "webpack-cli": "^4.9.2"
   },
   "dependencies": {
     "@cfworker/json-schema": "^1.12.0",
