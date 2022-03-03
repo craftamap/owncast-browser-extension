@@ -3,7 +3,7 @@
     <h1>Options</h1>
     <form
       id="options"
-      @submit="store"
+      @submit="storeSettings"
       @reset="reset"
     >
       <h2>
@@ -144,6 +144,8 @@
 import LoadingIcon from '../shared/components/icons/LoadingIcon.vue'
 import ErrorIcon from '../shared/components/icons/ErrorIcon.vue'
 import SuccessIcon from '../shared/components/icons/SuccessIcon.vue'
+import { useStore } from 'vuex'
+import { computed, ref } from 'vue'
 
 export default {
 	name: 'OptionView',
@@ -152,98 +154,101 @@ export default {
 		ErrorIcon,
 		SuccessIcon,
 	},
-	computed: {
-		displayLoading () {
-			return this.$store.state.display.loading
-		},
-		displayError () {
-			return this.$store.state.display.error
-		},
-		displaySuccess () {
-			return this.$store.state.display.success
-		},
-		importExportErrors () {
-			return this.$store.state.display.importExportErrors
-		},
-		isDirty () {
-			return this.$store.state.display.dirty
-		},
-		badge: {
-			get () {
-				return this.$store.state.options.badge
+	setup () {
+		const store = useStore()
+
+		const setDirty = () => {
+			store.commit('setDirty', true)
+		}
+
+		const badge = computed({
+			get: () => store.state.options.badge,
+			set: (value) => {
+				store.commit('setBadge', value)
+				setDirty()
 			},
-			set (value) {
-				this.$store.commit('setBadge', value)
-				this.$store.commit('setDirty', true)
+		})
+
+		const notifications = computed({
+			get: () => store.state.options.notifications,
+			set: (value) => {
+				store.commit('setNotifications', value)
+				setDirty()
 			},
-		},
-		notifications: {
-			get () {
-				return this.$store.state.options.notifications
+		})
+
+		const interval = computed({
+			get: () => store.state.options.interval,
+			set: (value) => {
+				store.commit('setInterval', value)
+				setDirty()
 			},
-			set (value) {
-				this.$store.commit('setNotifications', value)
-				this.$store.commit('setDirty', true)
+		})
+
+		const username = computed({
+			get: () => store.state.options.username,
+			set: (value) => {
+				store.commit('setUsername', value)
+				setDirty()
 			},
-		},
-		interval: {
-			get () {
-				return this.$store.state.options.interval
+		})
+
+		const theme = computed({
+			get: () => store.state.options.theme,
+			set: (value) => {
+				store.commit('setTheme', value)
+				setDirty()
 			},
-			set (value) {
-				this.$store.commit('setInterval', Number(value))
-				this.$store.commit('setDirty', true)
+		})
+
+		const layout = computed({
+			get: () => store.state.options.layout,
+			set: (value) => {
+				store.commit('setLayout', value)
+				setDirty()
 			},
-		},
-		username: {
-			get () {
-				return this.$store.state.options.username
-			},
-			set (value) {
-				this.$store.commit('setUsername', value)
-				this.$store.commit('setDirty', true)
-			},
-		},
-		theme: {
-			get () {
-				return this.$store.state.options.theme
-			},
-			set (value) {
-				this.$store.commit('setTheme', value)
-				this.$store.commit('setDirty', true)
-			},
-		},
-		layout: {
-			get () {
-				return this.$store.state.options.layout
-			},
-			set (value) {
-				this.$store.commit('setLayout', value)
-				this.$store.commit('setDirty', true)
-			},
-		},
-	},
-	methods: {
-		async store (e) {
+		})
+
+		const storeSettings = (e) => {
 			e.preventDefault()
-			return this.$store.dispatch('storeOptionsInStorage')
-		},
-		async reset (e) {
+			return store.dispatch('storeOptionsInStorage')
+		}
+		const reset = (e) => {
 			e.preventDefault()
-			return this.$store.dispatch('getOptionsFromStorage')
-		},
-		async triggerExport (e) {
+			store.dispatch('getOptionsFromStorage')
+		}
+
+		const triggerExport = (e) => {
 			e.preventDefault()
-			this.$store.dispatch('generateExport')
-		},
-		async triggerImport (e) {
+			store.dispatch('generateExport')
+		}
+		const importFile = ref(null)
+		const triggerImport = (e) => {
 			e.preventDefault()
 			/** @type {HTMLInputElement} */
-			const importFile = this.$refs.importFile
-			if (importFile.files.length > 0) {
-				this.$store.dispatch('triggerImport', importFile.files[0])
+			if (importFile.value.files.length > 0) {
+				store.dispatch('triggerImport', importFile.value.files[0])
 			}
-		},
+		}
+
+		return {
+			displayLoading: computed(() => store.state.display.loading),
+			displayError: computed(() => store.state.display.error),
+			displaySuccess: computed(() => store.state.display.success),
+			importExportErrors: computed(() => store.state.display.importExportErrors),
+			isDirty: computed(() => store.state.display.dirty),
+			importFile,
+			badge,
+			notifications,
+			interval,
+			username,
+			theme,
+			layout,
+			storeSettings,
+			reset,
+			triggerExport,
+			triggerImport,
+		}
 	},
 }
 </script>
