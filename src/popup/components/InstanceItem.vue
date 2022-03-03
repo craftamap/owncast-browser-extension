@@ -146,8 +146,6 @@ export default {
 			backgroundSrc,
 		}
 	},
-	computed: {
-	},
 }
 </script>
 
