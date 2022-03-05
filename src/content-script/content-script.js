@@ -6,16 +6,19 @@ function htmlToElement (html) {
 	template.innerHTML = html
 	return template.content.firstChild
 }
-function foundSocialList (response, container) {
-	const potentialSocial = container.querySelector('#social-list li:last-child')
+function injectButton (response) {
+	const potentialExternalActions = document.querySelector('#external-actions-container')
+	const potentialSocial = document.querySelector('#social-list')
 	let buttonContainer
-	if (potentialSocial !== null) {
+	if (potentialExternalActions !== null) {
+		buttonContainer = potentialExternalActions
+	} else if (potentialSocial !== null) {
 		buttonContainer = potentialSocial
 	} else {
-		buttonContainer = container.querySelector('h2')
+		buttonContainer = document.querySelector('h2').parentElement
 	}
 	if (!response) {
-		const button = htmlToElement('<button class="ml-2 border-2 rounded border-blue-500 p-2">Add To Extension</button>')
+		const button = htmlToElement('<button class="rounded-sm flex flex-row justify-center items-center overflow-hidden m-1 px-3 py-1 text-base border-blue-500 border-2 rounded">Add To Extension</button>')
 		const onClick = () => {
 			button.removeEventListener('click', onClick)
 			button.textContent = 'Wait...'
@@ -40,9 +43,9 @@ function foundSocialList (response, container) {
 			})
 		}
 		button.addEventListener('click', onClick)
-		buttonContainer.after(button)
+		buttonContainer.appendChild(button)
 	} else {
-		const button = htmlToElement('<button class="ml-2 border-2 rounded border-red-700 p-2">Remove From Extension</button>')
+		const button = htmlToElement('<button class="rounded-sm flex flex-row justify-center items-center overflow-hidden m-1 px-3 py-1 text-base border-red-700 border-2 rounded">Remove From Extension</button>')
 		const onClick = () => {
 			button.removeEventListener('click', onClick)
 			button.textContent = 'Wait...'
@@ -65,7 +68,7 @@ function foundSocialList (response, container) {
 			}, console.trace)
 		}
 		button.addEventListener('click', onClick)
-		buttonContainer.after(button)
+		buttonContainer.appendChild(button)
 	}
 }
 
@@ -83,7 +86,7 @@ function waitForContainer () {
 		}).then((response) => {
 			process.env.NODE_ENV === 'development' && console.log('got response', response)
 			process.env.NODE_ENV === 'development' && console.log(container)
-			foundSocialList(response, container)
+			injectButton(response)
 		})
 	}
 }
