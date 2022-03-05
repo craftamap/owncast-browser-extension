@@ -100,12 +100,15 @@
         >
         <LoadingIcon
           v-if="displayLoading"
+          class="icon"
         />
         <ErrorIcon
           v-if="displayError"
+          class="icon"
         />
         <SuccessIcon
           v-if="displaySuccess"
+          class="icon"
         />
       </div>
     </form>

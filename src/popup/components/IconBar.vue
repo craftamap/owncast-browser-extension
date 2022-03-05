@@ -15,15 +15,18 @@
     </div>
     <div id="center">
       <RefreshIcon
+        class="icon icon-big icon-pointer"
+        :is-loading="isLoading"
         @click="refresh"
       />
     </div>
     <div id="right">
-      <AddIcon
-        class="add-icon-big"
+      <PlusIcon
+        class="icon icon-big"
         @click="toggleShowAddBar"
       />
       <CogWheelIcon
+        class="icon icon-big"
         @click="openSettingsPage"
       />
     </div>
@@ -31,9 +34,8 @@
 </template>
 
 <script>
-import AddIcon from './icons/AddIcon.vue'
+import { PlusIcon, CogIcon } from '@heroicons/vue/solid'
 import RefreshIcon from './icons/RefreshIcon.vue'
-import CogWheelIcon from './icons/CogWheelIcon.vue'
 import browser from 'webextension-polyfill'
 import { useStore } from 'vuex'
 import { computed } from 'vue'
@@ -41,9 +43,9 @@ import { computed } from 'vue'
 export default {
 	name: 'IconBar',
 	components: {
-		AddIcon,
+		PlusIcon,
 		RefreshIcon,
-		CogWheelIcon,
+		CogWheelIcon: CogIcon,
 	},
 	setup () {
 		const store = useStore()
@@ -85,6 +87,10 @@ export default {
   margin-top: 0.5rem;
   border-radius: 0.25rem;
   align-items: center;
+
+  #left, #center, #right {
+	line-height: 0;
+  }
 
   div#left {
     justify-self: start;

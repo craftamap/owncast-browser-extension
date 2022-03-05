@@ -13,6 +13,7 @@
     <div class="icons">
       <AddIcon
         v-if="displayButton"
+        class="icon"
         @click="submit"
       />
       <LoadingIcon
@@ -32,7 +33,7 @@
 import LoadingIcon from '../../shared/components/icons/LoadingIcon.vue'
 import SuccessIcon from '../../shared/components/icons/SuccessIcon.vue'
 import ErrorIcon from '../../shared/components/icons/ErrorIcon.vue'
-import AddIcon from './icons/AddIcon.vue'
+import { PlusIcon } from '@heroicons/vue/solid'
 import { useStore } from 'vuex'
 import { computed, ref } from 'vue'
 
@@ -42,7 +43,7 @@ export default {
 		LoadingIcon,
 		ErrorIcon,
 		SuccessIcon,
-		AddIcon,
+		AddIcon: PlusIcon,
 	},
 	setup () {
 		const store = useStore()
@@ -102,6 +103,7 @@ export default {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  line-height: 0;
 }
 
 input.add-url {
