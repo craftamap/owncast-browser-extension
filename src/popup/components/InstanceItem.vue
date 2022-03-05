@@ -37,7 +37,7 @@
               class="instance-icon-bar-viewers"
               title="current number of viewers"
             >
-              <ViewerIcon />
+              <UsersIcon class="icon" />
               {{ instance.viewer }}
             </div>
             <div
@@ -45,7 +45,7 @@
               class="instance-icon-bar-uptime"
               title="uptime"
             >
-              <UptimeIcon />
+              <ClockIcon class="icon" />
               {{ instance.onlineSince.hour }}h {{ instance.onlineSince.minute }}m
             </div>
           </div>
@@ -65,7 +65,8 @@
       class="instance-hidden-icon-bar"
     >
       <div class="instance-icon-bar-remove">
-        <RemoveIcon
+        <TrashIcon
+          class="icon"
           @click="toggleRemove"
         />
       </div>
@@ -86,9 +87,7 @@
 
 <script>
 import stripHtml from '../../shared/util/stripHtml'
-import ViewerIcon from './icons/ViewerIcon.vue'
-import UptimeIcon from './icons/UptimeIcon.vue'
-import RemoveIcon from './icons/RemoveIcon.vue'
+import { UsersIcon, ClockIcon, TrashIcon } from '@heroicons/vue/solid'
 import ChevronIcon from './icons/ChevronIcon.vue'
 import { ref, toRefs, computed } from 'vue'
 import { useStore } from 'vuex'
@@ -96,9 +95,9 @@ import { useStore } from 'vuex'
 export default {
 	name: 'InstanceItem',
 	components: {
-		ViewerIcon,
-		UptimeIcon,
-		RemoveIcon,
+		UsersIcon,
+		ClockIcon,
+		TrashIcon,
 		ChevronIcon,
 	},
 	props: {
