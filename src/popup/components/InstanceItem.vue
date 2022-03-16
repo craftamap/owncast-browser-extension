@@ -204,7 +204,7 @@ export default {
   .instance-text {
     display: flex;
     flex-direction: column;
-    flex-grow: 0;
+    flex-grow: 1;
 
     .instance-text-bold {
       font-weight: 700;
