@@ -89,10 +89,10 @@
 import stripHtml from '../../shared/util/stripHtml'
 import { UsersIcon, ClockIcon, TrashIcon } from '@heroicons/vue/solid'
 import ChevronIcon from './icons/ChevronIcon.vue'
-import { ref, toRefs, computed } from 'vue'
-import { useStore } from 'vuex'
+import { ref, toRefs, computed, defineComponent } from 'vue'
+import { useStore } from '../store/'
 
-export default {
+export default defineComponent({
 	name: 'InstanceItem',
 	components: {
 		UsersIcon,
@@ -123,7 +123,7 @@ export default {
 		const remove = () => {
 			const instanceUrl = instance.value.instance
 			console.log('clicked remove on', instanceUrl)
-			store.dispatch('removeInstanceInStorage', instanceUrl)
+			store.removeInstanceInStorage(instanceUrl)
 		}
 		const instanceDescription = computed(() => {
 			return stripHtml(instance.value.description)
@@ -145,7 +145,7 @@ export default {
 			backgroundSrc,
 		}
 	},
-}
+})
 </script>
 
 <style lang="scss">

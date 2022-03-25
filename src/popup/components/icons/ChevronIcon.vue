@@ -7,8 +7,9 @@
 
 <script>
 import { ChevronDownIcon } from '@heroicons/vue/solid'
+import { defineComponent } from 'vue'
 
-export default {
+export default defineComponent({
 	name: 'ChevronIcon',
 	components: {
 		Chevron: ChevronDownIcon,
@@ -19,7 +20,7 @@ export default {
 			default: 'down',
 		},
 	},
-}
+})
 </script>
 
 <style lang="scss">

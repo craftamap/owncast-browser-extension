@@ -15,7 +15,9 @@
 </template>
 
 <script>
-export default {
+import { defineComponent } from 'vue'
+
+export default defineComponent({
 	name: 'CogWheelIcon',
 	emits: [
 		'click',
@@ -25,7 +27,7 @@ export default {
 			this.$emit('click')
 		},
 	},
-}
+})
 </script>
 
 <style lang="scss">

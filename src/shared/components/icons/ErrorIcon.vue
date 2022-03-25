@@ -4,13 +4,14 @@
 
 <script>
 import { XCircleIcon } from '@heroicons/vue/solid'
+import { defineComponent } from 'vue'
 
-export default {
+export default defineComponent({
 	name: 'ErrorIcon',
 	components: {
 		CrossCircle: XCircleIcon,
 	},
-}
+})
 </script>
 
 <style lang="scss">

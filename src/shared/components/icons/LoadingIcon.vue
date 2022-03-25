@@ -4,13 +4,14 @@
 
 <script charset="utf-8">
 import { RefreshIcon } from '@heroicons/vue/solid'
+import { defineComponent } from 'vue'
 
-export default {
+export default defineComponent({
 	name: 'LoadingIcon',
 	components: {
 		RefreshIcon: RefreshIcon,
 	},
-}
+})
 </script>
 
 <style lang="scss">

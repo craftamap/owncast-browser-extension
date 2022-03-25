@@ -37,10 +37,10 @@
 import { PlusIcon, CogIcon } from '@heroicons/vue/solid'
 import RefreshIcon from './icons/RefreshIcon.vue'
 import browser from 'webextension-polyfill'
-import { useStore } from 'vuex'
-import { computed } from 'vue'
+import { useStore } from '../store'
+import { computed, defineComponent } from 'vue'
 
-export default {
+export default defineComponent({
 	name: 'IconBar',
 	components: {
 		PlusIcon,
@@ -51,19 +51,19 @@ export default {
 		const store = useStore()
 
 		return {
-			isLoading: computed(() => store.state.loading),
+			isLoading: computed(() => store.loading),
 			refresh: () => {
-				store.dispatch('updateInstanceData')
+				store.updateInstanceData()
 			},
 			toggleShowAddBar: () => {
-				store.commit('toggleShowAddBar')
+				store.toggleShowAddBar()
 			},
 			openSettingsPage: () => {
 				browser.runtime.openOptionsPage()
 			},
 		}
 	},
-}
+})
 </script>
 
 <style lang="scss">

@@ -2,8 +2,7 @@ import { Validator } from '@cfworker/json-schema'
 import Schema05 from './export-0.5.0.schema.json'
 
 /**
- * @typedef {import('../store/index.js').Options} Options
- * @typedef {import('../store/index.js').State} State
+ * @typedef {import('../../background/util/storage').Options} Options
  *
  * @typedef Export
  * @type {object}
@@ -13,7 +12,6 @@ import Schema05 from './export-0.5.0.schema.json'
  */
 
 /**
- * @param {State} state
  * @returns {Blob}
  */
 function generateExport (state) {

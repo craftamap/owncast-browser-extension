@@ -147,10 +147,10 @@
 import LoadingIcon from '../shared/components/icons/LoadingIcon.vue'
 import ErrorIcon from '../shared/components/icons/ErrorIcon.vue'
 import SuccessIcon from '../shared/components/icons/SuccessIcon.vue'
-import { useStore } from 'vuex'
-import { computed, ref } from 'vue'
+import { useStore } from './store/index.js'
+import { computed, defineComponent, ref } from 'vue'
 
-export default {
+export default defineComponent({
 	name: 'OptionView',
 	components: {
 		LoadingIcon,
@@ -161,85 +161,85 @@ export default {
 		const store = useStore()
 
 		const setDirty = () => {
-			store.commit('setDirty', true)
+			store.setDirty(true)
 		}
 
 		const badge = computed({
-			get: () => store.state.options.badge,
+			get: () => store.options.badge,
 			set: (value) => {
-				store.commit('setBadge', value)
+				store.setBadge(value)
 				setDirty()
 			},
 		})
 
 		const notifications = computed({
-			get: () => store.state.options.notifications,
+			get: () => store.options.notifications,
 			set: (value) => {
-				store.commit('setNotifications', value)
+				store.setNotifications(value)
 				setDirty()
 			},
 		})
 
 		const interval = computed({
-			get: () => store.state.options.interval,
+			get: () => store.options.interval,
 			set: (value) => {
-				store.commit('setInterval', value)
+				store.setInterval(value)
 				setDirty()
 			},
 		})
 
 		const username = computed({
-			get: () => store.state.options.username,
+			get: () => store.options.username,
 			set: (value) => {
-				store.commit('setUsername', value)
+				store.setUsername(value)
 				setDirty()
 			},
 		})
 
 		const theme = computed({
-			get: () => store.state.options.theme,
+			get: () => store.options.theme,
 			set: (value) => {
-				store.commit('setTheme', value)
+				store.setTheme(value)
 				setDirty()
 			},
 		})
 
 		const layout = computed({
-			get: () => store.state.options.layout,
+			get: () => store.options.layout,
 			set: (value) => {
-				store.commit('setLayout', value)
+				store.setLayout(value)
 				setDirty()
 			},
 		})
 
-		const storeSettings = (e) => {
+		const storeSettings = (/** @type Event */ e) => {
 			e.preventDefault()
-			return store.dispatch('storeOptionsInStorage')
+			return store.storeOptionsInStorage()
 		}
-		const reset = (e) => {
+		const reset = (/** @type Event */ e) => {
 			e.preventDefault()
-			store.dispatch('getOptionsFromStorage')
+			store.getOptionsFromStorage()
 		}
 
-		const triggerExport = (e) => {
+		const triggerExport = (/** @type Event */ e) => {
 			e.preventDefault()
-			store.dispatch('generateExport')
+			store.generateExport()
 		}
+		/** @type {import('vue').Ref<HTMLInputElement>} */
 		const importFile = ref(null)
-		const triggerImport = (e) => {
+		const triggerImport = (/** @type Event */ e) => {
 			e.preventDefault()
-			/** @type {HTMLInputElement} */
 			if (importFile.value.files.length > 0) {
-				store.dispatch('triggerImport', importFile.value.files[0])
+				store.triggerImport(importFile.value.files[0])
 			}
 		}
 
 		return {
-			displayLoading: computed(() => store.state.display.loading),
-			displayError: computed(() => store.state.display.error),
-			displaySuccess: computed(() => store.state.display.success),
-			importExportErrors: computed(() => store.state.display.importExportErrors),
-			isDirty: computed(() => store.state.display.dirty),
+			displayLoading: computed(() => store.display.loading),
+			displayError: computed(() => store.display.error),
+			displaySuccess: computed(() => store.display.success),
+			importExportErrors: computed(() => store.display.importExportErrors),
+			isDirty: computed(() => store.display.dirty),
 			importFile,
 			badge,
 			notifications,
@@ -253,7 +253,7 @@ export default {
 			triggerImport,
 		}
 	},
-}
+})
 </script>
 
 <style lang="scss">
