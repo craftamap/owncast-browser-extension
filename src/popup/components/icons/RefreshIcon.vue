@@ -6,14 +6,15 @@
 
 <script>
 import { RefreshIcon } from '@heroicons/vue/solid'
+import { defineComponent } from 'vue'
 
-export default {
+export default defineComponent({
 	name: 'RefreshIcon',
 	components: {
 		Refresh: RefreshIcon,
 	},
 	props: { isLoading: Boolean },
-}
+})
 </script>
 
 <style lang="scss">

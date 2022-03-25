@@ -4,8 +4,11 @@ import Storage from './util/storage'
 import stripHtml from '../shared/util/stripHtml'
 import urlcat from 'urlcat'
 
+/**
+ * @param {Date} timestamp
+ */
 function dateDiff (timestamp, structure = dateDiff.structure) {
-	let delta = Math.abs(timestamp - new Date().getTime()) / 1000
+	let delta = Math.abs(timestamp.getTime() - new Date().getTime()) / 1000
 	const res = {}
 
 	for (const key in structure) {
@@ -52,13 +55,13 @@ const refreshInstanceData = async () => {
 		.filter((a) => !!a.value)
 		.map((a) => a.value)
 		.sort((a, b) => b.online - a.online)
-	const oldData = [...window.bgApp.instanceData || []]
+	const oldData = [...globalThis.bgApp.instanceData || []]
 
 	await sendNotifications(oldData || [], newInstanceData)
 
-	window.bgApp.instanceData = newInstanceData
+	globalThis.bgApp.instanceData = newInstanceData
 
-	await setBadge(window.bgApp.instanceData)
+	await setBadge(globalThis.bgApp.instanceData)
 
 	return newInstanceData
 }
@@ -115,7 +118,7 @@ const onMessageListener = (request, sender) => {
 			return cast.getConfig()
 		},
 		getInstanceData (request, sender) {
-			return Promise.resolve(window.bgApp.instanceData || [])
+			return Promise.resolve(globalThis.bgApp.instanceData || [])
 		},
 		updateInstanceData (request, sender) {
 			console.log('[updateInstanceData] before')
@@ -175,7 +178,7 @@ const onMessageListener = (request, sender) => {
 }
 
 window.addEventListener('load', function (event) {
-	window.bgApp = {
+	globalThis.bgApp = {
 		instanceData: [],
 	}
 

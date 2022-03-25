@@ -18,10 +18,10 @@
 import IconBar from './components/IconBar.vue'
 import InstanceList from './components/InstanceList.vue'
 import AddBar from './components/AddBar.vue'
-import { useStore } from 'vuex'
-import { computed } from 'vue'
+import { useStore } from './store'
+import { computed, defineComponent } from 'vue'
 
-export default {
+export default defineComponent({
 	name: 'App',
 	components: {
 		IconBar,
@@ -32,27 +32,24 @@ export default {
 		const store = useStore()
 
 		console.log('created App')
-		store.dispatch('getInstanceData')
+		store.getInstanceData()
 
 		return {
-			showAddBar: computed(() => store.state.add.show),
-			theme: computed(() => store.state.theme),
-			layout: computed(() => store.state.layout),
+			showAddBar: computed(() => store.add.show),
+			theme: computed(() => store.theme),
+			layout: computed(() => store.layout),
 		}
 	},
-}
+})
 </script>
 
 <style lang="scss">
 @import "../scss/colors.scss";
-
 .app {
 	display: flex;
 	flex-direction: column;
 	padding: 0.5rem;
-	min-width: 24rem;
-	width: 26rem;
-	max-width: 30rem;
+	max-width: 26rem;
 	min-height: 32rem;
 
 	.layout-compact & {

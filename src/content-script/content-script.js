@@ -106,8 +106,8 @@ function autoChangeUsername () {
 			}
 
 			const userInfoChange = document.querySelector('#user-info-change')
-			const usernameUpdateInput = userInfoChange.querySelector('#username-change-input')
-			const usernameUpdateButton = userInfoChange.querySelector('#button-update-username')
+			/** @type HTMLInputElement */ const usernameUpdateInput = userInfoChange.querySelector('#username-change-input')
+			/** @type HTMLButtonElement */ const usernameUpdateButton = userInfoChange.querySelector('#button-update-username')
 
 			if (usernameUpdateInput.value === username) {
 				process.env.NODE_ENV === 'development' && console.log('[autoChangeUsername] username already', usernameUpdateInput.value, 'not changing')
@@ -124,10 +124,10 @@ function autoChangeUsername () {
 }
 
 function init () {
-	if (window.addFollowButton) {
+	if (globalThis.addFollowButton) {
 		return
 	}
-	window.addFollowButton = true
+	globalThis.addFollowButton = true
 	// If a webpage has an owncast-video-container, its propably an owncast instance
 	const timeouts = {}
 	const onTimeout = () => {

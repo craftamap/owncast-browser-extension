@@ -1,19 +1,22 @@
 import browser from 'webextension-polyfill'
 import { createApp } from 'vue'
 import App from './App.vue'
-import { store } from './store'
 import '../scss/main.scss'
+import { createPinia } from 'pinia'
+import { useStore } from './store'
 
 window.addEventListener('load', function (_) {
+	const pinia = createPinia()
+
 	browser.runtime.onMessage.addListener((request) => {
 		if (request.type === 'updatedInstanceData') {
-			store.commit('setInstances', request.data.instances)
+			useStore().setInstances(request.data.instances)
 		}
 	})
 
-	store.dispatch('fetchThemeAndLayout').then(() => {
-		const app = createApp(App)
-		app.use(store)
-		app.mount('#app-root')
-	})
+	const app = createApp(App)
+	app.use(pinia)
+	app.mount('#app-root')
+
+	useStore().fetchThemeAndLayout()
 })

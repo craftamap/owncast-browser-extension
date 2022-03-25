@@ -10,12 +10,12 @@
 </template>
 
 <script>
-import { useStore } from 'vuex'
-import { computed } from 'vue'
+import { useStore } from '../store'
+import { computed, defineComponent } from 'vue'
 import InstanceItem from './InstanceItem.vue'
 import NoInstances from './NoInstances.vue'
 
-export default {
+export default defineComponent({
 	name: 'InstanceList',
 	components: {
 		InstanceItem,
@@ -25,8 +25,8 @@ export default {
 		const store = useStore()
 
 		return {
-			instances: computed(() => store.state.instances),
+			instances: computed(() => store.instances),
 		}
 	},
-}
+})
 </script>

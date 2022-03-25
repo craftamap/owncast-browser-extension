@@ -1,8 +1,10 @@
-import { createStore } from 'vuex'
+import { defineStore } from 'pinia'
 import browser from 'webextension-polyfill'
 
-export const store = createStore({
-	state: {
+export const useStore = defineStore('main', {
+	state: () => ({
+		theme: '',
+		layout: '',
 		instances: [],
 		loading: false,
 		add: {
@@ -11,134 +13,123 @@ export const store = createStore({
 			success: false,
 			error: false,
 		},
-	},
-	mutations: {
-		setTheme (state, theme) {
-			state.theme = theme
-		},
-		setLayout (state, layout) {
-			state.layout = layout
-		},
-		setLoading (state, newLoading) {
-			state.loading = newLoading
-		},
-		toggleShowAddBar (state) {
-			state.add.show = !state.add.show
-		},
-		setInstances (state, instances) {
-			state.instances = [...instances]
-			console.log('set instances in state', instances)
-		},
-		setAddLoading (state) {
-			state.add.loading = true
-			state.add.success = false
-			state.add.error = false
-		},
-		setAddSuccess (state) {
-			state.add.loading = false
-			state.add.success = true
-			state.add.error = false
-		},
-		setAddError (state) {
-			state.add.loading = false
-			state.add.success = false
-			state.add.error = true
-		},
-		unsetAdd (state) {
-			state.add.loading = false
-			state.add.success = false
-			state.add.error = false
-		},
-	},
+	}),
 	actions: {
-		async fetchThemeAndLayout ({ commit }) {
+		async fetchThemeAndLayout () {
 			console.log('fetch')
-			return browser.runtime.sendMessage({
+			const options = await browser.runtime.sendMessage({
 				type: 'getSettings',
-			}).then((options) => {
-				return Promise.all([
-					commit('setTheme', options.theme),
-					commit('setLayout', options.layout),
-				])
 			})
+			this.theme = options.theme
+			this.layout = options.layout
 		},
-		async updateInstanceData ({ commit }) {
-			commit('setLoading', true)
-			return browser.runtime.sendMessage({
-				type: 'updateInstanceData',
-			}).then((instances) => {
-				commit('setInstances', instances)
-				commit('setLoading', false)
-			}).catch(() => {
-				commit('setLoading', false)
-			})
-		},
-		async getInstanceData ({ commit }) {
-			console.log('action setInstances')
-			return browser.runtime.sendMessage({
+		async getInstanceData () {
+			const instances = await browser.runtime.sendMessage({
 				type: 'getInstanceData',
-			}).then((instances) => {
-				console.log('recieved instances', instances)
-				commit('setInstances', instances)
 			})
+			this.instances = [...instances]
 		},
-		async removeInstanceInStorage ({ dispatch }, url) {
-			return browser.runtime.sendMessage({
+		setInstances (instances) {
+			this.instances = [...instances]
+		},
+		async updateInstanceData () {
+			this.loading = true
+			try {
+				const instances = await browser.runtime.sendMessage({
+					type: 'updateInstanceData',
+				})
+				this.instances = [...instances]
+				this.loading = false
+			} catch (e) {
+				this.loading = false
+			}
+		},
+		toggleShowAddBar () {
+			this.add.show = !this.add.show
+		},
+		setAddLoading () {
+			this.add.loading = true
+			this.add.success = false
+			this.add.error = false
+		},
+		setAddSuccess () {
+			this.add.loading = false
+			this.add.success = true
+			this.add.error = false
+		},
+		setAddError () {
+			this.add.loading = false
+			this.add.success = false
+			this.add.error = true
+		},
+		unsetAdd () {
+			this.add.loading = false
+			this.add.success = false
+			this.add.error = false
+		},
+		/**
+		 * @param {string} url
+		 **/
+		async removeInstanceInStorage (url) {
+			await browser.runtime.sendMessage({
 				type: 'removeInstanceInStorage',
 				data: {
 					url,
 				},
-			}).then(() => {
-				dispatch('updateInstanceData')
 			})
+			await this.updateInstanceData()
 		},
-		async checkConnectionAndAddInStorage ({ commit, dispatch }, url) {
-			commit('setAddLoading')
-			if (url.substr(-1) !== '/') {
-				url = url + '/'
-			}
-			return new Promise((resolve, reject) => {
+		/**
+		 * @param {string} url
+		 **/
+		async checkConnectionAndAddInStorage (url) {
+			let success = false
+			try {
+				this.setAddLoading()
+				if (url.slice(-1) !== '/') {
+					url = url + '/'
+				}
+
 				const urlObj = new URL(url)
 				if (!(urlObj.protocol === 'http:' || urlObj.protocol === 'https:')) {
-					reject(new Error('Wrong Protocol!'))
+					throw new Error('Wrong Protocol!')
 				}
 				console.log(url)
-				resolve()
-			}).then(() => {
-				return browser.runtime.sendMessage({
+
+				await browser.runtime.sendMessage({
 					type: 'checkConnection',
 					data: {
 						url: url,
 					},
 				})
-			}).then(() => {
+
 				console.log('checkConnection was successful, now add Instance')
-				return browser.runtime.sendMessage({
+				await browser.runtime.sendMessage({
 					type: 'addInstanceInStorage',
 					data: {
 						url: url,
 					},
 				})
-			}).then(() => {
-				commit('setAddSuccess')
-				return 'success'
-			}).catch((reason) => {
-				console.log(reason)
-				commit('setAddError')
-				return 'error'
-			}).then((data) => {
-				return new Promise((resolve) => {
-					dispatch('updateInstanceData')
-					setTimeout(() => {
-						console.log('unset')
-						commit('unsetAdd')
-						if (data === 'success') {
-							commit('toggleShowAddBar')
-						}
-						resolve()
-					}, 3000)
-				})
+
+				this.setAddSuccess()
+
+				success = true
+			} catch (e) {
+				this.setAddError()
+			}
+
+			await new Promise((resolve) => {
+				this.updateInstanceData()
+				setTimeout(() => {
+					console.log('unset')
+					this.unsetAdd()
+					if (success) {
+						this.toggleShowAddBar()
+					}
+					resolve()
+				}, 3000)
 			})
 		},
+
 	},
 })

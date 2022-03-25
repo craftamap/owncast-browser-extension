@@ -5,13 +5,14 @@
 <script>
 
 import { CheckCircleIcon } from '@heroicons/vue/solid'
+import { defineComponent } from 'vue'
 
-export default {
+export default defineComponent({
 	name: 'SuccessIcon',
 	components: {
 		CheckCircleIcon,
 	},
-}
+})
 </script>
 
 <style lang="scss">

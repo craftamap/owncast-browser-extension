@@ -34,10 +34,10 @@ import LoadingIcon from '../../shared/components/icons/LoadingIcon.vue'
 import SuccessIcon from '../../shared/components/icons/SuccessIcon.vue'
 import ErrorIcon from '../../shared/components/icons/ErrorIcon.vue'
 import { PlusIcon } from '@heroicons/vue/solid'
-import { useStore } from 'vuex'
-import { computed, ref } from 'vue'
+import { useStore } from '../store'
+import { computed, defineComponent, ref } from 'vue'
 
-export default {
+export default defineComponent({
 	name: 'AddBar',
 	components: {
 		LoadingIcon,
@@ -53,26 +53,26 @@ export default {
 			url,
 			submit: () => {
 				console.log(url.value)
-				store.dispatch('checkConnectionAndAddInStorage', url.value)
+				store.checkConnectionAndAddInStorage(url.value)
 			},
 			displayButton: computed(() => {
-				const loading = store.state.add.loading
-				const error = store.state.add.error
-				const success = store.state.add.success
+				const loading = store.add.loading
+				const error = store.add.error
+				const success = store.add.success
 				return !(loading || error || success)
 			}),
 			displayLoading: computed(() => {
-				return store.state.add.loading
+				return store.add.loading
 			}),
 			displayError: computed(() => {
-				return store.state.add.error
+				return store.add.error
 			}),
 			displaySuccess: computed(() => {
-				return store.state.add.success
+				return store.add.success
 			}),
 		}
 	},
-}
+})
 </script>
 
 <style lang="scss">

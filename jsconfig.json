@@ -1,4 +1,9 @@
 {
+    "compilerOptions": {
+        "checkJs": true,
+        "resolveJsonModule": true,
+        "lib": ["dom", "es2021"]
+    },
     "include": [
         "./src/**/*"
     ]
