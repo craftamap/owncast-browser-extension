@@ -110,14 +110,18 @@ export default defineComponent({
 		const store = useStore()
 		const { instance } = toRefs(props)
 
-		const showHidden = ref(false)
-		const toggleHidden = () => {
-			showHidden.value = !showHidden.value
-		}
-
 		const showRemove = ref(false)
 		const toggleRemove = () => {
 			showRemove.value = !showRemove.value
+		}
+		const hideRemove = () => {
+			showRemove.value = false
+		}
+
+		const showHidden = ref(false)
+		const toggleHidden = () => {
+			hideRemove()
+			showHidden.value = !showHidden.value
 		}
 
 		const remove = () => {
@@ -235,8 +239,10 @@ export default defineComponent({
     align-items: center;
 
     .instance-icon-bar-viewers, .instance-icon-bar-uptime, .instance-icon-bar-chevron, .instance-icon-bar-remove {
-      display: inline-block;
-      vertical-align: middle;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      padding-right: 0.5rem;
     }
   }
 }
