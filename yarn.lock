@@ -2359,10 +2359,10 @@ eslint-plugin-import@^2.23.4:
     resolve "^1.20.0"
     tsconfig-paths "^3.12.0"
 
-eslint-plugin-mozilla@^2.10.0:
-  version "2.11.3"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-mozilla/-/eslint-plugin-mozilla-2.11.3.tgz#84242af09e45ba7a4f659de6193d993c75716e8e"
-  integrity sha512-3MXmz1TdFEmtkropVKAbYznR6laPhg12oaKE9DV26Opq0rMdzTyTEZZnsP/SuV2vBh71oRR0j2t7l4Gq+N5pXA==
+eslint-plugin-mozilla@^2.11.4:
+  version "2.11.4"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-mozilla/-/eslint-plugin-mozilla-2.11.4.tgz#e1a3ba84fb3ddb27a0ca199d6c34e7df41514232"
+  integrity sha512-wT796NZ00WdsSutPv3fsa4/1sSOm77ee1lwHLbAyV/1ilqoDSh52DehJXFnEU7WlY1HDya4Y+VtCFBTxyaI9iA==
   dependencies:
     "@babel/core" "^7.17.0"
     "@babel/eslint-parser" "^7.17.0"
