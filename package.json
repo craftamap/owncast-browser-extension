@@ -25,7 +25,7 @@
     "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.3.2",
     "mini-css-extract-plugin": "^2.6.0",
-    "sass": "^1.35.2",
+    "sass": "^1.50.0",
     "sass-loader": "^12.1.0",
     "web-ext": "6.8.0",
     "webextension-polyfill-ts": "^0.26.0",
