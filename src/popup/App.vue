@@ -45,12 +45,15 @@ export default defineComponent({
 
 <style lang="scss">
 @import "../scss/colors.scss";
+
 .app {
 	display: flex;
 	flex-direction: column;
 	padding: 0.5rem;
+	height: 34rem;
+	min-width: 24rem;
 	max-width: 26rem;
-	min-height: 32rem;
+	overflow-y: scroll;
 
 	.layout-compact & {
 		padding: 0;
