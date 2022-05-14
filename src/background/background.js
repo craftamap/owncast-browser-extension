@@ -1,8 +1,9 @@
 import browser from 'webextension-polyfill'
 import api from './api/owncast'
-import Storage from './util/storage.ts'
+import * as Storage from './util/storage.ts'
 import stripHtml from '../shared/util/stripHtml'
 import urlcat from 'urlcat'
+import { createMastodonApp, obtainMastodonOAuthToken, verifyCredentials } from './api/mastodon'
 
 /**
  * @param {Date} timestamp
@@ -110,7 +111,9 @@ const setBadge = async (instanceData) => {
 	}
 }
 
-const onMessageListener = (request, sender) => {
+const onMessageListener = (/** @type {{type: string, data: any}} */ request, sender) => {
+	/** @typedef {typeof request} r
+	    @type {Record<string, ((request: r, sender?: any) => Promise<any>)>} */
 	const listener = {
 		checkConnection (request, sender) {
 			console.log('[checkConnection]', request.data.url)
@@ -171,6 +174,27 @@ const onMessageListener = (request, sender) => {
 			return Storage.getOptionsFromStorage().then((options) => {
 				return options.username
 			})
+		},
+		createMastodonApp (request) {
+			const mastodonInstanceUrl = request.data.mastodonInstanceUrl
+			const redirectUrl = browser.identity.getRedirectURL()
+			console.log(redirectUrl)
+
+			return createMastodonApp(mastodonInstanceUrl, redirectUrl)
+		},
+		obtainMastodonOAuthToken (request) {
+			const { mastodonInstanceUrl, details } = request.data
+			return obtainMastodonOAuthToken(mastodonInstanceUrl, details)
+		},
+		async getExternalInstanceProviders (request) {
+			return { externalInstanceProviders: await Storage.getExternalInstanceProviders() }
+		},
+		addExternalInstanceProvider (request) {
+			const instanceProvider = request.data.instanceProvider
+			return Storage.addExternalInstanceProvider(instanceProvider)
+		},
+		verifyMastodonCredentials (request) {
+			return verifyCredentials(request.data.mastodonInstanceUrl, request.data.bearerToken)
 		},
 	}
 	const requestType = request && request.type

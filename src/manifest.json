@@ -35,6 +35,7 @@
   "permissions": [
     "*://*/*",
     "storage",
-    "notifications"
+    "notifications",
+    "identity"
   ]
 }

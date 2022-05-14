@@ -1,14 +1,15 @@
 import browser from 'webextension-polyfill'
+import { v4 as uuid } from 'uuid'
 
 type Theme = 'light' | 'dark'
 type Layout = 'normal' | 'compact'
 type Options = {notifications: boolean, badge: boolean, interval: number, theme: Theme, layout: Layout, username: string}
 
-function setOptionsInStorage (options: Options) {
+export function setOptionsInStorage (options: Options) {
 	return browser.storage.local.set({ options: options })
 }
 
-async function getOptionsFromStorage (): Promise<Options> {
+export async function getOptionsFromStorage (): Promise<Options> {
 	return browser.storage.local.get('options').then(({ options }) => {
 		return Object.assign({
 			notifications: true,
@@ -20,7 +21,7 @@ async function getOptionsFromStorage (): Promise<Options> {
 	})
 }
 
-async function getInstancesFromStorage (): Promise<{ instances: string[]}> {
+export async function getInstancesFromStorage (): Promise<{ instances: string[]}> {
 	return browser.storage.local.get('instances').then((data) => {
 		return {
 			instances: [...((data && data.instances) || [])],
@@ -28,19 +29,19 @@ async function getInstancesFromStorage (): Promise<{ instances: string[]}> {
 	})
 }
 
-async function setInstancesInStorage (instances: string[]) {
+export async function setInstancesInStorage (instances: string[]) {
 	return browser.storage.local.set({
 		instances: [...(instances || [])],
 	})
 }
 
-async function addInstanceInStorage (instance: string) {
+export async function addInstanceInStorage (instance: string) {
 	return getInstancesFromStorage().then((data) => {
 		return setInstancesInStorage(Array.from(new Set([...data.instances, instance])))
 	})
 }
 
-async function removeInstanceInStorage (instance: string) {
+export async function removeInstanceInStorage (instance: string) {
 	return getInstancesFromStorage().then((data) => {
 		console.log('removeInstanceInStorage data', JSON.stringify(data))
 		console.log('removeInstanceInStorage data', JSON.stringify(data.instances))
@@ -53,11 +54,33 @@ async function removeInstanceInStorage (instance: string) {
 	})
 }
 
-export default {
-	setOptionsInStorage,
-	getOptionsFromStorage,
-	getInstancesFromStorage,
-	setInstancesInStorage,
-	addInstanceInStorage,
-	removeInstanceInStorage,
+export async function getExternalInstanceProviders (): Promise<Record<string, any>> {
+	const response = await browser.storage.local.get({ externalInstanceProviders: {} })
+	return response.externalInstanceProviders
+}
+
+export async function setExternalInstanceProviders (externalInstanceProviders: Record<string, any> = {}) {
+	return browser.storage.local.set({
+		externalInstanceProviders: externalInstanceProviders,
+	})
+}
+
+// TODO: Add types
+export async function addExternalInstanceProvider (addedExternalInstanceProvider) {
+	const providers = await getExternalInstanceProviders()
+	if (addedExternalInstanceProvider.id) {
+		throw new Error('provided external instance provider with an id to addExternalInstanceProvider.')
+	}
+
+	let id
+	do {
+		id = uuid()
+	} while (id in providers)
+
+	const providerWithId = { id: id, ...addedExternalInstanceProvider }
+	const newProviders = { [id]: providerWithId, ...providers }
+
+	await setExternalInstanceProviders(newProviders)
+
+	return providerWithId
 }

@@ -140,6 +140,36 @@
         {{ importExportErrors }}
       </div>
     </div>
+    <h1>External Instance Providers</h1>
+    <p>TODO: add description</p>
+    <div>
+      <div
+        v-for="provider in externalInstanceProviders"
+        :key="provider.id"
+      >
+        <p>{{ provider.id }}</p>
+        <p>{{ provider.type }}</p>
+        <p>{{ provider.instanceUrl }}</p>
+        <p>{{ provider.userData.username }}</p>
+        <button
+          :id="provider.id"
+          @click="(e) => sync(e, provider.id)"
+        >
+          sync
+        </button>
+      </div>
+    </div>
+    <div>
+      <input
+        ref="mastodonInstanceUrl"
+        type="text"
+      >
+      <input
+        type="button"
+        value="Connect"
+        @click="mastodonLogin"
+      >
+    </div>
   </div>
 </template>
 
@@ -148,6 +178,7 @@ import LoadingIcon from '../shared/components/icons/LoadingIcon.vue'
 import ErrorIcon from '../shared/components/icons/ErrorIcon.vue'
 import SuccessIcon from '../shared/components/icons/SuccessIcon.vue'
 import { useStore } from './store/index.js'
+import { useStore as useExternalInstanceProviderStore } from './store/externalInstanceProviders'
 import { computed, defineComponent, ref } from 'vue'
 
 export default defineComponent({
@@ -159,6 +190,9 @@ export default defineComponent({
 	},
 	setup () {
 		const store = useStore()
+		const externalInstanceProviderStore = useExternalInstanceProviderStore()
+
+		externalInstanceProviderStore.getExternalInstanceProviders()
 
 		const setDirty = () => {
 			store.setDirty(true)
@@ -234,12 +268,29 @@ export default defineComponent({
 			}
 		}
 
+		const mastodonInstanceUrl = ref(null)
+		const mastodonLogin = async (/** @type Event */ e) => {
+			// TODO: validate url
+			const url = mastodonInstanceUrl.value.value
+
+			externalInstanceProviderStore.addMastodonInstanceProvider(url)
+		}
+
+		const sync = async (/** @type Event */ e, id) => {
+			console.log(id)
+			externalInstanceProviderStore.sync(id)
+		}
+
 		return {
 			displayLoading: computed(() => store.display.loading),
 			displayError: computed(() => store.display.error),
 			displaySuccess: computed(() => store.display.success),
 			importExportErrors: computed(() => store.display.importExportErrors),
 			isDirty: computed(() => store.display.dirty),
+			externalInstanceProviders: computed(() => externalInstanceProviderStore.externalInstanceProviders),
+			mastodonLogin,
+			mastodonInstanceUrl,
+			sync,
 			importFile,
 			badge,
 			notifications,
