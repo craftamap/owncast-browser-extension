@@ -27,6 +27,15 @@ module.exports = {
 				loader: 'vue-loader',
 			},
 			{
+				test: /\.ts$/,
+				use: [{
+					loader: 'ts-loader',
+					options: {
+						appendTsSuffixTo: [/\.vue$/]
+					}
+				}]
+			},
+			{
 				test: /\.s?css$/,
 				use: [
 					{ loader: MiniCssExtractPlugin.loader },

@@ -1,1 +1,1 @@
-declare const OWNCAST_BROWSER_EXTENSION_VERSION: string;
+declare const OWNCAST_BROWSER_EXTENSION_VERSION: string

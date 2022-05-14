@@ -1,0 +1,22 @@
+{
+    "compilerOptions": {
+        "checkJs": true,
+        "allowJs": true,
+        "resolveJsonModule": true,
+        "module": "esnext",
+        "lib": [
+            "dom",
+            "es2021"
+        ],
+        "jsx": "preserve",
+        "importHelpers": true,
+        "moduleResolution": "node",
+        "skipLibCheck": true,
+        "esModuleInterop": true,
+        "allowSyntheticDefaultImports": true
+    },
+    "include": [
+        "./src/**/*.vue",
+        "./src/**/*.ts"
+    ]
+}
