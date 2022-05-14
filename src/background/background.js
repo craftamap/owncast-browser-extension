@@ -1,6 +1,6 @@
 import browser from 'webextension-polyfill'
 import api from './api/owncast'
-import Storage from './util/storage'
+import Storage from './util/storage.ts'
 import stripHtml from '../shared/util/stripHtml'
 import urlcat from 'urlcat'
 
@@ -52,8 +52,8 @@ const refreshInstanceData = async () => {
 	}))
 	console.log('[refreshInstanceData]', statuses)
 	const newInstanceData = statuses
-		.filter((a) => !!a.value)
-		.map((a) => a.value)
+		.filter((a) => a.status === 'fulfilled')
+		.map((/** @type {PromiseFulfilledResult} */ a) => a.value)
 		.sort((a, b) => b.online - a.online)
 	const oldData = [...globalThis.bgApp.instanceData || []]
 

@@ -1,22 +1,14 @@
 import browser from 'webextension-polyfill'
 
-/**
- * @typedef {'light'|'dark'} Theme
- * @typedef {'normal'|'compact'} Layout
- * @typedef {{ notifications: Boolean, badge: Boolean, interval: Number, theme: Theme, layout: Layout, username: String }} Options
- */
+type Theme = 'light' | 'dark'
+type Layout = 'normal' | 'compact'
+type Options = {notifications: boolean, badge: boolean, interval: number, theme: Theme, layout: Layout, username: string}
 
-/**
- * @param {Options} options
- */
-function setOptionsInStorage (options) {
+function setOptionsInStorage (options: Options) {
 	return browser.storage.local.set({ options: options })
 }
 
-/**
- * @returns {Promise<Options>}
- */
-async function getOptionsFromStorage () {
+async function getOptionsFromStorage (): Promise<Options> {
 	return browser.storage.local.get('options').then(({ options }) => {
 		return Object.assign({
 			notifications: true,
@@ -28,39 +20,27 @@ async function getOptionsFromStorage () {
 	})
 }
 
-/**
- * @returns {Promise<{ instances: String[] }>}
- */
-async function getInstancesFromStorage () {
-	return browser.storage.local.get('instances').then((/** @type {{instances?: String[]}} */ data) => {
+async function getInstancesFromStorage (): Promise<{ instances: string[]}> {
+	return browser.storage.local.get('instances').then((data) => {
 		return {
 			instances: [...((data && data.instances) || [])],
 		}
 	})
 }
 
-/**
- * @param {String[]} instances
- */
-async function setInstancesInStorage (instances) {
+async function setInstancesInStorage (instances: string[]) {
 	return browser.storage.local.set({
 		instances: [...(instances || [])],
 	})
 }
 
-/**
- * @param {String} instance
- */
-async function addInstanceInStorage (instance) {
+async function addInstanceInStorage (instance: string) {
 	return getInstancesFromStorage().then((data) => {
 		return setInstancesInStorage(Array.from(new Set([...data.instances, instance])))
 	})
 }
 
-/**
- * @param {String} instance
- */
-async function removeInstanceInStorage (instance) {
+async function removeInstanceInStorage (instance: string) {
 	return getInstancesFromStorage().then((data) => {
 		console.log('removeInstanceInStorage data', JSON.stringify(data))
 		console.log('removeInstanceInStorage data', JSON.stringify(data.instances))

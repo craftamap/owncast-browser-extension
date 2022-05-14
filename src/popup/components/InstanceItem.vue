@@ -85,7 +85,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import stripHtml from '../../shared/util/stripHtml'
 import { UsersIcon, ClockIcon, TrashIcon } from '@heroicons/vue/solid'
 import ChevronIcon from './icons/ChevronIcon.vue'
