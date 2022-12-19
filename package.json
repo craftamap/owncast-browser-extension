@@ -16,7 +16,7 @@
     "@volar/vue-language-server": "^0.33.9",
     "@vue/compiler-sfc": "^3.2.29",
     "copy-webpack-plugin": "^10.2.4",
-    "css-loader": "^6.2.0",
+    "css-loader": "^6.7.3",
     "eslint": "^7.28.0",
     "eslint-config-standard": "^16.0.3",
     "eslint-plugin-import": "^2.23.4",
